@@ -13,7 +13,7 @@ export interface VoiceOption {
   id: string
   name: string
   description: string
-  type: "standard" | "cloned" | "celebrity"
+  type: "standard" | "cloned" 
   gender?: "female" | "male" | "neutral"
   style?: string
   available: boolean
@@ -37,32 +37,32 @@ interface VoiceSelectionProps {
 
 const DEFAULT_VOICES: VoiceOption[] = [
   {
-    id: "speechify-sarah",
-    name: "Sarah",
+    id: "erin",
+    name: "Erin",
     description: "Clear and professional female voice",
     type: "standard",
     gender: "female",
     available: true,
   },
   {
-    id: "speechify-david",
-    name: "David",
+    id: "oliver",
+    name: "Oliver",
     description: "Warm and confident male voice",
     type: "standard",
     gender: "male",
     available: true,
   },
   {
-    id: "speechify-alex",
-    name: "Alex",
+    id: "james",
+    name: "James",
     description: "Balanced and neutral voice",
     type: "standard",
     gender: "neutral",
     available: true,
   },
   {
-    id: "speechify-emma",
-    name: "Emma",
+    id: "kim",
+    name: "Kim",
     description: "Upbeat and energetic voice",
     type: "standard",
     gender: "female",
@@ -70,51 +70,42 @@ const DEFAULT_VOICES: VoiceOption[] = [
     available: true,
   },
   {
-    id: "speechify-james",
-    name: "James",
+    id: "ken",
+    name: "Ken",
     description: "Deep and authoritative male voice",
     type: "standard",
     gender: "male",
     available: true,
   },
   {
-    id: "speechify-lily",
-    name: "Lily",
+    id: "carol",
+    name: "Carol",
     description: "Soft and gentle female voice",
     type: "standard",
     gender: "female",
     available: true,
   },
   {
-    id: "speechify-marcus",
-    name: "Marcus",
+    id: "freddie",
+    name: "Freddie",
     description: "Rich and smooth male voice",
     type: "standard",
     gender: "male",
     available: true,
   },
   {
-    id: "speechify-sophia",
-    name: "Sophia",
+    id: "beverly",
+    name: "Beverly",
     description: "Elegant and sophisticated female voice",
     type: "standard",
     gender: "female",
     available: true,
   },
-  {
-    id: "celebrity-snoop",
-    name: "Snoop Dogg",
-    description: "Iconic rapper's distinctive voice",
-    type: "celebrity",
-    gender: "male",
-    available: true,
-    premium: false, // Available in free tier
-  },
 ]
 
 const PREMIUM_CELEBRITY_VOICES: VoiceOption[] = [
   {
-    id: "celebrity-gwyneth",
+    id: "beverly",
     name: "Gwyneth Paltrow",
     description: "Academy Award-winning actress voice",
     type: "celebrity",
@@ -132,7 +123,7 @@ const PREMIUM_CELEBRITY_VOICES: VoiceOption[] = [
     premium: true,
   },
   {
-    id: "celebrity-scarlett",
+    id: "kim",
     name: "Scarlett Johansson",
     description: "Distinctive actress voice",
     type: "celebrity",
@@ -333,14 +324,14 @@ export function VoiceSelection({
 
   const getVoiceGender = (voiceId: string) => {
     const genderMap = {
-      "speechify-sarah": "female",
-      "speechify-david": "male",
-      "speechify-alex": "neutral",
-      "speechify-emma": "female",
-      "speechify-james": "male",
-      "speechify-lily": "female",
-      "speechify-marcus": "male",
-      "speechify-sophia": "female",
+      "erin": "female",
+      "oliver": "male",
+      "james": "neutral",
+      "kim": "female",
+      "ken": "male",
+      "carol": "female",
+      "freddie": "male",
+      "beverly": "female",
       "celebrity-snoop": "male",
       "celebrity-gwyneth": "female",
       "celebrity-morgan": "male",
@@ -391,11 +382,6 @@ export function VoiceSelection({
                     <p className="text-xs text-gray-600 dark:text-gray-400">{voice.description}</p>
                   </div>
                   <div className="flex gap-1">
-                    {voice.type === "celebrity" && (
-                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-800">
-                        ⭐ Celebrity
-                      </Badge>
-                    )}
                     {voice.type === "cloned" && (
                       <Badge variant="secondary" className="text-xs">
                         Cloned

@@ -107,15 +107,22 @@ async function generateSpeechifyPreview(
       throw new Error(`Speechify API error: ${error}`)
     }
 
-    const audioBuffer = await response.arrayBuffer()
+    const contentType = response.headers.get("content-type") || "";
 
-    if (!audioBuffer || audioBuffer.byteLength === 0) {
-      console.log("[v0] Speechify returned empty audio buffer")
-      return null
+    if (contentType.includes("application/json")) {
+      // Caso JSON com Base64
+      const data = await response.json();
+      if (!data.audio_data) {
+        console.log("[v0] JSON recived but without audio");
+        return null;
+      }
+      const buffer = Buffer.from(data.audio_data, "base64");
+      return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+    } else {
+      // case direct binary (mp3)
+      return await response.arrayBuffer();
     }
 
-    console.log("[v0] Speechify audio buffer size:", audioBuffer.byteLength)
-    return audioBuffer
   } catch (fetchError) {
     console.error("[v0] Speechify API fetch failed:", fetchError)
     throw fetchError
@@ -124,14 +131,14 @@ async function generateSpeechifyPreview(
 
 function getSpeechifyVoiceId(voiceId: string): string {
   const voiceMapping = {
-    "speechify-sarah": "sarah",
-    "speechify-david": "david",
-    "speechify-alex": "alex",
-    "speechify-emma": "emma",
-    "speechify-james": "james",
-    "speechify-lily": "lily",
-    "speechify-marcus": "marcus",
-    "speechify-sophia": "sophia",
+    "erin": "erin",
+    "oliver": "oliver",
+    "james": "james",
+    "kim": "kim",
+    "ken": "ken",
+    "carol": "carol",
+    "freddie": "freddie",
+    "beverly": "beverly",
     "celebrity-snoop": "snoop_dogg",
     "celebrity-gwyneth": "gwyneth_paltrow",
     "celebrity-morgan": "morgan_freeman",
@@ -140,71 +147,71 @@ function getSpeechifyVoiceId(voiceId: string): string {
     "cloned-voice": "cloned-voice", // Will be handled separately
   }
 
-  return voiceMapping[voiceId as keyof typeof voiceMapping] || voiceMapping["speechify-sarah"]
+  return voiceMapping[voiceId as keyof typeof voiceMapping] || voiceMapping["erin"]
 }
 
 function getVoiceConfiguration(voiceId: string) {
   const voiceConfigs = {
-    "speechify-sarah": {
+    "erin": {
       gender: "female",
       language: "en-US",
-      name: "Sarah",
+      name: "Erin",
       pitch: 1.0,
       rate: 1.0,
-      voiceName: "Microsoft Zira - English (United States)",
+      voiceName: "Microsoft Erin - English (United States)",
     },
-    "speechify-david": {
+    "oliver": {
       gender: "male",
       language: "en-US",
-      name: "David",
+      name: "Oliver",
       pitch: 0.8,
       rate: 1.0,
-      voiceName: "Microsoft David - English (United States)",
+      voiceName: "Microsoft Oliver - English (United States)",
     },
-    "speechify-alex": {
+    "james": {
       gender: "neutral",
       language: "en-US",
-      name: "Alex",
+      name: "James",
       pitch: 0.9,
       rate: 1.0,
-      voiceName: "Microsoft Mark - English (United States)",
+      voiceName: "Microsoft James - English (United States)",
     },
-    "speechify-emma": {
+    "kim": {
       gender: "female",
       language: "en-US",
-      name: "Emma",
+      name: "Kim",
       pitch: 1.2,
       rate: 1.1,
-      voiceName: "Microsoft Aria - English (United States)",
+      voiceName: "Microsoft kim - English (United States)",
     },
-    "speechify-james": {
+    "ken": {
       gender: "male",
       language: "en-US",
-      name: "James",
+      name: "Ken",
       pitch: 0.7,
       rate: 0.9,
       voiceName: "Microsoft Mark - English (United States)",
     },
-    "speechify-lily": {
+    "carol": {
       gender: "female",
       language: "en-US",
-      name: "Lily",
+      name: "Carol",
       pitch: 1.1,
       rate: 0.95,
       voiceName: "Microsoft Zira - English (United States)",
     },
-    "speechify-marcus": {
+    "freddie": {
       gender: "male",
       language: "en-US",
-      name: "Marcus",
+      name: "Freddie",
       pitch: 0.75,
       rate: 0.9,
       voiceName: "Microsoft David - English (United States)",
     },
-    "speechify-sophia": {
+    "beverly": {
       gender: "female",
       language: "en-US",
-      name: "Sophia",
+      name: "Beverly",
       pitch: 1.05,
       rate: 1.0,
       voiceName: "Microsoft Aria - English (United States)",
@@ -259,5 +266,5 @@ function getVoiceConfiguration(voiceId: string) {
     },
   }
 
-  return voiceConfigs[voiceId as keyof typeof voiceConfigs] || voiceConfigs["speechify-sarah"]
+  return voiceConfigs[voiceId as keyof typeof voiceConfigs] || voiceConfigs["erin"]
 }

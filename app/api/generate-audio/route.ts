@@ -51,14 +51,14 @@ async function generateSpeechifyAudio(text: string, settings: any): Promise<Arra
 
 function getSpeechifyVoiceId(voiceId: string): string {
   const voiceMapping = {
-    "speechify-sarah": "sarah",
-    "speechify-david": "david",
-    "speechify-alex": "alex",
-    "speechify-emma": "emma",
-    "speechify-james": "james",
-    "speechify-lily": "lily",
-    "speechify-marcus": "marcus",
-    "speechify-sophia": "sophia",
+    "erin": "erin",
+    "oliver": "oliver",
+    "james": "james",
+    "kim": "kim",
+    "ken": "ken",
+    "carol": "carol",
+    "freddie": "freddie",
+    "beverly": "beverly",
     "celebrity-snoop": "snoop_dogg",
     "celebrity-gwyneth": "gwyneth_paltrow",
     "celebrity-morgan": "morgan_freeman",
@@ -67,7 +67,7 @@ function getSpeechifyVoiceId(voiceId: string): string {
     "cloned-voice": "cloned-voice", // Will be handled separately
   }
 
-  return voiceMapping[voiceId as keyof typeof voiceMapping] || voiceMapping["speechify-sarah"]
+  return voiceMapping[voiceId as keyof typeof voiceMapping] || voiceMapping["erin"]
 }
 
 async function generateSpeechifyChunk(text: string, voiceId: string, settings: any): Promise<ArrayBuffer> {
@@ -82,7 +82,7 @@ async function generateSpeechifyChunk(text: string, voiceId: string, settings: a
     }
   }
 
-  const response = await fetch("https://api.sws.speechify.com/v1/audio/speech", {
+  const response = await fetch("https://api.sws.speechify.com/v1/audio/stream", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${SPEECHIFY_API_KEY}`,
@@ -99,62 +99,26 @@ async function generateSpeechifyChunk(text: string, voiceId: string, settings: a
 
   if (!response.ok) {
     const error = await response.text()
-    throw new Error(`Speechify API error: ${error}`)
+    throw new Error(`Speechify API error: ${response.status, response.statusText}`)
   }
 
-  return response.arrayBuffer()
-}
+  const contentType = response.headers.get("content-type") || "";
 
-function getElevenLabsVoiceId(voiceId: string): string {
-  const voiceMapping = {
-    "female-standard": "21m00Tcm4TlvDq8ikWAM", // Rachel
-    "male-standard": "29vD33N1CtxCmqQRPOHJ", // Drew
-    "neutral-standard": "pNInz6obpgDQGcFmaJgB", // Adam
-    "cheerful-standard": "EXAVITQu4vr4xnSDxMaL", // Bella
-    "cloned-voice": "cloned-voice", // Will be handled separately
-  }
-
-  return voiceMapping[voiceId as keyof typeof voiceMapping] || voiceMapping["female-standard"]
-}
-
-async function generateElevenLabsChunk(text: string, voiceId: string, settings: any): Promise<ArrayBuffer> {
-  const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY!
-
-  if (voiceId === "cloned-voice") {
-    const clonedVoiceId = await getClonedVoiceId()
-    if (clonedVoiceId) {
-      voiceId = clonedVoiceId
+    if (contentType.includes("application/json")) {
+      // Caso JSON com Base64
+      const data = await response.json();
+      if (!data.audio_data) {
+        console.log("[v0] JSON recived but without audio");
+        return await response.arrayBuffer();
+      }
+      const buffer = Buffer.from(data.audio_data, "base64");
+      return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
     } else {
-      throw new Error("Cloned voice not available")
+      // case direct binary (mp3)
+      return await response.arrayBuffer();
     }
-  }
-
-  const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-    method: "POST",
-    headers: {
-      Accept: "audio/mpeg",
-      "Content-Type": "application/json",
-      "xi-api-key": ELEVENLABS_API_KEY,
-    },
-    body: JSON.stringify({
-      text,
-      model_id: "eleven_multilingual_v2",
-      voice_settings: {
-        stability: 0.5,
-        similarity_boost: 0.75,
-        style: 0.0,
-        use_speaker_boost: true,
-      },
-    }),
-  })
-
-  if (!response.ok) {
-    const error = await response.text()
-    throw new Error(`ElevenLabs API error: ${error}`)
-  }
-
-  return response.arrayBuffer()
 }
+
 
 async function getClonedVoiceId(): Promise<string | null> {
   return "user_cloned_voice_id"
