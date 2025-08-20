@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import mammoth from "mammoth";
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,6 +39,14 @@ export async function POST(request: NextRequest) {
 
     console.log("[v0] Text extraction completed. Length:", extractedText.length)
 
+    const MAX_CHAR_LIMIT = 20000;
+    if (extractedText.length > MAX_CHAR_LIMIT) {
+      return NextResponse.json(
+        { error: `File content exceeds the maximum allowed length of ${MAX_CHAR_LIMIT} characters.` },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json({
       text: extractedText,
       fileName: file.name,
@@ -54,173 +63,116 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function extractPdfText(file: File): Promise<string> {
+import pdf from "pdf-parse/lib/pdf-parse";
+
+export async function extractPdfText(file: File): Promise<string> {
   try {
-    console.log("[v0] Starting PDF text extraction...")
-    const arrayBuffer = await file.arrayBuffer()
-    const uint8Array = new Uint8Array(arrayBuffer)
+    console.log("[v0] Starting PDF text extraction...");
 
-    // Convert to string and look for text content
-    const pdfString = new TextDecoder("latin1").decode(uint8Array)
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-    let extractedText = ""
+    const data = await pdf(buffer);
+    const extractedText = data.text.trim();
 
-    // Method 1: Look for text in parentheses (common PDF text format)
-    const parenthesesMatches = pdfString.match(/$$([^)]+)$$/g)
-    if (parenthesesMatches) {
-      const textFromParentheses = parenthesesMatches
-        .map((match) => match.slice(1, -1)) // Remove parentheses
-        .filter((text) => text.length > 1 && /[a-zA-Z]/.test(text))
-        .join(" ")
-
-      if (textFromParentheses.length > extractedText.length) {
-        extractedText = textFromParentheses
-      }
-    }
-
-    // Method 2: Look for text objects with BT/ET markers
-    const btEtMatches = pdfString.match(/BT\s+(.*?)\s+ET/gs)
-    if (btEtMatches) {
-      const textFromBtEt = btEtMatches
-        .map((match) => {
-          // Extract text between parentheses within BT/ET blocks
-          const innerText = match.match(/$$([^)]+)$$/g)
-          return innerText ? innerText.map((t) => t.slice(1, -1)).join(" ") : ""
-        })
-        .filter((text) => text.length > 1)
-        .join(" ")
-
-      if (textFromBtEt.length > extractedText.length) {
-        extractedText = textFromBtEt
-      }
-    }
-
-    // Method 3: Look for stream content
-    const streamMatches = pdfString.match(/stream\s*(.*?)\s*endstream/gs)
-    if (streamMatches && extractedText.length < 50) {
-      for (const match of streamMatches) {
-        const content = match.replace(/^stream\s*|\s*endstream$/g, "")
-        const readableText = content.match(/[a-zA-Z\s.,!?;:'"()-]{10,}/g)
-        if (readableText) {
-          const streamText = readableText.join(" ")
-          if (streamText.length > extractedText.length) {
-            extractedText = streamText
-          }
-        }
-      }
-    }
-
-    console.log("[v0] Extracted text length:", extractedText.length)
-
-    if (extractedText.trim().length < 10) {
-      console.log("[v0] PDF appears to be image-based, attempting simple OCR...")
+    if (extractedText.length < 10) {
+      console.log("[v0] PDF appears to be image-based, attempting OCR...");
       try {
-        const ocrText = await performSimpleOCR(file)
+        const ocrText = await performSimpleOCR(file);
         if (ocrText && ocrText.trim().length > 10) {
-          return ocrText.trim()
+          return ocrText.trim();
         }
       } catch (ocrError) {
-        console.error("[v0] OCR failed:", ocrError)
+        console.error("[v0] OCR failed:", ocrError);
       }
 
-      return "This PDF appears to be image-based or encrypted. Text extraction was attempted but minimal text was found. For better results, please use a text-based PDF or convert your document to a text format."
+      return "This PDF appears to be image-based or encrypted. Text extraction was attempted but minimal text was found.";
     }
 
-    return (
-      extractedText.trim() ||
-      "No readable text found in this PDF. The file may be image-based, encrypted, or corrupted."
-    )
+    console.log("[v0] PDF text extracted successfully. Length:", extractedText.length);
+    return extractedText;
   } catch (error) {
-    console.error("[v0] Error extracting PDF text:", error)
-    throw new Error("Unable to extract text from PDF. Please try a different file.")
+    console.error("[v0] Error extracting PDF text:", error);
+    throw new Error("Unable to extract text from PDF. Please try a different file.");
   }
 }
 
 async function performSimpleOCR(file: File): Promise<string> {
   try {
-    console.log("[v0] Attempting OCR with Tesseract.js...")
+    const Tesseract = await import("tesseract.js");
+    const blob = new Blob([await file.arrayBuffer()], { type: file.type });
 
-    // Import Tesseract.js dynamically
-    const Tesseract = await import("tesseract.js")
-
-    // Convert file to blob URL for Tesseract
-    const blob = new Blob([await file.arrayBuffer()], { type: file.type })
-
-    console.log("[v0] Starting OCR recognition...")
-    const {
-      data: { text },
-    } = await Tesseract.recognize(
-      blob,
-      "eng+por", // English and Portuguese
-      {
-        logger: (m) => {
-          if (m.status === "recognizing text") {
-            console.log(`[v0] OCR Progress: ${Math.round(m.progress * 100)}%`)
-          }
-        },
+    const { data: { text } } = await Tesseract.recognize(blob, "eng+por", {
+      logger: (m) => {
+        if (m.status === "recognizing text") {
+          console.log(`[v0] OCR Progress: ${Math.round(m.progress * 100)}%`);
+        }
       },
-    )
+    });
 
-    console.log("[v0] OCR completed. Text length:", text?.length || 0)
-    return text || ""
+    return text || "";
   } catch (error) {
-    console.error("[v0] OCR processing failed:", error)
-    throw error
+    console.error("[v0] OCR processing failed:", error);
+    throw error;
   }
 }
+
 
 async function extractDocxText(file: File): Promise<string> {
   try {
-    console.log("[v0] Starting DOCX text extraction...")
-    const arrayBuffer = await file.arrayBuffer()
-    console.log("[v0] DOCX file size:", arrayBuffer.byteLength, "bytes")
+    console.log("[v0] Starting DOCX text extraction...");
 
-    const mammoth = await import("mammoth")
-    console.log("[v0] Mammoth library imported successfully")
+    const arrayBuffer = await file.arrayBuffer();
+    console.log("[v0] DOCX file size:", arrayBuffer.byteLength, "bytes");
 
-    const result = await mammoth.extractRawText({ arrayBuffer })
+    // Converte ArrayBuffer para Buffer
+    const buffer = Buffer.from(arrayBuffer);
+
+    // Extrair texto bruto
+    const result = await mammoth.extractRawText({ buffer });
     console.log("[v0] Mammoth extraction result:", {
-      textLength: result.text?.length || 0,
-      hasText: !!result.text,
+      textLength: result.value?.length || 0,
+      hasText: !!result.value,
       messagesCount: result.messages?.length || 0,
-    })
+    });
 
     if (result.messages && result.messages.length > 0) {
-      console.log("[v0] Mammoth messages:", result.messages)
+      console.log("[v0] Mammoth messages:", result.messages);
     }
 
-    if (result.text && result.text.trim().length > 0) {
-      console.log("[v0] DOCX text extracted successfully. Length:", result.text.length)
-      return result.text.trim()
+    if (result.value && result.value.trim().length > 0) {
+      console.log("[v0] DOCX text extracted successfully. Length:", result.value.length);
+      return result.value.trim();
     }
 
-    console.log("[v0] Raw text extraction failed, trying HTML extraction...")
-    const htmlResult = await mammoth.convertToHtml({ arrayBuffer })
+    console.log("[v0] Raw text extraction failed, trying HTML extraction...");
+
+    // Extrair HTML e converter para texto
+    const htmlResult = await mammoth.convertToHtml({ buffer });
     console.log("[v0] HTML extraction result:", {
       htmlLength: htmlResult.value?.length || 0,
       hasHtml: !!htmlResult.value,
-    })
+    });
 
     if (htmlResult.value && htmlResult.value.trim().length > 0) {
       const textFromHtml = htmlResult.value
-        .replace(/<[^>]*>/g, " ") // Remove HTML tags
-        .replace(/\s+/g, " ") // Normalize whitespace
-        .trim()
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
 
       if (textFromHtml.length > 0) {
-        console.log("[v0] Text extracted from HTML. Length:", textFromHtml.length)
-        return textFromHtml
+        console.log("[v0] Text extracted from HTML. Length:", textFromHtml.length);
+        return textFromHtml;
       }
     }
 
-    throw new Error(
-      `No readable text content found in DOCX file. File may be empty, corrupted, or contain only images/objects.`,
-    )
+    throw new Error("No readable text content found in DOCX file. File may be empty or contain only images.");
   } catch (error) {
-    console.error("[v0] Error extracting DOCX text:", error)
-    const errorMessage = error instanceof Error ? error.message : "Unknown error"
+    console.error("[v0] Error extracting DOCX text:", error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     throw new Error(
-      `Failed to extract text from Word document: ${errorMessage}. Please ensure the file is a valid DOCX file with text content.`,
-    )
+      `Failed to extract text from Word document: ${errorMessage}. Please ensure the file is a valid DOCX with text content.`
+    );
   }
 }
+

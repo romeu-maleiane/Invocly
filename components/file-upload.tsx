@@ -103,7 +103,8 @@ export function FileUpload() {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to extract text")
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to extract text");
       }
 
       const result = await response.json()
@@ -254,11 +255,13 @@ export function FileUpload() {
             <Card key={fileData.id} className="p-4">
               <CardContent className="p-0">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <div className="flex-1">
-                      <p className="font-medium text-sm">{fileData.file.name}</p>
+                      <p className="font-medium text-sm overflow-hidden whitespace-nowrap text-ellipsis sm:max-w-[200px] max-w-[100px]">{fileData.file.name}</p>
                       <p className="text-xs text-gray-500">{(fileData.file.size / 1024 / 1024).toFixed(2)} MB</p>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-2"> 
                     <Badge
                       variant={
                         fileData.status === "completed"
@@ -270,10 +273,10 @@ export function FileUpload() {
                     >
                       {fileData.status}
                     </Badge>
+                    <Button variant="ghost" size="sm" onClick={() => removeFile(fileData.id)}>
+                      x
+                    </Button>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => removeFile(fileData.id)}>
-                    ×
-                  </Button>
                 </div>
 
                 {(fileData.status === "uploading" || fileData.status === "processing") && (
@@ -318,7 +321,7 @@ export function FileUpload() {
                           text={fileData.extractedText}
                           onGenerate={(settings) => handleGenerateAudio(fileData.id, settings)}
                           isGenerating={generatingAudio === fileData.id}
-                          hasClonedVoice={hasClonedVoice && canUseFeature("voiceCloning")}
+                          hasClonedVoice={hasClonedVoice && !!canUseFeature("voiceCloning") }
                         />
                       </div>
                     )}

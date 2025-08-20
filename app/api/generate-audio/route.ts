@@ -99,7 +99,7 @@ async function generateSpeechifyChunk(text: string, voiceId: string, settings: a
 
   if (!response.ok) {
     const error = await response.text()
-    throw new Error(`Speechify API error: ${response.status, response.statusText}`)
+    throw new Error(`Speechify API error: ${error}`)
   }
 
   const contentType = response.headers.get("content-type") || "";

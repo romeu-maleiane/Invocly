@@ -20,24 +20,26 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-center flex-1">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Text to Speech Converter</h1>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-6">
+            <div className="text-center md:text-left flex-1">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
+                Text to Speech Converter
+              </h1>
+              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl md:max-w-none mx-auto">
                 Upload your documents and convert them to audio with multiple voice options
               </p>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className="mb-2">
-                  {currentPlan.name} Plan
-                </Badge>
-                {currentPlan.id === "free" && remainingDocs !== null && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{remainingDocs} documents left today</p>
-                )}
-              </div>
+            <div className="flex flex-col items-center md:items-end gap-4">
+              <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className="text-lg px-4 py-2">
+                {currentPlan.name} Plan
+              </Badge>
+              {currentPlan.id === "free" && remainingDocs !== null && (
+                <p className="text-base text-gray-600 dark:text-gray-400">
+                  {remainingDocs} documents left today
+                </p>
+              )}
               {currentPlan.id === "free" && (
-                <Button onClick={() => setShowPricingModal(true)} className="bg-blue-600 hover:bg-blue-700">
+                <Button onClick={() => setShowPricingModal(true)} className="bg-blue-600 hover:bg-blue-700 text-lg px-6 py-3">
                   Upgrade to Premium
                 </Button>
               )}

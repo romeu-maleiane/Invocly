@@ -32,7 +32,7 @@ interface VoiceSelectionProps {
   text: string
   onGenerate: (settings: VoiceSettings) => void
   isGenerating?: boolean
-  hasClonedVoice?: boolean
+  hasClonedVoice?: boolean 
 }
 
 const DEFAULT_VOICES: VoiceOption[] = [
