@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useSubscription } from "@/hooks/use-subscription"
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import { useState } from "react"
 
 export default function Home() {
@@ -18,31 +19,51 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <header className="flex justify-between items-center bg-white drop-shadow-sm p-4 gap-4 h-16">
+        <div>
+          Logo
+        </div>
+
+        <div className='flex justify-center items-center justify-self-center gap-4'>
+          <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className="text-lg px-6 py-1.5 rounded-full">
+            {currentPlan.name} Plan
+          </Badge>
+          {currentPlan.id === "free" && remainingDocs !== null && (
+            <p className="text-base text-gray-600 dark:text-gray-400">
+              {remainingDocs} documents left today
+            </p>
+          )}
+          {currentPlan.id === "free" && (
+            <Button onClick={() => setShowPricingModal(true)} className="bg-blue-600 hover:bg-blue-700 text-lg rounded-full px-6 py-3">
+              Upgrade to Premium
+            </Button>
+          )}
+        </div>
+
+        <div className='flex justify-center text-lg items-center gap-4'>
+          <SignedOut>
+            <SignInButton />
+            <SignUpButton>
+              <button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium text-sm sm:text-base px-6 py-1.5 cursor-pointer">
+                Sign Up
+              </button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
+      </header>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-6">
-            <div className="text-center md:text-left flex-1">
+          <div className="flex flex-col md:flex-row items-center justify-center mb-8 gap-6">
+            <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
                 Text to Speech Converter
               </h1>
               <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl md:max-w-none mx-auto">
                 Upload your documents and convert them to audio with multiple voice options
               </p>
-            </div>
-            <div className="flex flex-col items-center md:items-end gap-4">
-              <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className="text-lg px-4 py-2">
-                {currentPlan.name} Plan
-              </Badge>
-              {currentPlan.id === "free" && remainingDocs !== null && (
-                <p className="text-base text-gray-600 dark:text-gray-400">
-                  {remainingDocs} documents left today
-                </p>
-              )}
-              {currentPlan.id === "free" && (
-                <Button onClick={() => setShowPricingModal(true)} className="bg-blue-600 hover:bg-blue-700 text-lg px-6 py-3">
-                  Upgrade to Premium
-                </Button>
-              )}
             </div>
           </div>
 
