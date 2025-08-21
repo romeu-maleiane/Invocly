@@ -126,9 +126,7 @@ export function VoiceSelection({
 
   const availableVoices: VoiceOption[] = [
     ...DEFAULT_VOICES,
-    ...(typeof window !== "undefined" && localStorage.getItem("subscription") === "premium"
-      ? PREMIUM_VOICES
-      : []),
+    ...PREMIUM_VOICES,
     ...(hasClonedVoice
       ? [
           {
