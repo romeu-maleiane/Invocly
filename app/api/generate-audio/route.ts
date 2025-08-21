@@ -59,11 +59,6 @@ function getSpeechifyVoiceId(voiceId: string): string {
     "carol": "carol",
     "freddie": "freddie",
     "beverly": "beverly",
-    "celebrity-snoop": "snoop_dogg",
-    "celebrity-gwyneth": "gwyneth_paltrow",
-    "celebrity-morgan": "morgan_freeman",
-    "celebrity-scarlett": "scarlett_johansson",
-    "celebrity-samuel": "samuel_jackson",
     "cloned-voice": "cloned-voice", // Will be handled separately
   }
 

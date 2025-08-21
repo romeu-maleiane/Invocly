@@ -139,11 +139,6 @@ function getSpeechifyVoiceId(voiceId: string): string {
     "carol": "carol",
     "freddie": "freddie",
     "beverly": "beverly",
-    "celebrity-snoop": "snoop_dogg",
-    "celebrity-gwyneth": "gwyneth_paltrow",
-    "celebrity-morgan": "morgan_freeman",
-    "celebrity-scarlett": "scarlett_johansson",
-    "celebrity-samuel": "samuel_jackson",
     "cloned-voice": "cloned-voice", // Will be handled separately
   }
 
@@ -215,46 +210,6 @@ function getVoiceConfiguration(voiceId: string) {
       pitch: 1.05,
       rate: 1.0,
       voiceName: "Microsoft Aria - English (United States)",
-    },
-    "celebrity-snoop": {
-      gender: "male",
-      language: "en-US",
-      name: "Snoop Dogg",
-      pitch: 0.8,
-      rate: 0.9,
-      voiceName: "Microsoft David - English (United States)",
-    },
-    "celebrity-gwyneth": {
-      gender: "female",
-      language: "en-US",
-      name: "Gwyneth Paltrow",
-      pitch: 1.0,
-      rate: 1.0,
-      voiceName: "Microsoft Zira - English (United States)",
-    },
-    "celebrity-morgan": {
-      gender: "male",
-      language: "en-US",
-      name: "Morgan Freeman",
-      pitch: 0.6,
-      rate: 0.8,
-      voiceName: "Microsoft David - English (United States)",
-    },
-    "celebrity-scarlett": {
-      gender: "female",
-      language: "en-US",
-      name: "Scarlett Johansson",
-      pitch: 0.95,
-      rate: 1.0,
-      voiceName: "Microsoft Zira - English (United States)",
-    },
-    "celebrity-samuel": {
-      gender: "male",
-      language: "en-US",
-      name: "Samuel L. Jackson",
-      pitch: 0.85,
-      rate: 1.1,
-      voiceName: "Microsoft Mark - English (United States)",
     },
     "cloned-voice": {
       gender: "custom",

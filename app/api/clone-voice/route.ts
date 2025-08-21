@@ -22,6 +22,10 @@ export async function POST(request: NextRequest) {
 
     const voiceId = await processSpeechifyVoiceCloning(audioFile, voiceName)
 
+    if(!voiceId) {
+      throw new Error("Voice cloning failed");
+    }
+
     return NextResponse.json({
       voiceId,
       voiceName,
@@ -36,12 +40,12 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function processSpeechifyVoiceCloning(audioFile: File, voiceName: string): Promise<string> {
+async function processSpeechifyVoiceCloning(audioFile: File, voiceName: string): Promise<string | null> {
   const SPEECHIFY_API_KEY = process.env.SPEECHIFY_API_KEY
 
   if (!SPEECHIFY_API_KEY) {
-    console.warn("Speechify API key not found, using mock cloning")
-    return simulateVoiceCloning(audioFile, voiceName)
+    console.error("Speechify API key not found")
+    return null
   }
 
   try {
@@ -71,8 +75,7 @@ async function processSpeechifyVoiceCloning(audioFile: File, voiceName: string):
     return result.voice_id
   } catch (error) {
     console.error("Speechify voice cloning error:", error)
-    // Fallback to simulation if API fails
-    return simulateVoiceCloning(audioFile, voiceName)
+    return null
   }
 }
 
@@ -82,26 +85,4 @@ async function storeClonedVoiceId(voiceId: string, voiceName: string): Promise<v
 
   // You could store this in a database, Redis, or other persistent storage
   // Example: await db.clonedVoices.create({ voiceId, voiceName, userId })
-}
-
-async function simulateVoiceCloning(audioFile: File, voiceName: string): Promise<string> {
-  // Convert audio file to buffer for validation
-  const audioBuffer = await audioFile.arrayBuffer()
-
-  // Simulate processing time
-  await new Promise((resolve) => setTimeout(resolve, 3000))
-
-  // Simulate validation
-  if (audioBuffer.byteLength < 100000) {
-    throw new Error("Audio file too short for voice cloning (minimum 30 seconds required)")
-  }
-
-  if (audioBuffer.byteLength > 50 * 1024 * 1024) {
-    throw new Error("Audio file too large (maximum 50MB)")
-  }
-
-  // Generate a mock voice ID
-  const voiceId = `speechify_cloned_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-  return voiceId
 }

@@ -13,7 +13,7 @@ export interface VoiceOption {
   id: string
   name: string
   description: string
-  type: "standard" | "cloned" 
+  type: "standard" | "cloned" | 'premium'
   gender?: "female" | "male" | "neutral"
   style?: string
   available: boolean
@@ -52,93 +52,63 @@ const DEFAULT_VOICES: VoiceOption[] = [
     gender: "male",
     available: true,
   },
+]
+
+const PREMIUM_VOICES: VoiceOption[] = [
   {
     id: "james",
     name: "James",
     description: "Balanced and neutral voice",
-    type: "standard",
+    type: "premium",
     gender: "neutral",
     available: true,
+    premium: true
   },
   {
     id: "kim",
     name: "Kim",
     description: "Upbeat and energetic voice",
-    type: "standard",
+    type: "premium",
     gender: "female",
     style: "cheerful",
     available: true,
+    premium: true
   },
   {
     id: "ken",
     name: "Ken",
     description: "Deep and authoritative male voice",
-    type: "standard",
+    type: "premium",
     gender: "male",
     available: true,
+    premium: true
   },
   {
     id: "carol",
     name: "Carol",
     description: "Soft and gentle female voice",
-    type: "standard",
+    type: "premium",
     gender: "female",
     available: true,
+    premium: true
   },
   {
     id: "freddie",
     name: "Freddie",
     description: "Rich and smooth male voice",
-    type: "standard",
+    type: "premium",
     gender: "male",
     available: true,
+    premium: true
   },
   {
     id: "beverly",
     name: "Beverly",
-    description: "Elegant and sophisticated female voice",
-    type: "standard",
+    description: "Elegant and sophisticated voice",
+    type: "premium",
     gender: "female",
     available: true,
-  },
-]
-
-const PREMIUM_CELEBRITY_VOICES: VoiceOption[] = [
-  {
-    id: "beverly",
-    name: "Gwyneth Paltrow",
-    description: "Academy Award-winning actress voice",
-    type: "celebrity",
-    gender: "female",
-    available: true,
-    premium: true,
-  },
-  {
-    id: "celebrity-morgan",
-    name: "Morgan Freeman",
-    description: "Legendary narrator's iconic voice",
-    type: "celebrity",
-    gender: "male",
-    available: true,
-    premium: true,
-  },
-  {
-    id: "kim",
-    name: "Scarlett Johansson",
-    description: "Distinctive actress voice",
-    type: "celebrity",
-    gender: "female",
-    available: true,
-    premium: true,
-  },
-  {
-    id: "celebrity-samuel",
-    name: "Samuel L. Jackson",
-    description: "Powerful and commanding voice",
-    type: "celebrity",
-    gender: "male",
-    available: true,
-    premium: true,
+    premium: true
   },
 ]
 
@@ -157,7 +127,7 @@ export function VoiceSelection({
   const availableVoices: VoiceOption[] = [
     ...DEFAULT_VOICES,
     ...(typeof window !== "undefined" && localStorage.getItem("subscription") === "premium"
-      ? PREMIUM_CELEBRITY_VOICES
+      ? PREMIUM_VOICES
       : []),
     ...(hasClonedVoice
       ? [
@@ -171,7 +141,7 @@ export function VoiceSelection({
         ]
       : []),
   ]
-
+  
   const handleGenerate = () => {
     const settings: VoiceSettings = {
       selectedVoice,
@@ -332,11 +302,6 @@ export function VoiceSelection({
       "carol": "female",
       "freddie": "male",
       "beverly": "female",
-      "celebrity-snoop": "male",
-      "celebrity-gwyneth": "female",
-      "celebrity-morgan": "male",
-      "celebrity-scarlett": "female",
-      "celebrity-samuel": "male",
     }
     return genderMap[voiceId as keyof typeof genderMap] || "neutral"
   }
@@ -357,7 +322,7 @@ export function VoiceSelection({
           </svg>
           Voice & Audio Settings
         </CardTitle>
-        <CardDescription>Choose from premium voices including celebrity options</CardDescription>
+        <CardDescription>Choose from premium voices</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
@@ -390,11 +355,6 @@ export function VoiceSelection({
                     {voice.premium && (
                       <Badge variant="outline" className="text-xs text-amber-600 border-amber-600">
                         Premium
-                      </Badge>
-                    )}
-                    {voice.style && (
-                      <Badge variant="outline" className="text-xs">
-                        {voice.style}
                       </Badge>
                     )}
                   </div>
