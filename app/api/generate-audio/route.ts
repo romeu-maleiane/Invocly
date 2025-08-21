@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { auth } from '@clerk/nextjs/server'
 import { uploadAudio } from "@/models/uploadAudio"
+import { insertAudio } from "@/models/insertAudio";
 
 let buffer: Buffer; 
 export async function POST(request: NextRequest) {
@@ -18,8 +19,10 @@ export async function POST(request: NextRequest) {
 
     // add to database if user is loged 
     if (userId) {
-      await uploadAudio(buffer, fileName, userId)
-    }
+      const publicUrl = await uploadAudio(buffer, fileName, userId);
+      if(publicUrl)
+        await insertAudio(fileName, publicUrl, userId);
+    };
 
     return new NextResponse(audioBuffer, {
       headers: {

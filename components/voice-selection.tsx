@@ -15,7 +15,6 @@ export interface VoiceOption {
   description: string
   type: "standard" | "cloned" | 'premium'
   gender?: "female" | "male" | "neutral"
-  style?: string
   available: boolean
   preview?: string
   premium?: boolean
@@ -70,7 +69,6 @@ const PREMIUM_VOICES: VoiceOption[] = [
     description: "Upbeat and energetic voice",
     type: "premium",
     gender: "female",
-    style: "cheerful",
     available: true,
     premium: true
   },
