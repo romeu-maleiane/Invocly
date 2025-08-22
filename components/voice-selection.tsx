@@ -10,8 +10,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Separator } from "@/components/ui/separator"
 
 export interface VoiceOption {
-  id: string
-  name: string
+  voice_id: string
+  voice_name: string
   description: string
   type: "standard" | "cloned" | 'premium'
   gender?: "female" | "male" | "neutral"
@@ -31,90 +31,14 @@ interface VoiceSelectionProps {
   text: string
   onGenerate: (settings: VoiceSettings) => void
   isGenerating?: boolean
-  hasClonedVoice?: boolean 
+  voices: VoiceOption[]
 }
-
-const DEFAULT_VOICES: VoiceOption[] = [
-  {
-    id: "erin",
-    name: "Erin",
-    description: "Clear and professional female voice",
-    type: "standard",
-    gender: "female",
-    available: true,
-  },
-  {
-    id: "oliver",
-    name: "Oliver",
-    description: "Warm and confident male voice",
-    type: "standard",
-    gender: "male",
-    available: true,
-  },
-]
-
-const PREMIUM_VOICES: VoiceOption[] = [
-  {
-    id: "james",
-    name: "James",
-    description: "Balanced and neutral voice",
-    type: "premium",
-    gender: "neutral",
-    available: true,
-    premium: true
-  },
-  {
-    id: "kim",
-    name: "Kim",
-    description: "Upbeat and energetic voice",
-    type: "premium",
-    gender: "female",
-    available: true,
-    premium: true
-  },
-  {
-    id: "ken",
-    name: "Ken",
-    description: "Deep and authoritative male voice",
-    type: "premium",
-    gender: "male",
-    available: true,
-    premium: true
-  },
-  {
-    id: "carol",
-    name: "Carol",
-    description: "Soft and gentle female voice",
-    type: "premium",
-    gender: "female",
-    available: true,
-    premium: true
-  },
-  {
-    id: "freddie",
-    name: "Freddie",
-    description: "Rich and smooth male voice",
-    type: "premium",
-    gender: "male",
-    available: true,
-    premium: true
-  },
-  {
-    id: "beverly",
-    name: "Beverly",
-    description: "Elegant and sophisticated voice",
-    type: "premium",
-    gender: "female",
-    available: true,
-    premium: true
-  },
-]
 
 export function VoiceSelection({
   text,
   onGenerate,
   isGenerating = false,
-  hasClonedVoice = false,
+  voices = [],
 }: VoiceSelectionProps) {
   const [selectedVoice, setSelectedVoice] = useState<string>("speechify-sarah")
   const [speed, setSpeed] = useState<number[]>([1.0])
@@ -122,21 +46,7 @@ export function VoiceSelection({
   const [volume, setVolume] = useState<number[]>([1.0])
   const [isPlayingPreview, setIsPlayingPreview] = useState<string | null>(null)
 
-  const availableVoices: VoiceOption[] = [
-    ...DEFAULT_VOICES,
-    ...PREMIUM_VOICES,
-    ...(hasClonedVoice
-      ? [
-          {
-            id: "cloned-voice",
-            name: "Your Voice",
-            description: "Your personalized cloned voice",
-            type: "cloned" as const,
-            available: true,
-          },
-        ]
-      : []),
-  ]
+  const availableVoices: VoiceOption[] = voices
   
   const handleGenerate = () => {
     const settings: VoiceSettings = {
@@ -302,7 +212,7 @@ export function VoiceSelection({
     return genderMap[voiceId as keyof typeof genderMap] || "neutral"
   }
 
-  const selectedVoiceData = availableVoices.find((v) => v.id === selectedVoice)
+  const selectedVoiceData = availableVoices.find((v) => v.voice_id === selectedVoice)
 
   return (
     <Card className="w-full">
@@ -326,23 +236,28 @@ export function VoiceSelection({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {availableVoices.map((voice) => (
               <div
-                key={voice.id}
+                key={voice.voice_id}
                 className={`
                   border rounded-lg p-4 cursor-pointer transition-all hover:shadow-md
                   ${
-                    selectedVoice === voice.id
+                    selectedVoice === voice.voice_id
                       ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
                       : "border-gray-200 dark:border-gray-700"
                   }
                 `}
-                onClick={() => setSelectedVoice(voice.id)}
+                onClick={() => setSelectedVoice(voice.voice_id)}
               >
                 <div className="flex items-start justify-between mb-2">
                   <div>
-                    <h4 className="font-medium text-sm">{voice.name}</h4>
+                    <h4 className="font-medium text-sm">{voice.voice_name}</h4>
                     <p className="text-xs text-gray-600 dark:text-gray-400">{voice.description}</p>
                   </div>
                   <div className="flex gap-1">
+                    {voice.type === "standard" && (
+                      <Badge variant="default" className="text-xs">
+                        Standard
+                      </Badge>
+                    )}
                     {voice.type === "cloned" && (
                       <Badge variant="secondary" className="text-xs">
                         Cloned
@@ -361,11 +276,11 @@ export function VoiceSelection({
                   className="w-full mt-2"
                   onClick={(e) => {
                     e.stopPropagation()
-                    playPreview(voice.id)
+                    playPreview(voice.voice_id)
                   }}
-                  disabled={isPlayingPreview === voice.id}
+                  disabled={isPlayingPreview === voice.voice_id}
                 >
-                  {isPlayingPreview === voice.id ? (
+                  {isPlayingPreview === voice.voice_id ? (
                     <>
                       <svg className="w-4 h-4 mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
@@ -503,4 +418,21 @@ export function VoiceSelection({
       </CardContent>
     </Card>
   )
+}
+
+
+// Helper function to get gender from voice ID
+function getVoiceGender(voiceId: string) {
+  const genderMap = {
+    "speechify-sarah": "female",
+    "speechify-mark": "male",
+    "speechify-james": "male",
+    "speechify-kim": "female",
+    "speechify-ken": "male",
+    "speechify-carol": "female",
+    "speechify-freddie": "male",
+    "speechify-beverly": "female",
+    "cloned-voice": "neutral",
+  }
+  return genderMap[voiceId as keyof typeof genderMap] || "neutral"
 }

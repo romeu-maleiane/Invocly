@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { processExtractedText, validateTextForTTS, type ExtractionResult } from "@/lib/text-extraction"
-import { VoiceSelection, type VoiceSettings } from "./voice-selection"
+import { VoiceSelection, type VoiceSettings, type VoiceOption } from "./voice-selection"
 import { AudioPlayer } from "./audio-player"
 import { useSubscription } from "@/hooks/use-subscription"
 
@@ -24,28 +24,15 @@ interface UploadedFile {
   generatedAudioUrl?: string
 }
 
-export function FileUpload() {
+interface FileUploadProps {
+  voices: VoiceOption[]
+}
+
+export function FileUpload({ voices }: FileUploadProps) {
   const { currentPlan, canProcessDocument, incrementUsage, canUseFeature } = useSubscription()
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
   const [generatingAudio, setGeneratingAudio] = useState<string | null>(null)
-  const [hasClonedVoice, setHasClonedVoice] = useState(false)
-
-  useEffect(() => {
-    checkForClonedVoice()
-  }, [])
-
-  const checkForClonedVoice = async () => {
-    try {
-      const response = await fetch("/api/check-cloned-voice")
-      if (response.ok) {
-        const result = await response.json()
-        setHasClonedVoice(result.hasClonedVoice)
-      }
-    } catch (error) {
-      console.error("Failed to check cloned voice:", error)
-    }
-  }
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
@@ -321,7 +308,7 @@ export function FileUpload() {
                           text={fileData.extractedText}
                           onGenerate={(settings) => handleGenerateAudio(fileData.id, settings)}
                           isGenerating={generatingAudio === fileData.id}
-                          hasClonedVoice={hasClonedVoice && !!canUseFeature("voiceCloning") }
+                          voices={voices}
                         />
                       </div>
                     )}
@@ -344,4 +331,13 @@ export function FileUpload() {
       )}
     </div>
   )
+}
+
+
+// Helper function to get file icon
+function getFileIcon(fileName: string) {
+  if (fileName.endsWith(".pdf")) return "📄"
+  if (fileName.endsWith(".docx")) return "📃"
+  if (fileName.endsWith(".txt")) return "📝"
+  return "📁"
 }

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { FileUpload } from "@/components/file-upload"
 import { VoiceCloning } from "@/components/voice-cloning"
@@ -8,12 +8,56 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useSubscription } from "@/hooks/use-subscription"
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
-import { useState } from "react"
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { VoiceOption } from "@/components/voice-selection"
+
+async function getVoices(userId?: string) {
+  const supabase = createClient()
+
+  let voices: VoiceOption[] = []
+
+  const { data: publicVoices, error: publicError } = await supabase
+    .from("voices")
+    .select("*")
+    .eq("user_id", '')
+
+  if (publicError) {
+    console.error("Error fetching public voices:", publicError)
+  } else if (publicVoices) {
+    voices = voices.concat(publicVoices)
+  }
+
+  if (userId) {
+    const { data: clonedVoices, error: clonedError } = await supabase
+      .from("voices")
+      .select("*")
+      .eq("user_id", userId)
+
+    if (clonedError) {
+      console.error("Error fetching cloned voices:", clonedError)
+    } else if (clonedVoices) {
+      voices = voices.concat(clonedVoices)
+    }
+  }
+  
+  return voices
+}
 
 export default function Home() {
   const { currentPlan, dailyUsage, canProcessDocument, getRemainingDocuments, upgradeToPremium } = useSubscription()
   const [showPricingModal, setShowPricingModal] = useState(false)
+  const [voices, setVoices] = useState<VoiceOption[]>([])
+  const { user } = useUser()
+
+  useEffect(() => {
+    async function loadVoices() {
+      const fetchedVoices = await getVoices(user?.id)
+      setVoices(fetchedVoices)
+    }
+    loadVoices()
+  }, [user])
 
   const remainingDocs = getRemainingDocuments()
 
@@ -102,7 +146,7 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <FileUpload />
+                  <FileUpload voices={voices} />
                 </CardContent>
               </Card>
             </TabsContent>

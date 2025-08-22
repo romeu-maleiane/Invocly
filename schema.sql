@@ -28,5 +28,6 @@ create table voices (
     gender text null default ''::text,
     available boolean null,
     premium boolean null,
+    user_id TEXT NOT NULL REFERENCES users(id)
     constraint voices_pkey primary key (id)
 );
