@@ -2,8 +2,9 @@
 -- Create the users table
 CREATE TABLE users (
     id TEXT PRIMARY KEY,
-    user_name audio_url TEXT NOT NULL,
-    email audio_url TEXT NOT NULL,
+    user_name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    plan TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
