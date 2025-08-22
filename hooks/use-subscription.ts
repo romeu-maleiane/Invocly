@@ -1,6 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useUser } from "@clerk/nextjs"
+import { createClient } from "@/lib/supabase/client"
 
 export interface SubscriptionPlan {
   id: string
@@ -23,7 +25,7 @@ export const PLANS: Record<string, SubscriptionPlan> = {
     price: 0,
     features: ["Up to 3 documents per day", "4 standard voices", "Basic audio controls"],
     limits: {
-      dailyDocuments: 3,
+      dailyDocuments: 5,
       maxFileSize: 5,
       voiceCloning: false,
       batchProcessing: false,
@@ -53,40 +55,81 @@ export const PLANS: Record<string, SubscriptionPlan> = {
 }
 
 export function useSubscription() {
+  const { user } = useUser()
   const [currentPlan, setCurrentPlan] = useState<string>("free")
   const [dailyUsage, setDailyUsage] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)
+  const supabase = createClient()
 
   useEffect(() => {
-    // Load subscription data from localStorage or API
-    const savedPlan = localStorage.getItem("subscription_plan") || "free"
-    const savedUsage = Number.parseInt(localStorage.getItem("daily_usage") || "0")
-    const lastUsageDate = localStorage.getItem("last_usage_date")
-    const today = new Date().toDateString()
+    async function loadSubscription() {
+      setIsLoading(true)
+      const today = new Date().toDateString()
 
-    // Reset daily usage if it's a new day
-    if (lastUsageDate !== today) {
-      setDailyUsage(0)
-      localStorage.setItem("daily_usage", "0")
-      localStorage.setItem("last_usage_date", today)
-    } else {
-      setDailyUsage(savedUsage)
+      if (user) {
+        const { data, error } = await supabase
+          .from("users")
+          .select("plan")
+          .eq("id", user.id)
+          .single()
+
+        if (data) {
+          setCurrentPlan(data.plan)
+        } else {
+          setCurrentPlan("free")
+        }
+      } else {
+        setCurrentPlan("free")
+      }
+
+      const usageKey = user ? `daily_usage_${user.id}` : "daily_usage_guest"
+      const lastUsageDateKey = user ? `last_usage_date_${user.id}` : "last_usage_date_guest"
+
+      const savedUsage = Number.parseInt(localStorage.getItem(usageKey) || "0")
+      const lastUsageDate = localStorage.getItem(lastUsageDateKey)
+
+      if (lastUsageDate !== today) {
+        setDailyUsage(0)
+        localStorage.setItem(usageKey, "0")
+        localStorage.setItem(lastUsageDateKey, today)
+      } else {
+        setDailyUsage(savedUsage)
+      }
+
+      setIsLoading(false)
     }
 
-    setCurrentPlan(savedPlan)
-    setIsLoading(false)
-  }, [])
+    loadSubscription()
+  }, [user])
 
-  const upgradeToPremium = () => {
-    setCurrentPlan("premium")
-    localStorage.setItem("subscription_plan", "premium")
+  const upgradeToPremium = async () => {
+    if (user) {
+      const { error } = await supabase
+        .from("users")
+        .update({ plan: "premium" })
+        .eq("id", user.id)
+
+      if (!error) {
+        setCurrentPlan("premium")
+      } else {
+        console.error("Error upgrading to premium:", error)
+      }
+    }
   }
 
-  const incrementUsage = () => {
+  const incrementUsage = async () => {
+    if (currentPlan === "premium" && user) {
+      return
+    }
+
     const newUsage = dailyUsage + 1
     setDailyUsage(newUsage)
-    localStorage.setItem("daily_usage", newUsage.toString())
-    localStorage.setItem("last_usage_date", new Date().toDateString())
+    const today = new Date().toDateString()
+    const usageKey = user ? `daily_usage_${user.id}` : "daily_usage_guest"
+    const lastUsageDateKey = user ? `last_usage_date_${user.id}` : "last_usage_date_guest"
+
+    localStorage.setItem(usageKey, newUsage.toString())
+    localStorage.setItem(lastUsageDateKey, today)
   }
 
   const canUseFeature = (feature: keyof SubscriptionPlan["limits"]) => {
