@@ -22,6 +22,7 @@ export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceNam
   const [isProcessing, setIsProcessing] = useState(false)
   const [processingProgress, setProcessingProgress] = useState(0)
   const [voiceName, setVoiceName] = useState("")
+  const [voiceDescription, setVoiceDescription] = useState("")
   const [error, setError] = useState<string | null>(null)
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
@@ -104,6 +105,7 @@ export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceNam
       const formData = new FormData()
       formData.append("audio", audioBlob, "voice_sample.wav")
       formData.append("voiceName", voiceName.trim())
+      formData.append("voiceDescription", voiceDescription.trim())
 
       // Simulate progress updates
       const progressInterval = setInterval(() => {
@@ -187,6 +189,18 @@ export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceNam
             placeholder="Enter a name for your voice (e.g., My Voice)"
             value={voiceName}
             onChange={(e) => setVoiceName(e.target.value)}
+            disabled={isProcessing}
+          />
+        </div>
+
+        {/* Voice Description Input */}
+        <div className="space-y-2">
+          <Label htmlFor="voiceDescription">Voice Description (Optional)</Label>
+          <Input
+            id="voiceDescription"
+            placeholder="e.g., My podcast voice"
+            value={voiceDescription}
+            onChange={(e) => setVoiceDescription(e.target.value)}
             disabled={isProcessing}
           />
         </div>
