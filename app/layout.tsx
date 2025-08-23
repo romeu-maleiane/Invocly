@@ -8,7 +8,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Invocly - Invoke you reading voice',
-  description: 'Turn text into lifelike speech with Invocly. Choose from multiple voices and listen to your documents, articles, or messages anytime, anywhere.',
+  description: 'Convert PDF, DOCX, and TXT files into lifelike speech with Invocly. Choose from multiple natural voices and listen to your documents anytime, anywhere.',
 }
 
 export default function RootLayout({

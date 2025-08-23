@@ -14,7 +14,6 @@ export interface SubscriptionPlan {
     maxFileSize: number // in MB
     voiceCloning: boolean
     batchProcessing: boolean
-    priorityProcessing: boolean
   }
 }
 
@@ -29,7 +28,6 @@ export const PLANS: Record<string, SubscriptionPlan> = {
       maxFileSize: 5,
       voiceCloning: false,
       batchProcessing: false,
-      priorityProcessing: false,
     },
   },
   premium: {
@@ -39,9 +37,9 @@ export const PLANS: Record<string, SubscriptionPlan> = {
     features: [
       "Unlimited documents",
       "Voice cloning feature",
+      "Premium voices",
       "Advanced audio controls",
       "50MB file size limit",
-      "Priority processing",
       "Batch processing",
     ],
     limits: {
@@ -49,7 +47,6 @@ export const PLANS: Record<string, SubscriptionPlan> = {
       maxFileSize: 50,
       voiceCloning: true,
       batchProcessing: true,
-      priorityProcessing: true,
     },
   },
 }

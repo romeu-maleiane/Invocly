@@ -73,7 +73,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
-              Convert Text to Lifelike Speech
+              Convert documents to Lifelike Speech
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Simply upload your documents and transform them into high-quality audio with a variety of natural-sounding voices.
@@ -147,7 +147,7 @@ export default function Home() {
                       </svg>
                       <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Unlock Voice Cloning</h3>
                       <p className="text-gray-600 dark:text-gray-400 mb-6">
-                        Upgrade to our Premium plan to clone your voice and use it in your audio conversions.
+                        Upgrade to our Premium plan to use our premium voices and clone your voice and use it in your audio conversions.
                       </p>
                       <Button onClick={() => setShowPricingModal(true)} className="bg-blue-600 hover:bg-blue-700 text-white text-lg rounded-full px-8 py-3">
                         Upgrade to Premium
