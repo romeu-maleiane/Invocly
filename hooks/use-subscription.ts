@@ -23,9 +23,9 @@ export const PLANS: Record<string, SubscriptionPlan> = {
     id: "free",
     name: "Free",
     price: 0,
-    features: ["Up to 3 documents per day", "4 standard voices", "Basic audio controls"],
+    features: ["Up to 3 documents per day", "2 standard voices", "Basic audio controls"],
     limits: {
-      dailyDocuments: 5,
+      dailyDocuments: 3,
       maxFileSize: 5,
       voiceCloning: false,
       batchProcessing: false,
@@ -35,7 +35,7 @@ export const PLANS: Record<string, SubscriptionPlan> = {
   premium: {
     id: "premium",
     name: "Premium",
-    price: 9.99,
+    price: 14.99,
     features: [
       "Unlimited documents",
       "Voice cloning feature",
