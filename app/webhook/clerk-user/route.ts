@@ -7,9 +7,10 @@ export const POST = async (request: NextRequest) => {
 
     if(event.type === 'user.created'){
         const { id, last_name, first_name,  email_addresses } = event.data
-        await InsertUser(id, first_name, last_name, email_addresses[0])
+        await InsertUser(id, first_name, last_name, email_addresses[0].email_address)
     }
 
+    // send email
     console.log('User inserted successfuly')
     return NextResponse.json({ received: true }, { status: 200 })
 }

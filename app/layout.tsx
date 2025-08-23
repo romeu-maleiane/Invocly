@@ -7,9 +7,8 @@ import {
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: 'Invocly - Invoke you reading voice',
+  description: 'Turn text into lifelike speech with Invocly. Choose from multiple voices and listen to your documents, articles, or messages anytime, anywhere.',
 }
 
 export default function RootLayout({

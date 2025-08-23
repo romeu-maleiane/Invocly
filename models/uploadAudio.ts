@@ -5,7 +5,7 @@ export async function uploadAudio(file: Buffer, fileName: string, userId: string
     const supabase = await createClient()
 
     try {
-        const { data, error } = await supabase.storage
+        const { error } = await supabase.storage
             .from('audio')
             .upload(`${userId}/${fileName}`, file, {
                 cacheControl: '3600',

@@ -102,21 +102,6 @@ export function useSubscription() {
     loadSubscription()
   }, [user])
 
-  const upgradeToPremium = async () => {
-    if (user) {
-      const { error } = await supabase
-        .from("users")
-        .update({ plan: "premium" })
-        .eq("id", user.id)
-
-      if (!error) {
-        setCurrentPlan("premium")
-      } else {
-        console.error("Error upgrading to premium:", error)
-      }
-    }
-  }
-
   const incrementUsage = async () => {
     if (currentPlan === "premium" && user) {
       return
@@ -153,7 +138,6 @@ export function useSubscription() {
     currentPlan: PLANS[currentPlan],
     dailyUsage,
     isLoading,
-    upgradeToPremium,
     incrementUsage,
     canUseFeature,
     canProcessDocument,

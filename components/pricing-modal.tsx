@@ -1,29 +1,16 @@
 "use client"
-
-import { useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import BuyButton from "./buyButto"
 
 interface PricingModalProps {
   isOpen: boolean
   onClose: () => void
-  onUpgrade: () => void
 }
 
-export function PricingModal({ isOpen, onClose, onUpgrade }: PricingModalProps) {
-  const [isUpgrading, setIsUpgrading] = useState(false)
-
-  const handleUpgrade = async () => {
-    setIsUpgrading(true)
-    // Simulate payment processing
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    onUpgrade()
-    setIsUpgrading(false)
-    onClose()
-  }
+export function PricingModal({ isOpen, onClose}: PricingModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -139,29 +126,13 @@ export function PricingModal({ isOpen, onClose, onUpgrade }: PricingModalProps) 
 
               <Separator />
 
-              <Button onClick={handleUpgrade} className="w-full bg-blue-600 hover:bg-blue-700" disabled={isUpgrading}>
-                {isUpgrading ? (
-                  <>
-                    <svg className="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                      />
-                    </svg>
-                    Processing...
-                  </>
-                ) : (
-                  "Upgrade to Premium"
-                )}
-              </Button>
+              <BuyButton />
             </CardContent>
           </Card>
         </div>
 
         <div className="text-center text-sm text-gray-500 mt-6">
-          <p>✨ 30-day money-back guarantee • Cancel anytime • Secure payment</p>
+          <p>✨ 14-day money-back guarantee • Cancel anytime • Secure payment</p>
         </div>
       </DialogContent>
     </Dialog>
