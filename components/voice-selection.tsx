@@ -8,6 +8,8 @@ import { Slider } from "@/components/ui/slider"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Separator } from "@/components/ui/separator"
+import { useSubscription } from "@/hooks/use-subscription"
+import { LockIcon } from "lucide-react"
 
 export interface VoiceOption {
   voice_id: string
@@ -45,6 +47,7 @@ export function VoiceSelection({
   const [pitch, setPitch] = useState<number[]>([1.0])
   const [volume, setVolume] = useState<number[]>([1.0])
   const [isPlayingPreview, setIsPlayingPreview] = useState<string | null>(null)
+  const { currentPlan } = useSubscription()
 
   const availableVoices: VoiceOption[] = voices
   
@@ -234,80 +237,90 @@ export function VoiceSelection({
         <div>
           <Label className="text-base font-medium mb-3 block">Select Voice</Label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {availableVoices.map((voice) => (
-              <div
-                key={voice.voice_id}
-                className={`
-                  border rounded-lg p-4 cursor-pointer transition-all hover:shadow-md
-                  ${
-                    selectedVoice === voice.voice_id
-                      ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
-                      : "border-gray-200 dark:border-gray-700"
-                  }
-                `}
-                onClick={() => setSelectedVoice(voice.voice_id)}
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <h4 className="font-medium text-sm">{voice.voice_name}</h4>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">{voice.description}</p>
-                  </div>
-                  <div className="flex gap-1">
-                    {voice.type === "standard" && (
-                      <Badge variant="default" className="text-xs">
-                        Standard
-                      </Badge>
-                    )}
-                    {voice.type === "cloned" && (
-                      <Badge variant="secondary" className="text-xs">
-                        Cloned
-                      </Badge>
-                    )}
-                    {voice.premium && (
-                      <Badge variant="outline" className="text-xs text-amber-600 border-amber-600">
-                        Premium
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-full mt-2"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    playPreview(voice.voice_id)
-                  }}
-                  disabled={isPlayingPreview === voice.voice_id}
+            {availableVoices.map((voice) => {
+              const isPremium = voice.premium
+              const isPremiumUser = currentPlan.name === "Premium"
+              const isDisabled = isPremium && !isPremiumUser
+
+              return (
+                <div
+                  key={voice.voice_id}
+                  className={`
+                    border rounded-lg p-4 transition-all hover:shadow-md
+                    ${
+                      selectedVoice === voice.voice_id
+                        ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
+                        : "border-gray-200 dark:border-gray-700"
+                    }
+                    ${isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"}
+                  `}
+                  onClick={() => !isDisabled && setSelectedVoice(voice.voice_id)}
                 >
-                  {isPlayingPreview === voice.voice_id ? (
-                    <>
-                      <svg className="w-4 h-4 mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                      Playing...
-                    </>
-                  ) : (
-                    <>
-                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      Preview
-                    </>
-                  )}
-                </Button>
-              </div>
-            ))}
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      {isDisabled && <LockIcon className="w-4 h-4 text-amber-600" />}
+                      <div>
+                        <h4 className="font-medium text-sm">{voice.voice_name}</h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">{voice.description}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-1">
+                      {voice.type === "standard" && (
+                        <Badge variant="default" className="text-xs">
+                          Standard
+                        </Badge>
+                      )}
+                      {voice.type === "cloned" && (
+                        <Badge variant="secondary" className="text-xs">
+                          Cloned
+                        </Badge>
+                      )}
+                      {voice.premium && (
+                        <Badge variant="outline" className="text-xs text-amber-600 border-amber-600">
+                          Premium
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full mt-2"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      playPreview(voice.voice_id)
+                    }}
+                    disabled={isPlayingPreview === voice.voice_id}
+                  >
+                    {isPlayingPreview === voice.voice_id ? (
+                      <>
+                        <svg className="w-4 h-4 mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                          />
+                        </svg>
+                        Playing...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        Preview
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )
+            })}
           </div>
         </div>
 
@@ -399,7 +412,7 @@ export function VoiceSelection({
           )}
         </Button>
 
-        {typeof window !== "undefined" && localStorage.getItem("subscription") !== "premium" && (
+        {currentPlan.name !== "Premium" && (
           <Alert>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -410,8 +423,7 @@ export function VoiceSelection({
               />
             </svg>
             <AlertDescription>
-              Upgrade to Premium ($9.99/month) to unlock celebrity voices like Morgan Freeman, Gwyneth Paltrow, and
-              more!
+              Upgrade to Premium ($14.99/month) to access premium voices, clone your voice, and use it in all your audio conversions.
             </AlertDescription>
           </Alert>
         )}
