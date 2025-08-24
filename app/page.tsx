@@ -3,6 +3,7 @@
 import { FileUpload } from "@/components/file-upload"
 import { VoiceCloning } from "@/components/voice-cloning"
 import { PricingModal } from "@/components/pricing-modal"
+import { MyAudios } from "@/components/my-audios"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -17,6 +18,7 @@ import { getVoices } from "@/lib/getVoices"
 export default function Home() {
   const { currentPlan, getRemainingDocuments, } = useSubscription()
   const [showPricingModal, setShowPricingModal] = useState(false)
+  const [showMyAudios, setShowMyAudios] = useState(false)
   const [voices, setVoices] = useState<VoiceOption[]>([])
   const { user } = useUser()
 
@@ -64,6 +66,9 @@ export default function Home() {
               </SignUpButton>
             </SignedOut>
             <SignedIn>
+              <Button variant="outline" onClick={() => setShowMyAudios(true)}>
+                My Audios
+              </Button>
               <UserButton />
             </SignedIn>
           </div>
@@ -162,6 +167,7 @@ export default function Home() {
       </div>
 
       <PricingModal isOpen={showPricingModal} onClose={() => setShowPricingModal(false)} />
+      <MyAudios isOpen={showMyAudios} onClose={() => setShowMyAudios(false)} />
     </div>
   )
 }

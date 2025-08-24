@@ -3,7 +3,7 @@ import { auth } from '@clerk/nextjs/server'
 import { uploadAudio } from "@/models/uploadAudio"
 import { insertAudio } from "@/models/insertAudio";
 
-let buffer: Buffer; 
+ 
 export async function POST(request: NextRequest) {
   try {
     const { text, settings, fileName } = await request.json()
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     // add to database if user is loged 
     if (userId) {
-      const publicUrl = await uploadAudio(buffer, fileName, userId);
+      const publicUrl = await uploadAudio(audioBuffer, fileName, userId);
       if(publicUrl)
         await insertAudio(fileName, publicUrl, userId);
     };
@@ -94,7 +94,7 @@ async function generateSpeechifyAudio(text: string, voiceId: string, settings: a
       console.log("[v0] JSON recived but without audio");
       return await response.arrayBuffer();
     }
-      buffer = Buffer.from(data.audio_data, "base64");
+      const buffer = Buffer.from(data.audio_data, "base64");
     return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer;
   } else {
     // case direct binary (mp3)

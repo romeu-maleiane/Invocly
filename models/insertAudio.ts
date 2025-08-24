@@ -5,9 +5,13 @@ export async function insertAudio(audioName: string, publicUrl: string, userId: 
     const supabase = await createClient()
 
     try {
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from('audios')
-            .upsert({'audio_name': audioName, 'audio_url': publicUrl, 'user_id': userId}).select()
+            .upsert({'audio_name': audioName.replace(/\.(txt|docx|pdf)$/i, ''), 
+                'audio_url': publicUrl, 
+                'user_id': userId
+            })
+            .select()
 
         if (error) {
             console.error("Supabase insert audio error:", error)
