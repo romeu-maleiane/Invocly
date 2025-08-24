@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { FileUpload } from "@/components/file-upload"
 import { VoiceCloning } from "@/components/voice-cloning"
 import { PricingModal } from "@/components/pricing-modal"
@@ -36,7 +37,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
       <header className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 shadow-md">
         <div className="flex items-center">
-          <img src="/placeholder-logo.svg" alt="Logo" className="h-8 w-auto" />
+         <Image src='/placeholder-logo.png' alt='Logo' width={40} height={20} className="h-10 w-auto" />
         </div>
 
         <div className="flex items-center gap-4">
@@ -66,7 +67,7 @@ export default function Home() {
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <Button variant="outline" onClick={() => setShowMyAudios(true)}>
+              <Button className="text-sm rounded-full px-4 py-2" variant="outline" onClick={() => setShowMyAudios(true)}>
                 My Audios
               </Button>
               <UserButton />
@@ -77,7 +78,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
               Convert PDF, DOCX & TXT to Lifelike Speech Instantly
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
