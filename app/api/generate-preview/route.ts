@@ -1,3 +1,4 @@
+import { getVoiceId } from "@/models/getVoiceId"
 import { type NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
@@ -45,14 +46,12 @@ export async function POST(request: NextRequest) {
       console.log("[v0] No Speechify API key found, using browser TTS fallback")
     }
 
-    const voiceConfig = getVoiceConfiguration(voiceId)
 
     return NextResponse.json(
       {
         success: true,
         fallback: true,
         message: SPEECHIFY_API_KEY ? "Using browser TTS (Speechify unavailable)" : "Using browser TTS",
-        voiceConfig,
         settings: {
           text,
           speed: speed || 1.0,
@@ -80,8 +79,11 @@ async function generateSpeechifyPreview(
 ): Promise<ArrayBuffer | null> {
   const SPEECHIFY_API_KEY = process.env.SPEECHIFY_API_KEY!
 
-  const speechifyVoiceId = getSpeechifyVoiceId(voiceId)
+  const speechifyVoiceId = await getVoiceId(voiceId)
 
+  if (!speechifyVoiceId) {
+    throw new Error("Voice not found")
+  }
   // Limit preview text length
   const previewText = text.length > 100 ? text.substring(0, 100) + "..." : text
 
@@ -117,7 +119,7 @@ async function generateSpeechifyPreview(
         return null;
       }
       const buffer = Buffer.from(data.audio_data, "base64");
-      return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+      return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer;
     } else {
       // case direct binary (mp3)
       return await response.arrayBuffer();
@@ -129,97 +131,3 @@ async function generateSpeechifyPreview(
   }
 }
 
-function getSpeechifyVoiceId(voiceId: string): string {
-  const voiceMapping = {
-    "erin": "erin",
-    "oliver": "oliver",
-    "james": "james",
-    "kim": "kim",
-    "ken": "ken",
-    "carol": "carol",
-    "freddie": "freddie",
-    "beverly": "beverly",
-    "cloned-voice": "cloned-voice", // Will be handled separately
-  }
-
-  return voiceMapping[voiceId as keyof typeof voiceMapping] || voiceMapping["erin"]
-}
-
-function getVoiceConfiguration(voiceId: string) {
-  const voiceConfigs = {
-    "erin": {
-      gender: "female",
-      language: "en-US",
-      name: "Erin",
-      pitch: 1.0,
-      rate: 1.0,
-      voiceName: "Microsoft Erin - English (United States)",
-    },
-    "oliver": {
-      gender: "male",
-      language: "en-US",
-      name: "Oliver",
-      pitch: 0.8,
-      rate: 1.0,
-      voiceName: "Microsoft Oliver - English (United States)",
-    },
-    "james": {
-      gender: "neutral",
-      language: "en-US",
-      name: "James",
-      pitch: 0.9,
-      rate: 1.0,
-      voiceName: "Microsoft James - English (United States)",
-    },
-    "kim": {
-      gender: "female",
-      language: "en-US",
-      name: "Kim",
-      pitch: 1.2,
-      rate: 1.1,
-      voiceName: "Microsoft kim - English (United States)",
-    },
-    "ken": {
-      gender: "male",
-      language: "en-US",
-      name: "Ken",
-      pitch: 0.7,
-      rate: 0.9,
-      voiceName: "Microsoft Mark - English (United States)",
-    },
-    "carol": {
-      gender: "female",
-      language: "en-US",
-      name: "Carol",
-      pitch: 1.1,
-      rate: 0.95,
-      voiceName: "Microsoft Zira - English (United States)",
-    },
-    "freddie": {
-      gender: "male",
-      language: "en-US",
-      name: "Freddie",
-      pitch: 0.75,
-      rate: 0.9,
-      voiceName: "Microsoft David - English (United States)",
-    },
-    "beverly": {
-      gender: "female",
-      language: "en-US",
-      name: "Beverly",
-      pitch: 1.05,
-      rate: 1.0,
-      voiceName: "Microsoft Aria - English (United States)",
-    },
-    "cloned-voice": {
-      gender: "custom",
-      language: "en-US",
-      name: "Your Voice",
-      pitch: 1.0,
-      rate: 1.0,
-      voiceName: "Microsoft Zira - English (United States)",
-    },
-  }
-
-  return voiceConfigs[voiceId as keyof typeof voiceConfigs] || voiceConfigs["erin"]
-}

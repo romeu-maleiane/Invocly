@@ -42,7 +42,7 @@ export function VoiceSelection({
   isGenerating = false,
   voices = [],
 }: VoiceSelectionProps) {
-  const [selectedVoice, setSelectedVoice] = useState<string>("speechify-sarah")
+  const [selectedVoice, setSelectedVoice] = useState<string>("erin")
   const [speed, setSpeed] = useState<number[]>([1.0])
   const [pitch, setPitch] = useState<number[]>([1.0])
   const [volume, setVolume] = useState<number[]>([1.0])
@@ -50,7 +50,7 @@ export function VoiceSelection({
   const { currentPlan } = useSubscription()
 
   const availableVoices: VoiceOption[] = voices
-  
+
   const handleGenerate = () => {
     const settings: VoiceSettings = {
       selectedVoice,
@@ -65,7 +65,6 @@ export function VoiceSelection({
     setIsPlayingPreview(voiceId)
 
     try {
-      console.log("[v0] Starting preview for voice:", voiceId)
       const previewText = "Hello! This is how I sound. I can read your documents with this voice."
 
       const response = await fetch("/api/generate-preview", {
@@ -114,8 +113,7 @@ export function VoiceSelection({
             console.log("[v0] Audio element error - likely invalid audio data")
             setIsPlayingPreview(null)
             URL.revokeObjectURL(audioUrl)
-            // Fallback to browser TTS
-            playWebSpeechPreview(previewText, voiceId)
+            throw new Error('Something went wrong playing the audio')
           }
 
           audio.onloadstart = () => {
@@ -130,89 +128,17 @@ export function VoiceSelection({
             await audio.play()
           } catch (playError) {
             console.error("[v0] Audio play() failed:", playError)
-            setIsPlayingPreview(null)
-            URL.revokeObjectURL(audioUrl)
-            playWebSpeechPreview(previewText, voiceId)
+            throw new Error('Something went wrong playing the audio')
           }
-        } else if (contentType?.includes("application/json")) {
-          console.log("[v0] Processing JSON fallback response")
-          const { voiceConfig, settings } = await response.json()
-          playWebSpeechPreview(previewText, voiceId, voiceConfig, settings)
-        } else {
-          throw new Error(`Unexpected content type: ${contentType}`)
-        }
+        } 
       } else {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
     } catch (error) {
-      console.error("[v0] Preview failed:", error)
+      console.error("Preview failed:", error)
       setIsPlayingPreview(null)
-
-      // Always fallback to browser TTS
-      const previewText = "Hello! This is how I sound. I can read your documents with this voice."
-      playWebSpeechPreview(previewText, voiceId)
+      throw new Error('Preview failed')
     }
-  }
-
-  const playWebSpeechPreview = (text: string, voiceId: string, voiceConfig?: any, settings?: any) => {
-    if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(text)
-
-      const voices = speechSynthesis.getVoices()
-      let selectedVoice = voices.find(
-        (voice) => voiceConfig?.voiceName && voice.name.includes(voiceConfig.voiceName.split(" - ")[0]),
-      )
-
-      if (!selectedVoice) {
-        const voiceGender = voiceConfig?.gender || getVoiceGender(voiceId)
-        selectedVoice =
-          voices.find(
-            (voice) =>
-              voice.lang.startsWith("en") &&
-              (voiceGender === "female"
-                ? voice.name.toLowerCase().includes("female") || voice.name.toLowerCase().includes("woman")
-                : voiceGender === "male"
-                  ? voice.name.toLowerCase().includes("male") || voice.name.toLowerCase().includes("man")
-                  : true),
-          ) || voices[0]
-      }
-
-      if (selectedVoice) {
-        utterance.voice = selectedVoice
-      }
-
-      utterance.rate = settings?.speed || speed[0]
-      utterance.pitch = settings?.pitch || pitch[0]
-      utterance.volume = volume[0]
-
-      utterance.onend = () => {
-        setIsPlayingPreview(null)
-      }
-
-      utterance.onerror = (error) => {
-        console.error("Speech synthesis error:", error)
-        setIsPlayingPreview(null)
-      }
-
-      speechSynthesis.speak(utterance)
-    } else {
-      setIsPlayingPreview(null)
-      alert("Preview not available. Your browser may not support speech synthesis.")
-    }
-  }
-
-  const getVoiceGender = (voiceId: string) => {
-    const genderMap = {
-      "erin": "female",
-      "oliver": "male",
-      "james": "neutral",
-      "kim": "female",
-      "ken": "male",
-      "carol": "female",
-      "freddie": "male",
-      "beverly": "female",
-    }
-    return genderMap[voiceId as keyof typeof genderMap] || "neutral"
   }
 
   const selectedVoiceData = availableVoices.find((v) => v.voice_id === selectedVoice)
@@ -247,10 +173,9 @@ export function VoiceSelection({
                   key={voice.voice_id}
                   className={`
                     border rounded-lg p-4 transition-all hover:shadow-md
-                    ${
-                      selectedVoice === voice.voice_id
-                        ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
-                        : "border-gray-200 dark:border-gray-700"
+                    ${selectedVoice === voice.voice_id
+                      ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
+                      : "border-gray-200 dark:border-gray-700"
                     }
                     ${isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"}
                   `}

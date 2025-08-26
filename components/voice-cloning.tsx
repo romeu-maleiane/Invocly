@@ -15,6 +15,26 @@ interface VoiceCloningProps {
   existingVoiceName?: string
 }
 
+const getCloningErrorMessage = (error: any): string => {
+  const defaultMessage = "An unexpected error occurred. Please try again later."
+  if (error instanceof Error) {
+    const message = error.message.toLowerCase()
+    if (message.includes("failed to access microphone")) {
+      return "Could not access the microphone. Please check your browser permissions and try again."
+    }
+    if (message.includes("audio file too large")) {
+      return "The audio file is too large. Please ensure your recording is under 60 seconds."
+    }
+    if (message.includes("invalid audio file format")) {
+      return "An invalid audio format was detected. Please try recording again."
+    }
+    if (message.includes("failed to clone voice")) {
+      return "We couldn't clone your voice at this time. Please ensure your recording is clear and without background noise."
+    }
+  }
+  return defaultMessage
+}
+
 export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceName }: VoiceCloningProps) {
   const [isRecording, setIsRecording] = useState(false)
   const [recordingDuration, setRecordingDuration] = useState(0)
@@ -65,7 +85,8 @@ export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceNam
         })
       }, 1000)
     } catch (error) {
-      setError("Failed to access microphone. Please check permissions.")
+      const friendlyErrorMessage = getCloningErrorMessage(error)
+      setError(friendlyErrorMessage)
       console.error("Recording error:", error)
     }
   }
@@ -88,12 +109,12 @@ export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceNam
 
   const processVoiceCloning = async () => {
     if (!audioBlob || !voiceName.trim()) {
-      setError("Please provide a voice name and recording")
+      setError("Please provide a voice name and recording.")
       return
     }
 
     if (recordingDuration < 30) {
-      setError("Recording must be at least 30 seconds long")
+      setError("Recording must be at least 30 seconds long.")
       return
     }
 
@@ -134,7 +155,8 @@ export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceNam
       resetRecording()
       setVoiceName("")
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Voice cloning failed")
+      const friendlyErrorMessage = getCloningErrorMessage(error)
+      setError(friendlyErrorMessage)
       console.error("Voice cloning error:", error)
     } finally {
       setIsProcessing(false)

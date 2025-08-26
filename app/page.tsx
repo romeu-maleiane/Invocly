@@ -9,11 +9,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Alert, AlertTitle } from "@/components/ui/alert"
 import { useSubscription } from "@/hooks/use-subscription"
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
 import { useState, useEffect } from "react"
 import { VoiceOption } from "@/components/voice-selection"
 import { getVoices } from "@/lib/getVoices"
+import { AlertCircleIcon } from 'lucide-react'
 
 
 export default function Home() {
@@ -35,39 +37,46 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      <header className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 shadow-md">
+      
+        {currentPlan.id === "free" && (<Alert className='flex justify-center items-center gap-1 rounded-t-none py-2'>
+          <div>
+          <AlertCircleIcon size={17} color='#4a5565'/>
+          </div>
+          {currentPlan.id === "free" && remainingDocs !== null && (
+            <AlertTitle className="text-sm text-gray-600 dark:text-gray-400">
+              {remainingDocs === 0 ? 'To add more - upgrade to premium.' : `${remainingDocs} documents left today.`}
+            </AlertTitle>
+          )}
+          {currentPlan.id === "free" && (
+            <Button onClick={() => setShowPricingModal(true)} size='sm' className="bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-full ml-1">
+              Upgrade
+            </Button>
+          )}
+        </Alert>)}
+        
+      <header className="flex justify-between items-center p-4  dark:bg-gray-800 ">
         <div className="flex items-center">
-         <Image src='/placeholder-logo.png' alt='Logo' width={40} height={20} className="h-10 w-auto" />
+          <Image src='/placeholder-logo.png' alt='Logo' width={40} height={20} className="h-10 w-auto" />
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className='flex items-center gap-4'>
-            <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className="text-sm px-4 py-1 rounded-full">
+        <div className="flex items-center gap-2 sm:gap-4">
+          { user && (<div className='flex items-center gap-2 sm:gap-4'>
+            <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className="text-sm py-1 rounded-full">
               {currentPlan.name} Plan
             </Badge>
-            {currentPlan.id === "free" && remainingDocs !== null && (
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {remainingDocs} documents left today
-              </p>
-            )}
-            {currentPlan.id === "free" && (
-              <Button onClick={() => setShowPricingModal(true)} className="bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-full px-4 py-2">
-                Upgrade
-              </Button>
-            )}
-          </div>
+          </div>)}
 
-          <div className='flex items-center gap-4'>
+          <div className='flex items-center gap-2 sm:gap-4'>
             <SignedOut>
               <SignInButton />
               <SignUpButton>
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-full px-4 py-2">
+                <Button size='sm' className="bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-full">
                   Sign Up
                 </Button>
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <Button className="text-sm rounded-full px-4 py-2" variant="outline" onClick={() => setShowMyAudios(true)}>
+              <Button size='sm' className="text-sm rounded-full min:px-2 max:px-4 py-2" variant="outline" onClick={() => setShowMyAudios(true)}>
                 My Audios
               </Button>
               <UserButton />
@@ -92,9 +101,7 @@ export default function Home() {
               <TabsTrigger value="clone" disabled={!currentPlan.limits.voiceCloning}>
                 Clone Your Voice
                 {!currentPlan.limits.voiceCloning && (
-                  <Badge variant="outline" className="ml-2 text-xs">
-                    Premium
-                  </Badge>
+                  ' - Premium'
                 )}
               </TabsTrigger>
             </TabsList>

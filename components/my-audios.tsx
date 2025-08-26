@@ -63,7 +63,7 @@ export function MyAudios({ isOpen, onClose }: MyAudiosProps) {
             </svg>
           </Button>
         </CardHeader>
-        <CardContent className="flex-grow overflow-hidden">
+        <CardContent className="flex-grow overflow-hidden overflow-y-scroll">
           <ScrollArea className="h-full">
             {isLoading ? (
               <div className="flex items-center justify-center h-full">

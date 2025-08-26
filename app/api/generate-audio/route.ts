@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { auth } from '@clerk/nextjs/server'
 import { uploadAudio } from "@/models/uploadAudio"
 import { insertAudio } from "@/models/insertAudio";
+import { getVoiceId } from "@/models/getVoiceId";
 
  
 export async function POST(request: NextRequest) {
@@ -13,7 +14,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing required parameters" }, { status: 400 })
     }
 
-    const voiceId = getSpeechifyVoiceId(settings.selectedVoice)
+    const voiceId = await getVoiceId(settings.selectedVoice)
+
+    if (!voiceId) {
+      return NextResponse.json({ error: "Voice not found" }, { status: 404 })
+    }
 
     const audioBuffer = await generateSpeechifyAudio(text, voiceId, settings)
 
@@ -35,22 +40,6 @@ export async function POST(request: NextRequest) {
     console.error("Audio generation failed:", error)
     return NextResponse.json({ error: "Failed to generate audio" }, { status: 500 })
   }
-}
-
-function getSpeechifyVoiceId(voiceId: string): string {
-  const voiceMapping = {
-    "erin": "erin",
-    "oliver": "oliver",
-    "james": "james",
-    "kim": "kim",
-    "ken": "ken",
-    "carol": "carol",
-    "freddie": "freddie",
-    "beverly": "beverly",
-    "cloned-voice": "cloned-voice", // Will be handled separately
-  }
-
-  return voiceMapping[voiceId as keyof typeof voiceMapping] || voiceMapping["erin"]
 }
 
 async function generateSpeechifyAudio(text: string, voiceId: string, settings: any): Promise<ArrayBuffer> {
