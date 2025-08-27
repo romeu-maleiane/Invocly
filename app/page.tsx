@@ -37,30 +37,29 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      
-        {currentPlan.id === "free" && (<Alert className='flex justify-center items-center gap-1 rounded-t-none py-2'>
-          <div>
-          <AlertCircleIcon size={17} color='#4a5565'/>
-          </div>
-          {currentPlan.id === "free" && remainingDocs !== null && (
-            <AlertTitle className="text-sm text-gray-600 dark:text-gray-400">
-              {remainingDocs === 0 ? 'To add more - upgrade to premium.' : `${remainingDocs} documents left today.`}
-            </AlertTitle>
-          )}
-          {currentPlan.id === "free" && (
-            <Button onClick={() => setShowPricingModal(true)} size='sm' className="bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-full ml-1">
-              Upgrade
-            </Button>
-          )}
-        </Alert>)}
-        
+      {currentPlan.id === "free" && (<Alert className='flex justify-center items-center gap-1 rounded-t-none py-2'>
+        <div>
+          <AlertCircleIcon size={17} color='#4a5565' />
+        </div>
+        {currentPlan.id === "free" && remainingDocs !== null && (
+          <AlertTitle className="text-sm text-gray-600 dark:text-gray-400">
+            {remainingDocs === 0 ? 'To add more - upgrade to premium.' : `${remainingDocs} documents left today.`}
+          </AlertTitle>
+        )}
+        {currentPlan.id === "free" && (
+          <Button onClick={() => setShowPricingModal(true)} size='sm' className="bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-full ml-1">
+            Upgrade
+          </Button>
+        )}
+      </Alert>)}
+
       <header className="flex justify-between items-center p-4  dark:bg-gray-800 ">
         <div className="flex items-center">
           <Image src='/placeholder-logo.png' alt='Logo' width={40} height={20} className="h-10 w-auto" />
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          { user && (<div className='flex items-center gap-2 sm:gap-4'>
+          {user && (<div className='flex items-center gap-2 sm:gap-4'>
             <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className="text-sm py-1 rounded-full">
               {currentPlan.name} Plan
             </Badge>
