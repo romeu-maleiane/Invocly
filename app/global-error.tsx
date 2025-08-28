@@ -21,10 +21,10 @@ export default function GlobalError({ error }: { error: Error & { digest?: strin
                 Sorry {':('}
               </h1>
               <p className='text-lg text-gray-600'>
-                Something went wrong! Please refresh the page.
+                Something went wrong! Please reload the page.
               </p>
               <Button onClick={() => window.location.reload()} className='mt-2 ml-80 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-full'>
-                Refresh
+                Reload
               </Button>
             </CardContent>
           </Card>

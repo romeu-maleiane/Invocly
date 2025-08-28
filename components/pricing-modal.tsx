@@ -1,9 +1,10 @@
 "use client"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogTitle } from "@/components/ui/dialog"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import BuyButton from "./buyButto"
+import { useSubscription } from "@/hooks/use-subscription"
 
 interface PricingModalProps {
   isOpen: boolean
@@ -11,22 +12,23 @@ interface PricingModalProps {
 }
 
 export function PricingModal({ isOpen, onClose}: PricingModalProps) {
-
+  const { currentPlan } = useSubscription()
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl">
+      <DialogContent className="max-w-4xl max-h-11/12 overflow-y-scroll custom-scrollbar">
+
         <DialogHeader>
           <DialogTitle className="text-2xl text-center">Choose Your Plan</DialogTitle>
           <DialogDescription className="text-center">Unlock advanced features with our premium plan</DialogDescription>
         </DialogHeader>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-6">
+        <div className="grid md:grid-cols-2 gap-6 mt-3">
           {/* Free Plan */}
           <Card className="relative">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 Free Plan
-                <Badge variant="secondary">Current</Badge>
+                {currentPlan.id === 'free' && <Badge variant="secondary">Current</Badge>}
               </CardTitle>
               <CardDescription>Perfect for trying out the service</CardDescription>
               <div className="text-3xl font-bold">
@@ -77,7 +79,7 @@ export function PricingModal({ isOpen, onClose}: PricingModalProps) {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 Premium Plan
-                <Badge variant="default">Upgrade</Badge>
+                {currentPlan.id === 'free' ? <Badge variant="default">Upgrade</Badge>  : <Badge variant="secondary">Current</Badge>}
               </CardTitle>
               <CardDescription>For power users and professionals</CardDescription>
               <div className="text-3xl font-bold text-blue-600">
@@ -131,7 +133,7 @@ export function PricingModal({ isOpen, onClose}: PricingModalProps) {
           </Card>
         </div>
 
-        <div className="text-center text-sm text-gray-500 mt-6">
+        <div className="text-center text-sm text-gray-500 mt-3">
           <p>✨ 14-day money-back guarantee • Cancel anytime • Secure payment</p>
         </div>
       </DialogContent>

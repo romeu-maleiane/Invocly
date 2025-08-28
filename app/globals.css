@@ -122,6 +122,23 @@
   }
 }
 
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+  .custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 9999px;
+  min-height: 30px; /* limita o tamanho do thumb */
+}
+}
+
+
 html {
   font-size: 18px;
 }

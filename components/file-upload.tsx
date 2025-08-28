@@ -62,7 +62,6 @@ export function FileUpload({ voices }: FileUploadProps) {
       for (const fileData of newFiles) {
         try {
           await processFile(fileData)
-          incrementUsage()
         } catch (error) {
           setUploadedFiles((prev) =>
             prev.map((f) => (f.id === fileData.id ? { ...f, status: "error", error: "Failed to process file" } : f)),
@@ -72,7 +71,7 @@ export function FileUpload({ voices }: FileUploadProps) {
 
       setIsProcessing(false)
     },
-    [canProcessDocument, currentPlan.limits.maxFileSize, incrementUsage],
+    [canProcessDocument, currentPlan.limits.maxFileSize,],
   )
 
   const processFile = async (fileData: UploadedFile) => {
@@ -103,6 +102,7 @@ export function FileUpload({ voices }: FileUploadProps) {
         throw new Error(`Text validation failed: ${validation.issues.join(", ")}`)
       }
 
+      incrementUsage()
       setUploadedFiles((prev) =>
         prev.map((f) =>
           f.id === fileData.id

@@ -6,6 +6,7 @@ import {
 } from '@clerk/nextjs'
 import './globals.css'
 import { Footer } from '@/components/footer'
+import GlobalContextProvider from '@/lib/globalContext'
 
 export const metadata: Metadata = {
   title: 'Invocly - Invoke you reading voice',
@@ -47,9 +48,11 @@ export default function RootLayout({
           }
         `}</style>
         </head>
-        <body className="flex flex-col h-full">
+        <body className="flex flex-col h-full custom-scrollbar">
           <main className="flex-grow">
-            {children}
+            <GlobalContextProvider>
+              {children}
+            </GlobalContextProvider>
           </main>
           <Footer />
         </body>

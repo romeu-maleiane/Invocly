@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useUser } from "@clerk/nextjs"
 import { createClient } from "@/lib/supabase/client"
+import { GlobalContext } from "@/lib/globalContext"
 
 export interface SubscriptionPlan {
   id: string
@@ -55,6 +56,7 @@ export function useSubscription() {
   const { user } = useUser()
   const [currentPlan, setCurrentPlan] = useState<string>("free")
   const [dailyUsage, setDailyUsage] = useState<number>(0)
+  const {setRemainingDocs} = useContext(GlobalContext)
   const [isLoading, setIsLoading] = useState(true)
   const supabase = createClient()
 
@@ -125,11 +127,11 @@ export function useSubscription() {
     return dailyUsage < plan.limits.dailyDocuments
   }
 
-  const getRemainingDocuments = () => {
+  useEffect(() => {
     const plan = PLANS[currentPlan]
-    if (plan.limits.dailyDocuments === null) return null
-    return Math.max(0, plan.limits.dailyDocuments - dailyUsage)
-  }
+    if (plan.limits.dailyDocuments === null)  return setRemainingDocs(null)
+    setRemainingDocs(Math.max(0, plan.limits.dailyDocuments - dailyUsage))
+  }, [dailyUsage])
 
   return {
     currentPlan: PLANS[currentPlan],
@@ -138,6 +140,5 @@ export function useSubscription() {
     incrementUsage,
     canUseFeature,
     canProcessDocument,
-    getRemainingDocuments,
   }
 }

@@ -1,5 +1,4 @@
 'use client'
-
 import Image from 'next/image'
 import { FileUpload } from "@/components/file-upload"
 import { VoiceCloning } from "@/components/voice-cloning"
@@ -12,14 +11,16 @@ import { Badge } from "@/components/ui/badge"
 import { Alert, AlertTitle } from "@/components/ui/alert"
 import { useSubscription } from "@/hooks/use-subscription"
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { VoiceOption } from "@/components/voice-selection"
 import { getVoices } from "@/lib/getVoices"
 import { AlertCircleIcon } from 'lucide-react'
+import { GlobalContext } from '@/lib/globalContext'
 
 
 export default function Home() {
-  const { currentPlan, getRemainingDocuments, } = useSubscription()
+  const { currentPlan, } = useSubscription()
+  const { remainingDocs } = useContext(GlobalContext)
   const [showPricingModal, setShowPricingModal] = useState(false)
   const [showMyAudios, setShowMyAudios] = useState(false)
   const [voices, setVoices] = useState<VoiceOption[]>([])
@@ -33,7 +34,7 @@ export default function Home() {
     loadVoices()
   }, [user])
 
-  const remainingDocs = getRemainingDocuments()
+  useEffect(() => console.log(remainingDocs),[remainingDocs])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
