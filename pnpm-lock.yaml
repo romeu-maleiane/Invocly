@@ -17,6 +17,12 @@ importers:
       '@lemonsqueezy/lemonsqueezy.js':
         specifier: ^4.0.0
         version: 4.0.0
+      '@polar-sh/nextjs':
+        specifier: ^0.4.4
+        version: 0.4.4(next@15.2.4(@babel/core@7.28.3)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+      '@polar-sh/sdk':
+        specifier: ^0.34.15
+        version: 0.34.15
       '@radix-ui/react-accordion':
         specifier: 1.2.2
         version: 1.2.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -732,6 +738,24 @@ packages:
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
+
+  '@polar-sh/adapter-utils@0.2.3':
+    resolution: {integrity: sha512-ULIV5UEP/DSkaRoeY7QNjTDWM5Th9spiN5ZeOrLJ0G66my0lyT1o2+uK1XOKd7Kwqp56xucgcpu/M2lOCttvvw==}
+
+  '@polar-sh/nextjs@0.4.4':
+    resolution: {integrity: sha512-rjpGmR1/z7vGzLRzDNhjRP50dfh9xXW/zedRDL93tmFRl2QJSaZig0TPePe3wTTK0iOX0euLHPAF6AhyjfMcaw==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      next: ^15.0.0 || ^15.2.0-canary.*
+
+  '@polar-sh/sdk@0.34.15':
+    resolution: {integrity: sha512-6j5Ju8lzKzQVWwS2NNmenQYYUEdz1t2IpdWCJkHiANVl3/wU3yqqFZRCQj+x4nBzWb0lD+rDoaXMSK4Gpfw+zw==}
+    hasBin: true
+    peerDependencies:
+      '@modelcontextprotocol/sdk': '>=1.5.0 <1.10.0'
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
 
   '@prisma/instrumentation@6.13.0':
     resolution: {integrity: sha512-b97b0sBycGh89RQcqobSgjGl3jwPaC5cQIOFod6EX1v0zIxlXPmL3ckSXxoHpy+Js0QV/tgCzFvqicMJCtezBA==}
@@ -3203,6 +3227,9 @@ packages:
   zod@3.25.67:
     resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
 
+  zod@3.25.76:
+    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
@@ -3766,6 +3793,25 @@ snapshots:
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
+
+  '@polar-sh/adapter-utils@0.2.3':
+    dependencies:
+      '@polar-sh/sdk': 0.34.15
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+
+  '@polar-sh/nextjs@0.4.4(next@15.2.4(@babel/core@7.28.3)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+    dependencies:
+      '@polar-sh/adapter-utils': 0.2.3
+      '@polar-sh/sdk': 0.34.15
+      next: 15.2.4(@babel/core@7.28.3)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+
+  '@polar-sh/sdk@0.34.15':
+    dependencies:
+      standardwebhooks: 1.0.0
+      zod: 3.25.76
 
   '@prisma/instrumentation@6.13.0(@opentelemetry/api@1.9.0)':
     dependencies:
@@ -6269,3 +6315,5 @@ snapshots:
   zlibjs@0.3.1: {}
 
   zod@3.25.67: {}
+
+  zod@3.25.76: {}

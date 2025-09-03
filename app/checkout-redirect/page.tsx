@@ -1,28 +1,19 @@
 'use client'
-import { createCheckoutUrl } from '@/lib/lemon-squeezy/server';
 import { useUser } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { useEffect } from 'react';
 
 function CheckoutRedirectPage() {
     const { user, } = useUser()
-    const NEXT_PUBLIC_LEMONSQUEEZY_VARIANT_ID = process.env.NEXT_PUBLIC_LEMONSQUEEZY_VARIANT_ID
-    if(!NEXT_PUBLIC_LEMONSQUEEZY_VARIANT_ID) {
-        console.error('NEXT_PUBLIC_LEMONSQUEEZY_VARIANT_ID is required!')
+    const subscriptionId = process.env.NEXT_PUBLIC_POLAR_SUBSCRIPTION_ID || ""
+
+    if(!subscriptionId) {
+        console.error('subscriptionId is required!')
         redirect('/')
     }
+    
     useEffect(() => {
-         const handleCheckoutUrl = async() => {
-            const checkoutUrl = await createCheckoutUrl({
-                variantId: NEXT_PUBLIC_LEMONSQUEEZY_VARIANT_ID,
-                embed: false,
-                userEmail: user?.emailAddresses[0].emailAddress || undefined,
-                userId: user?.id || undefined
-            });
-            console.log('Checkout Url',checkoutUrl)
-            redirect(checkoutUrl || '/')
-        }
-        handleCheckoutUrl()
+        redirect(`/checkout/?products=${subscriptionId}&customerExternalId=${user?.id}&customerEmail=${user?.emailAddresses[0].emailAddress}`)
     },[user])   
 
     return (

@@ -66,14 +66,14 @@ export function useSubscription() {
       const today = new Date().toDateString()
 
       if (user) {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from("users")
           .select("plan")
           .eq("id", user.id)
           .single()
 
         if (data) {
-          setCurrentPlan(data.plan)
+          setCurrentPlan(data.plan.trim())
         } else {
           setCurrentPlan("free")
         }
@@ -101,7 +101,7 @@ export function useSubscription() {
     loadSubscription()
   }, [user])
 
-  const incrementUsage = async () => {
+  const incrementUsage = () => {
     if (currentPlan === "premium" && user) {
       return
     }
