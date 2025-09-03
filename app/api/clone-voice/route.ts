@@ -1,6 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { createClient } from "@/lib/supabase/server";
 import { type NextRequest, NextResponse } from "next/server"
+import { SpeechifyClient } from "@speechify/api";
+import { storeClonedVoiceId } from "@/models/storeClonedVoiceId";
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,14 +20,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid audio file format" }, { status: 400 })
     }
 
-    // Check file size (max 10MB)
-    if (audioFile.size > 10 * 1024 * 1024) {
-      return NextResponse.json({ error: "Audio file too large (max 10MB)" }, { status: 400 })
+    // Check file size (max 5MB)
+    if (audioFile.size > 5 * 1024 * 1024) {
+      return NextResponse.json({ error: "Audio file too large (max 5MB)" }, { status: 400 })
     }
 
     const voiceId = await processSpeechifyVoiceCloning(audioFile, voiceName, voiceDescription)
 
-    if(!voiceId) {
+    if (!voiceId) {
       throw new Error("Voice cloning failed");
     }
 
@@ -44,68 +46,50 @@ export async function POST(request: NextRequest) {
 }
 
 async function processSpeechifyVoiceCloning(audioFile: File, voiceName: string, voiceDescription: string): Promise<string | null> {
-  const SPEECHIFY_API_KEY = process.env.SPEECHIFY_API_KEY
+  const supabase = await createClient()
 
+  const SPEECHIFY_API_KEY = process.env.SPEECHIFY_API_KEY
   if (!SPEECHIFY_API_KEY) {
     console.error("Speechify API key not found")
     return null
   }
+  
+  const { userId } = await auth()
+  const { data, error } = await supabase
+  .from("users")
+  .select('user_name,email')
+  .eq('id', userId)
+  .single()
 
+  if (error) {
+    console.error("Error fetching user on clone voice api:", error)
+    throw new Error("Failed to store cloned voice")
+  }
+
+  const consentData = {
+    fullName: data?.user_name || '',
+    email: data?.email || ''
+  }
+
+  const client = new SpeechifyClient({ token: SPEECHIFY_API_KEY });
   try {
-    // First, create a voice clone with Speechify
-    const formData = new FormData()
-    formData.append("name", voiceName)
-    formData.append("audio_file", audioFile)
-    formData.append("description", voiceDescription || `Cloned voice: ${voiceName}`)
+    // First, create a voice clone with Speechify  
+    const clonedVoice = await client.tts.voices.create({
+      sample: audioFile,
+      name: voiceName,
+      gender: "notSpecified",
+      consent: JSON.stringify(consentData)
+    });
 
-    const response = await fetch("https://api.sws.speechify.com/v1/voices/clone", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${SPEECHIFY_API_KEY}`,
-      },
-      body: formData,
-    })
-
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.message || "Speechify voice cloning failed")
+    if (!clonedVoice) {
+      throw new Error("Speechify voice cloning failed")
     }
 
-    const result = await response.json()
+    await storeClonedVoiceId(clonedVoice.id, voiceName, voiceDescription)
 
-    await storeClonedVoiceId(result.voice_id, voiceName, voiceDescription)
-
-    return result.voice_id
+    return clonedVoice.id
   } catch (error) {
     console.error("Speechify voice cloning error:", error)
     return null
   }
-}
-
-async function storeClonedVoiceId(voiceId: string, voiceName: string, voiceDescription: string): Promise<void> {
-  const supabase = await createClient()
-  const { userId } = await auth()
-
-  if (!userId) {
-    throw new Error("User not authenticated")
-  }
-
-  const { error } = await supabase.from("voices").insert([
-    {
-      id: voiceId,
-      name: voiceName,
-      description: voiceDescription,
-      user_id: userId,
-      type: "cloned",
-      available: true,
-      premium: true,
-    },
-  ])
-
-  if (error) {
-    console.error("Error storing cloned voice:", error)
-    throw new Error("Failed to store cloned voice")
-  }
-
-  console.log(`Stored cloned voice: ${voiceName} with ID: ${voiceId}`)
 }
