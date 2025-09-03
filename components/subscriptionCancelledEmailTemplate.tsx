@@ -14,13 +14,14 @@ import {
   Button,
   Hr,
 } from '@react-email/components';
+import { getFormattedDate } from '@/lib/utils';
 
-export const BillingEmailTemplate = ({ firstName }: { firstName: string }) => {
+export const SubscriptionCancelledEmail = ({ firstName }: { firstName: string }) => {
 
   return (
     <Html lang="en" dir="ltr">
       <Head />
-      <Preview>Welcome to Invocly Premium! Thank you for joining us.</Preview>
+      <Preview>Your Invocly Premium subscription has been cancelled. We're sorry to see you go!</Preview>
       <Tailwind>
         <Body className="bg-[#F0F9FA] py-[40px] font-sans">
           <Container className="bg-[#FFFFFF] mx-auto px-[24px] py-[32px] rounded-[8px] max-w-[600px]">
@@ -36,7 +37,7 @@ export const BillingEmailTemplate = ({ firstName }: { firstName: string }) => {
             {/* Main Content */}
             <Section>
               <Heading className="text-[#111827] text-[28px] font-bold mb-[24px] text-center">
-                Welcome to Invocly Premium! 🎉
+                We're Sorry to See You Go
               </Heading>
               
               <Text className="text-[#111827] text-[16px] mb-[20px] leading-[24px]">
@@ -44,58 +45,59 @@ export const BillingEmailTemplate = ({ firstName }: { firstName: string }) => {
               </Text>
               
               <Text className="text-[#111827] text-[16px] mb-[20px] leading-[24px]">
-                Thank you so much for choosing Invocly Premium! We're incredibly grateful for your trust in our document-to-speech conversion platform.
+                We wanted to confirm that your Invocly Premium subscription has been successfully cancelled as of {getFormattedDate(new Date())}. While we're sad to see you go, we completely understand that circumstances change.
               </Text>
               
               <Text className="text-[#111827] text-[16px] mb-[24px] leading-[24px]">
-                With your new Premium subscription, you now have access to exclusive features that will make your document-to-speech experience even more amazing:
+                Your account will remain active, and you can continue using Invocly with our free features. All your documents and settings will be preserved, so you won't lose any of your work.
               </Text>
 
-              {/* Premium Features */}
+              {/* What Happens Next */}
               <Section className="bg-[#2563EB]/10 p-[20px] rounded-[8px] mb-[24px]">
                 <Text className="text-[#111827] text-[16px] mb-[12px] leading-[24px] font-semibold">
-                  ✨ Your new Premium benefits:
+                  📋 What happens next:
                 </Text>
                 <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
-                  • Unlimited document conversions
+                  • Your account switches to our free plan immediately
                 </Text>
                 <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
-                  • Voice cloning feature
+                  • All your documents and history remain safe
                 </Text>
                 <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
-                  • Premium voices 
+                  • You can still convert documents with basic features
+                </Text>
+                <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
+                  • No further charges will be made to your account
                 </Text>
                 <Text className="text-[#111827] text-[14px] leading-[20px]">
-                  • Advanced audio controls
-                </Text>
-                <Text className="text-[#111827] text-[14px] leading-[20px]">
-                  • 50MB file size limit
-                </Text>
-                <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
-                  • Priority support
+                  • You can reactivate Premium anytime you want
                 </Text>
               </Section>
               
               <Text className="text-[#111827] text-[16px] mb-[24px] leading-[24px]">
-                We're here to ensure you have the best possible experience with Invocly. If you have any questions or need assistance, our support team is always ready to help you make the most of your Premium features.
+                We'd love to know how we could have served you better. If you have a moment, we'd really appreciate your feedback to help us improve Invocly for everyone.
               </Text>
 
-              {/* CTA Button */}
+              {/* CTA Buttons */}
               <Section className="text-center mb-[32px]">
                 <Button
                   href="https://invocly.com"
-                  className="bg-[#2563EB] text-white px-[32px] py-[12px] rounded-[8px] text-[16px] font-semibold box-border"
+                  className="bg-[#2563EB] text-white px-[32px] py-[12px] rounded-[8px] text-[16px] font-semibold box-border mb-[12px] inline-block"
                 >
-                  Start Using Premium
+                  Share Your Feedback
                 </Button>
+                <br />
+                <Link href="https://invocly.com" className="text-[#2563EB] text-[14px] underline">
+                  Continue with free plan
+                </Link>
               </Section>
               
               <Text className="text-[#111827] text-[16px] mb-[20px] leading-[24px]">
-                Once again, thank you for being part of the Invocly family. We're excited to see how you'll make the most of your new Premium features!
+                Remember, you're always welcome back! If you ever decide to give Premium another try, we'll be here with all the features you loved, plus any new improvements we've made along the way.
               </Text>
               
               <Text className="text-[#111827] text-[16px] mb-[32px] leading-[24px]">
-                With gratitude,<br />
+                Thank you for being part of our journey. We wish you all the best!<br />
                 The Invocly Team
               </Text>
             </Section>
