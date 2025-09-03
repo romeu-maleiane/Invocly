@@ -28,7 +28,7 @@ export default function RefundPricingPolicy() {
               For recurring subscriptions, we do not offer refunds for partial months of service. If you cancel your subscription, you will retain access to the service until the end of your current billing period.
             </p>
             <p>
-              To request a refund, please contact our support team with your account information and the reason for your request.
+              To request a refund, please send an email to support@invocly.com with your account information and the reason for your request.
             </p>
           </section>
         </CardContent>
