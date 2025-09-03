@@ -14,7 +14,6 @@ export interface SubscriptionPlan {
     dailyDocuments: number | null // null = unlimited
     maxFileSize: number // in MB
     voiceCloning: boolean
-    batchProcessing: boolean
   }
 }
 
@@ -23,12 +22,15 @@ export const PLANS: Record<string, SubscriptionPlan> = {
     id: "free",
     name: "Free",
     price: 0,
-    features: ["Up to 3 documents per day", "2 standard voices", "Basic audio controls"],
+    features: [
+      "Up to 3 documents per day", 
+      "2 standard voices", 
+      "Basic audio controls"
+    ],
     limits: {
       dailyDocuments: 3,
       maxFileSize: 5,
       voiceCloning: false,
-      batchProcessing: false,
     },
   },
   premium: {
@@ -41,13 +43,11 @@ export const PLANS: Record<string, SubscriptionPlan> = {
       "Premium voices",
       "Advanced audio controls",
       "50MB file size limit",
-      "Batch processing",
     ],
     limits: {
       dailyDocuments: null,
       maxFileSize: 50,
       voiceCloning: true,
-      batchProcessing: true,
     },
   },
 }
