@@ -4,6 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import { Analytics } from "@vercel/analytics/next"
 import './globals.css'
 import { Footer } from '@/components/footer'
 import GlobalContextProvider from '@/lib/globalContext'
@@ -52,6 +53,7 @@ export default function RootLayout({
           <main className="flex-grow">
             <GlobalContextProvider>
               {children}
+              <Analytics />
             </GlobalContextProvider>
           </main>
           <Footer />
