@@ -9,9 +9,11 @@ import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { convertWebMToWav } from "@/lib/convertWebMToWav"
+import { getVoices } from "@/lib/getVoices"
+import { useUser } from "@clerk/nextjs"
 
 interface VoiceCloningProps {
-  onVoiceCloned: (voiceId: string, voiceName: string) => void
+  onVoiceCloned: (value: any) => void
   hasExistingVoice?: boolean
   existingVoiceName?: string
 }
@@ -45,6 +47,8 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
   const [voiceName, setVoiceName] = useState("")
   const [voiceDescription, setVoiceDescription] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const { user } = useUser()
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const audioChunksRef = useRef<Blob[]>([])
@@ -150,12 +154,18 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
       const result = await response.json()
       setProcessingProgress(100)
 
-      // Notify parent component
-      onVoiceCloned(result.voiceId, voiceName.trim())
-
+      
+      // Show success message
+      setSuccessMessage("Voice cloned successfully!")
+      setTimeout(() => setSuccessMessage(null), 5000)
+      
       // Reset form
       resetRecording()
       setVoiceName("")
+      
+      //update voice list
+      const newVoiceList = await getVoices(user?.id)
+      onVoiceCloned(newVoiceList)
     } catch (error) {
       const friendlyErrorMessage = getCloningErrorMessage(error)
       setError(friendlyErrorMessage)
@@ -345,6 +355,12 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
         {error && (
           <Alert variant="destructive">
             <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        {successMessage && (
+          <Alert variant="success">
+            <AlertDescription>{successMessage}</AlertDescription>
           </Alert>
         )}
 

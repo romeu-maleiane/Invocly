@@ -134,9 +134,7 @@ export default function Home() {
             <TabsContent value="clone">
               {currentPlan.limits.voiceCloning ? (
                 <VoiceCloning
-                  onVoiceCloned={(voiceId, voiceName) => {
-                    console.log("Voice cloned:", voiceId, voiceName)
-                  }}
+                  onVoiceCloned={setVoices}
                   hasExistingVoice={false}
                 />
               ) : (
