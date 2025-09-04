@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import { convertWebMToWav } from "@/lib/convertWebMToWav"
 
 interface VoiceCloningProps {
   onVoiceCloned: (voiceId: string, voiceName: string) => void
@@ -35,7 +36,7 @@ const getCloningErrorMessage = (error: any): string => {
   return defaultMessage
 }
 
-export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceName }: VoiceCloningProps) {
+export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
   const [isRecording, setIsRecording] = useState(false)
   const [recordingDuration, setRecordingDuration] = useState(0)
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
@@ -123,8 +124,9 @@ export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceNam
     setError(null)
 
     try {
+      const wavBlob = await convertWebMToWav(audioBlob);
       const formData = new FormData()
-      formData.append("audio", audioBlob, "voice_sample.wav")
+      formData.append("audio", wavBlob, "voice.wav")
       formData.append("voiceName", voiceName.trim())
       formData.append("voiceDescription", voiceDescription.trim())
 
@@ -187,22 +189,6 @@ export function VoiceCloning({ onVoiceCloned, hasExistingVoice, existingVoiceNam
         <CardDescription>Create a personalized voice by recording 30-60 seconds of your speech</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {hasExistingVoice && (
-          <Alert>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <AlertDescription>
-              You already have a cloned voice: <strong>{existingVoiceName}</strong>. Creating a new one will replace it.
-            </AlertDescription>
-          </Alert>
-        )}
-
         {/* Voice Name Input */}
         <div className="space-y-2">
           <Label htmlFor="voiceName">Voice Name</Label>

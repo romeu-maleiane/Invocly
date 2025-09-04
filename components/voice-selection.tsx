@@ -356,20 +356,3 @@ export function VoiceSelection({
     </Card>
   )
 }
-
-
-// Helper function to get gender from voice ID
-function getVoiceGender(voiceId: string) {
-  const genderMap = {
-    "speechify-sarah": "female",
-    "speechify-mark": "male",
-    "speechify-james": "male",
-    "speechify-kim": "female",
-    "speechify-ken": "male",
-    "speechify-carol": "female",
-    "speechify-freddie": "male",
-    "speechify-beverly": "female",
-    "cloned-voice": "neutral",
-  }
-  return genderMap[voiceId as keyof typeof genderMap] || "neutral"
-}
