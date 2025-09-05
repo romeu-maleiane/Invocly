@@ -52,7 +52,7 @@ export const BillingEmailTemplate = ({ firstName }: { firstName: string }) => {
               </Text>
 
               {/* Premium Features */}
-              <Section className="bg-[#2563EB]/10 p-[20px] rounded-[8px] mb-[24px]">
+              <Section className="bg-blue-50 p-[20px] rounded-[8px] mb-[24px]">
                 <Text className="text-[#111827] text-[16px] mb-[12px] leading-[24px] font-semibold">
                   ✨ Your new Premium benefits:
                 </Text>

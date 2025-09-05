@@ -53,7 +53,7 @@ export const SubscriptionExpiredEmail = ({ firstName }: { firstName: string }) =
                             </Text>
 
                             {/* What You're Missing */}
-                            <Section className="bg-[#2563EB]/10 p-[20px] rounded-[8px] mb-[24px] border-l-4 border-red-400">
+                            <Section className="bg-blue-50 p-[20px] rounded-[8px] mb-[24px] border-l-4 border-red-400">
                                 <Text className="text-[#111827] text-[16px] mb-[12px] leading-[24px] font-semibold">
                                     ⚠️ Premium features you're missing out on:
                                 </Text>

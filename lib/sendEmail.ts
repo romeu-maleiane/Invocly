@@ -3,8 +3,25 @@ import { Resend } from 'resend'
 import { BillingEmailTemplate } from '../components/billingEmailTemplate';
 import { SubscriptionExpiredEmail } from '@/components/expiredSubscriptionEmailTemplate';
 import { SubscriptionCancelledEmail } from '@/components/subscriptionCancelledEmailTemplate';
+import { NewUserWelcomeEmail } from '@/components/welcomeEmailTemplate';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+export const sendNewUserWelcomeEmail = async ({ name, email }: { name: string, email: string }) => {
+    try {
+        const { error } = await resend.emails.send({
+            from: 'Invocly <not-reply@billing.invocly.com>',
+            to: [email],
+            subject: 'Welcome to Invocly',
+            react: NewUserWelcomeEmail({ firstName: name }),
+        });
+
+        if(error) throw new Error(error.message)
+
+    } catch (error) {
+        console.error('Send Welcome Email Error: ', error)
+    }
+}
 
 export const sendBillingEmail = async ({ name, email }: { name: string, email: string }) => {
     try {
@@ -50,6 +67,6 @@ export const sendSubscritionCancelledEmail = async ({ name, email }: { name: str
         if(error) throw new Error(error.message)
 
     } catch (error) {
-        console.error('Send BillingEmail Error: ', error)
+        console.error('Send Subscrition Cancelled Email Error: ', error)
     }
 }
