@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+
+# Invocly LLMs Transparency File
+# Last updated: 2025-09-05
+
+Application: Invocly
+Description: Invocly converts documents into natural audio, with optional voice cloning.
+Website: https://invocly.com
+
+# Providers
+- Speechify API (voice synthesis & cloning)
+
+# Data Usage
+- Uploaded documents are used solely for generating audio and are not stored permanently.
+- Voice samples are processed only for cloning and linked securely to user accounts.
+- No training of third-party LLMs is performed using user data.
+
+# User Controls
+- Users can delete uploaded documents and cloned voices at any time.
+- Voice cloning requires explicit user consent.
+- Data privacy aligned with GDPR/CCPA principles.
+
+# Contact
+For questions or concerns about AI usage in Invocly:
+support@invocly.com

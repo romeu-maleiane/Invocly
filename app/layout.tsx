@@ -10,7 +10,7 @@ import { Footer } from '@/components/footer'
 import GlobalContextProvider from '@/lib/globalContext'
 
 export const metadata: Metadata = {
-  title: 'Invocly - Invoke you reading voice',
+  title: 'Invocly - Invoke your reading voice',
   description: 'Convert PDF, DOCX, and TXT files into lifelike speech with Invocly. Choose from multiple natural voices and listen to your documents anytime, anywhere.',
   icons: [{
     rel: 'icon',
