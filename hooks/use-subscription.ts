@@ -84,8 +84,8 @@ export function useSubscription() {
       const usageKey = user ? `daily_usage_${user.id}` : "daily_usage_guest"
       const lastUsageDateKey = user ? `last_usage_date_${user.id}` : "last_usage_date_guest"
 
-      const savedUsage = Number.parseInt(localStorage.getItem(usageKey) || "0")
-      const lastUsageDate = localStorage.getItem(lastUsageDateKey)
+      const savedUsage = Number.parseInt(localStorage?.getItem(usageKey) || "0")
+      const lastUsageDate = localStorage?.getItem(lastUsageDateKey)
 
       if (lastUsageDate !== today) {
         setDailyUsage(0)

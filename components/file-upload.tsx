@@ -102,7 +102,6 @@ export function FileUpload({ voices }: FileUploadProps) {
         throw new Error(`Text validation failed: ${validation.issues.join(", ")}`)
       }
 
-      incrementUsage()
       setUploadedFiles((prev) =>
         prev.map((f) =>
           f.id === fileData.id
@@ -166,6 +165,7 @@ export function FileUpload({ voices }: FileUploadProps) {
         throw new Error("Failed to generate audio")
       }
 
+      incrementUsage()
       const audioBlob = await response.blob()
       const audioUrl = URL.createObjectURL(audioBlob)
 
