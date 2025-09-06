@@ -111,71 +111,76 @@ export function AudioPlayer({ audioUrl, fileName, duration, onDownload }: AudioP
           </div>
 
           {/* Controls */}
-          <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={togglePlayPause}
-              className="flex items-center gap-2 bg-transparent"
-            >
-              {isPlaying ? (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
-                </svg>
-              ) : (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              )}
-              {isPlaying ? "Pause" : "Play"}
-            </Button>
-
-            <div className="flex items-center gap-2 flex-1">
-              <span className="text-xs text-gray-500">Speed:</span>
-              <Slider
-                value={playbackRate}
-                onValueChange={setPlaybackRate}
-                min={0.5}
-                max={2.0}
-                step={0.1}
-                className="w-20"
-              />
-              <Badge variant="outline" className="text-xs">
-                {playbackRate[0]}x
-              </Badge>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728"
-                />
-              </svg>
-              <Slider value={volume} onValueChange={setVolume} min={0} max={1} step={0.1} className="w-16" />
-            </div>
-
-            {onDownload && (
-              <Button variant="outline" size="sm" onClick={handleDownload}>
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                Download
+          <div className="flex items-center justify-center flex-wrap gap-4">
+            <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={togglePlayPause}
+                className="flex items-center gap-2 bg-transparent"
+              >
+                {isPlaying ? (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
+                  </svg>
+                ) : (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                )}
+                {isPlaying ? "Pause" : "Play"}
               </Button>
-            )}
-          </div>
+
+              <div className="flex items-center gap-2 flex-1">
+                <span className="text-xs text-gray-500">Speed:</span>
+                <Slider
+                  value={playbackRate}
+                  onValueChange={setPlaybackRate}
+                  min={0.5}
+                  max={2.0}
+                  step={0.1}
+                  className="w-20"
+                />
+                <Badge variant="outline" className="text-xs">
+                  {playbackRate[0]}x
+                </Badge>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-4">
+
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728"
+                  />
+                </svg>
+                <Slider value={volume} onValueChange={setVolume} min={0} max={1} step={0.1} className="w-16" />
+              </div>
+
+              {onDownload && (
+                <Button variant="outline" size="sm" onClick={handleDownload}>
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Download
+                </Button>
+              )}
+              </div>
+            </div>
         </div>
       </CardContent>
     </Card>
