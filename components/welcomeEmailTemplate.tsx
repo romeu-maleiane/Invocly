@@ -86,7 +86,7 @@ export const NewUserWelcomeEmail = ({ firstName }: { firstName: string }) => {
               </Text>
               
               <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
-                ✓ Convert up to 3 documents per month
+                ✓ Convert up to 3 documents
               </Text>
               <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
                 ✓ Access to basic voice selection
@@ -133,7 +133,7 @@ export const NewUserWelcomeEmail = ({ firstName }: { firstName: string }) => {
                   </Button>
                   <br />
                   <Text className="text-[#2563EB] text-[14px] mt-[8px] leading-[20px]">
-                    Start your free 7-day trial today!
+                    Start your free!
                   </Text>
                 </Section>
               </Section>

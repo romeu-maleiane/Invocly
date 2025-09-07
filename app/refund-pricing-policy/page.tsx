@@ -16,7 +16,7 @@ export default function RefundPricingPolicy() {
             <section>
               <h2 className="text-xl font-semibold">Pricing Policy</h2>
               <p>
-                Our pricing is designed to be transparent and flexible, with different plans to suit your needs. We offer both monthly and annual subscription plans. You can find detailed information about our plans on our pricing page.
+                Our pricing is designed to be transparent and flexible, with different plans to suit your needs. We offer monthly plan. You can find detailed information about our plans on our pricing page.
               </p>
               <p>
                 Prices are subject to change, but we will notify you of any changes at least 30 days in advance.

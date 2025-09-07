@@ -23,7 +23,7 @@ export const PLANS: Record<string, SubscriptionPlan> = {
     name: "Free",
     price: 0,
     features: [
-      "Up to 3 documents per day", 
+      "Up to 3 documents", 
       "2 standard voices", 
       "Basic audio controls"
     ],
@@ -55,7 +55,7 @@ export const PLANS: Record<string, SubscriptionPlan> = {
 export function useSubscription() {
   const { user } = useUser()
   const [currentPlan, setCurrentPlan] = useState<string>("free")
-  const [dailyUsage, setDailyUsage] = useState<number>(0)
+  const [usage, setUsage] = useState<number>(0)
   const {setRemainingDocs} = useContext(GlobalContext)
   const [isLoading, setIsLoading] = useState(true)
   const supabase = createClient()
@@ -81,19 +81,10 @@ export function useSubscription() {
         setCurrentPlan("free")
       }
 
-      const usageKey = user ? `daily_usage_${user.id}` : "daily_usage_guest"
-      const lastUsageDateKey = user ? `last_usage_date_${user.id}` : "last_usage_date_guest"
-
+      const usageKey = user ? `usage_${user.id}` : "usage_guest"
       const savedUsage = Number.parseInt(localStorage?.getItem(usageKey) || "0")
-      const lastUsageDate = localStorage?.getItem(lastUsageDateKey)
+      setUsage(savedUsage)
 
-      if (lastUsageDate !== today) {
-        setDailyUsage(0)
-        localStorage.setItem(usageKey, "0")
-        localStorage.setItem(lastUsageDateKey, today)
-      } else {
-        setDailyUsage(savedUsage)
-      }
 
       setIsLoading(false)
     }
@@ -106,14 +97,11 @@ export function useSubscription() {
       return
     }
 
-    const newUsage = dailyUsage + 1
-    setDailyUsage(newUsage)
-    const today = new Date().toDateString()
-    const usageKey = user ? `daily_usage_${user.id}` : "daily_usage_guest"
-    const lastUsageDateKey = user ? `last_usage_date_${user.id}` : "last_usage_date_guest"
+    const newUsage = usage + 1
+    setUsage(newUsage)
+    const usageKey = user ? `usage_${user.id}` : "usage_guest"
 
     localStorage.setItem(usageKey, newUsage.toString())
-    localStorage.setItem(lastUsageDateKey, today)
   }
 
   const canUseFeature = (feature: keyof SubscriptionPlan["limits"]) => {
@@ -124,18 +112,18 @@ export function useSubscription() {
   const canProcessDocument = () => {
     const plan = PLANS[currentPlan]
     if (plan.limits.dailyDocuments === null) return true
-    return dailyUsage < plan.limits.dailyDocuments
+    return usage < plan.limits.dailyDocuments
   }
 
   useEffect(() => {
     const plan = PLANS[currentPlan]
     if (plan.limits.dailyDocuments === null)  return setRemainingDocs(null)
-    setRemainingDocs(Math.max(0, plan.limits.dailyDocuments - dailyUsage))
-  }, [dailyUsage])
+    setRemainingDocs(Math.max(0, plan.limits.dailyDocuments - usage))
+  }, [usage])
 
   return {
     currentPlan: PLANS[currentPlan],
-    dailyUsage,
+    usage,
     isLoading,
     incrementUsage,
     canUseFeature,

@@ -307,7 +307,7 @@ export function VoiceSelection({
         <Button
           onClick={handleGenerate}
           disabled={isGenerating || !selectedVoiceData?.available}
-          className="w-full"
+          className="w-full bg-blue-600 hover:bg-blue-700"
           size="lg"
         >
           {isGenerating ? (

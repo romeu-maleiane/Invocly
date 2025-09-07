@@ -225,10 +225,10 @@ export function FileUpload({ voices }: FileUploadProps) {
             />
           </svg>
           <div>
-            <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+            <p className="text-xl font-medium text-gray-700 dark:text-gray-300">
               {isDragActive ? "Drop files here" : "Drag & drop files here"}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-md text-gray-500 dark:text-gray-400 mt-1">
               or click to browse (PDF, DOCX, TXT - max {currentPlan.limits.maxFileSize}MB)
             </p>
           </div>
@@ -257,6 +257,7 @@ export function FileUpload({ voices }: FileUploadProps) {
                             ? "destructive"
                             : "secondary"
                       }
+                      className={`${fileData.status === "completed" && "bg-blue-600"}`}
                     >
                       {fileData.status}
                     </Badge>
