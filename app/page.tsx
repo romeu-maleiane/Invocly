@@ -61,7 +61,7 @@ export default function Home() {
 
         <div className="flex items-center gap-2 sm:gap-4">
           {user && (<div className='flex items-center gap-2 sm:gap-4'>
-            <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className={`text-sm py-1 ${currentPlan.id === "premium" && 'bg-blue-600'} bg-blue-600 rounded-full`}>
+            <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className={`text-sm py-1 ${currentPlan.id === "premium" ? 'bg-blue-600': ''} rounded-full`}>
               {currentPlan.name} Plan
             </Badge>
           </div>)}
