@@ -4,12 +4,12 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Separator } from "@/components/ui/separator"
 import { useSubscription } from "@/hooks/use-subscription"
 import { LockIcon } from "lucide-react"
+import { estimateDuration } from "@/lib/utils"
 
 export interface VoiceOption {
   voice_id: string
@@ -22,16 +22,9 @@ export interface VoiceOption {
   premium?: boolean
 }
 
-export interface VoiceSettings {
-  selectedVoice: string
-  speed: number
-  pitch: number
-  volume: number
-}
-
 interface VoiceSelectionProps {
   text: string
-  onGenerate: (settings: VoiceSettings) => void
+  onGenerate: (selectedVoice: string) => void
   isGenerating?: boolean
   voices: VoiceOption[]
 }
@@ -43,22 +36,13 @@ export function VoiceSelection({
   voices = [],
 }: VoiceSelectionProps) {
   const [selectedVoice, setSelectedVoice] = useState<string>("erin")
-  const [speed, setSpeed] = useState<number[]>([1.0])
-  const [pitch, setPitch] = useState<number[]>([1.0])
-  const [volume, setVolume] = useState<number[]>([1.0])
   const [isPlayingPreview, setIsPlayingPreview] = useState<string | null>(null)
   const { currentPlan } = useSubscription()
 
   const availableVoices: VoiceOption[] = voices
 
   const handleGenerate = () => {
-    const settings: VoiceSettings = {
-      selectedVoice,
-      speed: speed[0],
-      pitch: pitch[0],
-      volume: volume[0],
-    }
-    onGenerate(settings)
+    onGenerate(selectedVoice)
   }
 
   const playPreview = async (voiceId: string) => {
@@ -73,61 +57,42 @@ export function VoiceSelection({
         body: JSON.stringify({
           text: previewText,
           voiceId,
-          speed: speed[0],
-          pitch: pitch[0],
         }),
       })
 
       if (response.ok) {
         const contentType = response.headers.get("content-type")
-        console.log("[v0] Preview response content-type:", contentType)
 
         if (contentType?.includes("audio/")) {
-          console.log("[v0] Processing audio response")
           const audioBlob = await response.blob()
 
           if (audioBlob.size === 0) {
-            console.log("[v0] Empty audio blob received, falling back to browser TTS")
             throw new Error("Empty audio response")
           }
 
           if (!audioBlob.type.startsWith("audio/")) {
-            console.log("[v0] Invalid audio blob type:", audioBlob.type, "falling back to browser TTS")
             throw new Error("Invalid audio format")
           }
 
           const audioUrl = URL.createObjectURL(audioBlob)
 
           const audio = new Audio(audioUrl)
-          audio.volume = volume[0]
-          audio.playbackRate = speed[0]
 
           audio.onended = () => {
-            console.log("[v0] Audio preview ended successfully")
             setIsPlayingPreview(null)
             URL.revokeObjectURL(audioUrl)
           }
 
           audio.onerror = (error) => {
-            console.error("[v0] Audio playback error:", error)
-            console.log("[v0] Audio element error - likely invalid audio data")
             setIsPlayingPreview(null)
             URL.revokeObjectURL(audioUrl)
             throw new Error('Something went wrong playing the audio')
           }
 
-          audio.onloadstart = () => {
-            console.log("[v0] Audio loading started")
-          }
-
-          audio.oncanplay = () => {
-            console.log("[v0] Audio can play - valid audio detected")
-          }
-
           try {
             await audio.play()
           } catch (playError) {
-            console.error("[v0] Audio play() failed:", playError)
+            console.error("Audio play() failed:", playError)
             throw new Error('Something went wrong playing the audio')
           }
         } 
@@ -155,7 +120,7 @@ export function VoiceSelection({
               d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
             />
           </svg>
-          Voice & Audio Settings
+          Voices 
         </CardTitle>
         <CardDescription>Choose from premium voices</CardDescription>
       </CardHeader>
@@ -251,47 +216,7 @@ export function VoiceSelection({
 
         <Separator />
 
-        <div className="space-y-4">
-          <Label className="text-base font-medium">Audio Controls</Label>
-
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <Label className="text-sm">Reading Speed</Label>
-              <Badge variant="outline">{speed[0]}x</Badge>
-            </div>
-            <Slider value={speed} onValueChange={setSpeed} min={0.5} max={4.0} step={0.1} className="w-full" />
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>0.5x (Slow)</span>
-              <span>4.0x (Fast)</span>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <Label className="text-sm">Pitch</Label>
-              <Badge variant="outline">{pitch[0]}x</Badge>
-            </div>
-            <Slider value={pitch} onValueChange={setPitch} min={0.5} max={2.0} step={0.1} className="w-full" />
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>0.5x (Lower)</span>
-              <span>2.0x (Higher)</span>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <Label className="text-sm">Volume</Label>
-              <Badge variant="outline">{Math.round(volume[0] * 100)}%</Badge>
-            </div>
-            <Slider value={volume} onValueChange={setVolume} min={0.1} max={1.0} step={0.1} className="w-full" />
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>10%</span>
-              <span>100%</span>
-            </div>
-          </div>
-        </div>
-
-        <Separator />
+          <Label className="text-base font-medium">Audio Generation</Label>
 
         <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
           <div className="flex justify-between items-center text-sm">
@@ -300,7 +225,7 @@ export function VoiceSelection({
           </div>
           <div className="flex justify-between items-center text-sm mt-1">
             <span className="text-gray-600 dark:text-gray-400">Estimated duration:</span>
-            <span className="font-medium">{Math.ceil(text.split(" ").length / 200 / speed[0])} min</span>
+            <span className="font-medium">{estimateDuration(text, 200, 0.85)}</span>
           </div>
         </div>
 

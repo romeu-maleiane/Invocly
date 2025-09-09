@@ -7,38 +7,101 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
 interface AudioPlayerProps {
-  audioUrl: string
+  audioStream: ReadableStream<Uint8Array>
   fileName: string
-  duration?: number
-  onDownload?: () => void
+  onStreamEnd: (blob: Blob) => void
+  onDownload: () => void
 }
 
-export function AudioPlayer({ audioUrl, fileName, duration, onDownload }: AudioPlayerProps) {
+export function AudioPlayer({
+  audioStream,
+  fileName,
+  onStreamEnd,
+  onDownload,
+}: AudioPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
-  const [totalDuration, setTotalDuration] = useState(duration || 0)
+  const [totalDuration, setTotalDuration] = useState(0)
   const [volume, setVolume] = useState([1.0])
   const [playbackRate, setPlaybackRate] = useState([1.0])
   const audioRef = useRef<HTMLAudioElement>(null)
+  const [isStreamComplete, setIsStreamComplete] = useState(false)
 
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
     const updateTime = () => setCurrentTime(audio.currentTime)
-    const updateDuration = () => setTotalDuration(audio.duration)
     const handleEnded = () => setIsPlaying(false)
 
     audio.addEventListener("timeupdate", updateTime)
-    audio.addEventListener("loadedmetadata", updateDuration)
     audio.addEventListener("ended", handleEnded)
 
     return () => {
       audio.removeEventListener("timeupdate", updateTime)
-      audio.removeEventListener("loadedmetadata", updateDuration)
       audio.removeEventListener("ended", handleEnded)
     }
-  }, [audioUrl])
+  }, [])
+
+  useEffect(() => {
+    const mediaSource = new MediaSource()
+    const audio = audioRef.current
+    if (!audio) return
+
+    const objectUrl = URL.createObjectURL(mediaSource)
+    audio.src = objectUrl
+    audio.load()
+
+    const onSourceOpen = () => {
+      try {
+        const sourceBuffer = mediaSource.addSourceBuffer("audio/mpeg")
+        const reader = audioStream.getReader()
+        const chunks: BlobPart[] = []
+
+        const processStream = () => {
+          reader
+            .read()
+            .then(({ done, value }) => {
+              if (done) {
+                if (!sourceBuffer.updating && mediaSource.readyState === "open") {
+                  mediaSource.endOfStream()
+                  const blob = new Blob(chunks, { type: "audio/mpeg" })
+                  onStreamEnd(blob)
+                  setIsStreamComplete(true)
+                  setTotalDuration(mediaSource.duration)
+                }
+                return
+              }
+
+              chunks.push(new Uint8Array(value))
+              if (!sourceBuffer.updating) {
+                sourceBuffer.appendBuffer(new Uint8Array(value))
+              } else {
+                sourceBuffer.addEventListener("updateend", () => processStream(), { once: true })
+              }
+            })
+            .catch((err) => {
+              console.error("Stream reading error:", err)
+            })
+        }
+
+        sourceBuffer.addEventListener("updateend", processStream)
+        processStream()
+      } catch (error) {
+        console.error("MediaSource or SourceBuffer error:", error)
+      }
+    }
+
+    mediaSource.addEventListener("sourceopen", onSourceOpen)
+
+    audio.play().catch((e) => console.log("Autoplay failed", e))
+    setIsPlaying(true)
+
+    return () => {
+      mediaSource.removeEventListener("sourceopen", onSourceOpen)
+      URL.revokeObjectURL(objectUrl)
+    }
+  }, [audioStream])
 
   useEffect(() => {
     if (audioRef.current) {
@@ -61,23 +124,10 @@ export function AudioPlayer({ audioUrl, fileName, duration, onDownload }: AudioP
 
   const handleSeek = (value: number[]) => {
     const audio = audioRef.current
-    if (!audio) return
+    if (!audio || !isStreamComplete) return
 
     audio.currentTime = value[0]
     setCurrentTime(value[0])
-  }
-
-  const handleDownload = () => {
-    if (onDownload) {
-      onDownload()
-    } else {
-      const link = document.createElement("a")
-      link.href = audioUrl
-      link.download = fileName.replace(/\.[^/.]+$/, "") + "_audio.mp3"
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    }
   }
 
   const formatTime = (seconds: number) => {
@@ -89,24 +139,33 @@ export function AudioPlayer({ audioUrl, fileName, duration, onDownload }: AudioP
   return (
     <Card className="w-full">
       <CardContent className="p-4">
-        <audio ref={audioRef} src={audioUrl} preload="metadata" />
+        <audio ref={audioRef} preload="metadata" />
 
         <div className="space-y-4">
           {/* File Info */}
           <div className="flex items-center justify-between">
             <div>
               <h4 className="font-medium text-sm">{fileName}</h4>
-              <p className="text-xs text-gray-500">Generated Audio</p>
+              <p className="text-xs text-gray-500">
+                {!isStreamComplete ? "Streaming Audio..." : "Generated Audio"}
+              </p>
             </div>
             <Badge variant="secondary">MP3</Badge>
           </div>
 
           {/* Progress Bar */}
           <div className="space-y-2">
-            <Slider value={[currentTime]} onValueChange={handleSeek} max={totalDuration} step={1} className="w-full" />
+            <Slider
+              value={[currentTime]}
+              onValueChange={handleSeek}
+              max={totalDuration}
+              step={1}
+              className="w-full"
+              disabled={!isStreamComplete}
+            />
             <div className="flex justify-between text-xs text-gray-500">
               <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(totalDuration)}</span>
+              <span>{!isStreamComplete ? "Loading duration..." : formatTime(totalDuration)}</span>
             </div>
           </div>
 
@@ -143,6 +202,7 @@ export function AudioPlayer({ audioUrl, fileName, duration, onDownload }: AudioP
                 min={0.5}
                 max={2.0}
                 step={0.1}
+                disabled={!isStreamComplete}
                 className="sm:w-20 w-full"
               />
               <Badge variant="outline" className="text-xs">
@@ -162,19 +222,23 @@ export function AudioPlayer({ audioUrl, fileName, duration, onDownload }: AudioP
               <Slider value={volume} onValueChange={setVolume} min={0} max={1} step={0.1} className="sm:w-16 w-full" />
             </div>
 
-            {onDownload && (
-              <Button variant="default" size="sm" className="bg-blue-600 text-center sm:w-fit w-full" onClick={handleDownload}>
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                Download
-              </Button>
-            )}
+            <Button
+              variant="default"
+              size="sm"
+              className="bg-blue-600 hover:bg-blue-700 text-center sm:w-fit w-full"
+              onClick={onDownload}
+              disabled={!isStreamComplete}
+            >
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              {!isStreamComplete ? 'Loading download...' : 'Download'}
+            </Button>
           </div>
         </div>
       </CardContent>

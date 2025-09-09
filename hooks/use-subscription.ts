@@ -11,8 +11,8 @@ export interface SubscriptionPlan {
   price: number
   features: string[]
   limits: {
-    dailyDocuments: number | null // null = unlimited
-    maxFileSize: number // in MB
+    Documents: number | null 
+    maxFileSize: number 
     voiceCloning: boolean
   }
 }
@@ -24,11 +24,10 @@ export const PLANS: Record<string, SubscriptionPlan> = {
     price: 0,
     features: [
       "Up to 3 documents", 
-      "2 standard voices", 
-      "Basic audio controls"
+      "2 standard voices",
     ],
     limits: {
-      dailyDocuments: 3,
+      Documents: 3,
       maxFileSize: 5,
       voiceCloning: false,
     },
@@ -41,11 +40,10 @@ export const PLANS: Record<string, SubscriptionPlan> = {
       "Unlimited documents",
       "Voice cloning feature",
       "Premium voices",
-      "Advanced audio controls",
       "50MB file size limit",
     ],
     limits: {
-      dailyDocuments: null,
+      Documents: null,
       maxFileSize: 50,
       voiceCloning: true,
     },
@@ -111,14 +109,14 @@ export function useSubscription() {
 
   const canProcessDocument = () => {
     const plan = PLANS[currentPlan]
-    if (plan.limits.dailyDocuments === null) return true
-    return usage < plan.limits.dailyDocuments
+    if (plan.limits.Documents === null) return true
+    return usage < plan.limits.Documents
   }
 
   useEffect(() => {
     const plan = PLANS[currentPlan]
-    if (plan.limits.dailyDocuments === null)  return setRemainingDocs(null)
-    setRemainingDocs(Math.max(0, plan.limits.dailyDocuments - usage))
+    if (plan.limits.Documents === null)  return setRemainingDocs(null)
+    setRemainingDocs(Math.max(0, plan.limits.Documents - usage))
   }, [usage])
 
   return {

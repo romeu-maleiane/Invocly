@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
   try {
-    const { text, voiceId, speed, pitch } = await request.json()
+    const { text, voiceId,} = await request.json()
 
     if (!text || !voiceId) {
       return NextResponse.json({ error: "Missing required parameters" }, { status: 400 })
@@ -13,22 +13,18 @@ export async function POST(request: NextRequest) {
 
     if (SPEECHIFY_API_KEY) {
       try {
-        console.log("[v0] Attempting Speechify API preview for voice:", voiceId)
-        const previewAudio = await generateSpeechifyPreview(text, voiceId, speed, pitch)
+        const previewAudio = await generateSpeechifyPreview(text, voiceId,)
 
         if (previewAudio && previewAudio.byteLength > 0) {
-          console.log("[v0] Speechify preview generated successfully")
           return new NextResponse(previewAudio, {
             headers: {
               "Content-Type": "audio/mpeg",
               "Cache-Control": "public, max-age=3600",
             },
           })
-        } else {
-          console.log("[v0] Speechify returned empty audio, falling back to browser TTS")
         }
       } catch (error) {
-        console.error("[v0] Speechify preview error:", error)
+        console.error("Speechify preview error:", error)
         const errorMessage = error instanceof Error ? error.message : String(error)
 
         // Check for specific Speechify API errors
@@ -38,12 +34,10 @@ export async function POST(request: NextRequest) {
           errorMessage.includes("rate_limit") ||
           errorMessage.includes("unusual_activity")
         ) {
-          console.log("[v0] Speechify API unavailable, using browser fallback:", errorMessage)
+          console.log("Speechify API unavailable, using browser fallback:", errorMessage)
         }
         // Fall back to voice config response for browser TTS
       }
-    } else {
-      console.log("[v0] No Speechify API key found, using browser TTS fallback")
     }
 
 
@@ -52,12 +46,6 @@ export async function POST(request: NextRequest) {
         success: true,
         fallback: true,
         message: SPEECHIFY_API_KEY ? "Using browser TTS (Speechify unavailable)" : "Using browser TTS",
-        settings: {
-          text,
-          speed: speed || 1.0,
-          pitch: pitch || 1.0,
-          volume: 1.0,
-        },
       },
       {
         headers: {
@@ -66,7 +54,7 @@ export async function POST(request: NextRequest) {
       },
     )
   } catch (error) {
-    console.error("[v0] Preview generation failed:", error)
+    console.error("Preview generation failed:", error)
     return NextResponse.json({ error: "Failed to generate preview" }, { status: 500 })
   }
 }
@@ -74,8 +62,6 @@ export async function POST(request: NextRequest) {
 async function generateSpeechifyPreview(
   text: string,
   voiceId: string,
-  speed: number,
-  pitch: number,
 ): Promise<ArrayBuffer | null> {
   const SPEECHIFY_API_KEY = process.env.SPEECHIFY_API_KEY!
 
@@ -98,14 +84,12 @@ async function generateSpeechifyPreview(
         input: previewText,
         voice_id: speechifyVoiceId,
         audio_format: "mp3",
-        speed: speed,
-        // Speechify doesn't have direct pitch control, so we'll use voice variations
       }),
     })
 
     if (!response.ok) {
       const error = await response.text()
-      console.log("[v0] Speechify API error response:", error)
+      console.error("Speechify API error response:", error)
       throw new Error(`Speechify API error: ${error}`)
     }
 
@@ -115,7 +99,7 @@ async function generateSpeechifyPreview(
       // Caso JSON com Base64
       const data = await response.json();
       if (!data.audio_data) {
-        console.log("[v0] JSON recived but without audio");
+        console.error("JSON recived but without audio");
         return null;
       }
       const buffer = Buffer.from(data.audio_data, "base64");
@@ -126,7 +110,7 @@ async function generateSpeechifyPreview(
     }
 
   } catch (fetchError) {
-    console.error("[v0] Speechify API fetch failed:", fetchError)
+    console.error("Speechify API fetch failed:", fetchError)
     throw fetchError
   }
 }

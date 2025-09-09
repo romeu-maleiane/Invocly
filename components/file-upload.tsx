@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { useDropzone } from "react-dropzone"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -8,9 +8,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { processExtractedText, validateTextForTTS, type ExtractionResult } from "@/lib/text-extraction"
-import { VoiceSelection, type VoiceSettings, type VoiceOption } from "./voice-selection"
+import { VoiceSelection, type VoiceOption } from "./voice-selection"
 import { AudioPlayer } from "./audio-player"
 import { useSubscription } from "@/hooks/use-subscription"
+import { useUser } from "@clerk/nextjs"
+import { uploadAudio } from "@/models/uploadAudio"
+import { insertAudio } from "@/models/insertAudio"
 
 interface UploadedFile {
   file: File
@@ -21,7 +24,8 @@ interface UploadedFile {
   extractionResult?: ExtractionResult
   error?: string
   showVoiceSelection?: boolean
-  generatedAudioUrl?: string
+  downloadableBlob?: Blob
+  audioStream?: ReadableStream<Uint8Array>
 }
 
 interface FileUploadProps {
@@ -29,15 +33,15 @@ interface FileUploadProps {
 }
 
 export function FileUpload({ voices }: FileUploadProps) {
-  const { currentPlan, canProcessDocument, incrementUsage, canUseFeature } = useSubscription()
+  const { currentPlan, canProcessDocument, incrementUsage } = useSubscription()
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
-  const [isProcessing, setIsProcessing] = useState(false)
   const [generatingAudio, setGeneratingAudio] = useState<string | null>(null)
+  const { user } = useUser()
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       if (!canProcessDocument()) {
-        alert("You've reached your daily document limit. Upgrade to Premium for unlimited documents!")
+        alert("You've reached your document limit. Upgrade to Premium for unlimited documents!")
         return
       }
 
@@ -57,7 +61,6 @@ export function FileUpload({ voices }: FileUploadProps) {
       }))
 
       setUploadedFiles((prev) => [...prev, ...newFiles])
-      setIsProcessing(true)
 
       for (const fileData of newFiles) {
         try {
@@ -69,7 +72,6 @@ export function FileUpload({ voices }: FileUploadProps) {
         }
       }
 
-      setIsProcessing(false)
     },
     [canProcessDocument, currentPlan.limits.maxFileSize,],
   )
@@ -89,8 +91,8 @@ export function FileUpload({ voices }: FileUploadProps) {
       })
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to extract text");
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to extract text")
       }
 
       const result = await response.json()
@@ -144,47 +146,66 @@ export function FileUpload({ voices }: FileUploadProps) {
     setUploadedFiles((prev) => prev.map((f) => (f.id === id ? { ...f, showVoiceSelection: !f.showVoiceSelection } : f)))
   }
 
-  const handleGenerateAudio = async (fileId: string, settings: VoiceSettings) => {
+  const handleGenerateAudio = async (fileId: string, selectedVoice: string) => {
     const file = uploadedFiles.find((f) => f.id === fileId)
     if (!file?.extractedText) return
 
     setGeneratingAudio(fileId)
 
     try {
-      const response = await fetch("/api/generate-audio", {
+      const response = await fetch("/api/audio-stream", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: file.extractedText,
-          settings,
-          fileName: file.file.name,
+          selectedVoice,
         }),
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to generate audio")
+      if (!response.ok || !response.body) {
+        throw new Error("Failed to generate audio stream")
       }
 
       incrementUsage()
-      const audioBlob = await response.blob()
-      const audioUrl = URL.createObjectURL(audioBlob)
-
       setUploadedFiles((prev) =>
-        prev.map((f) => (f.id === fileId ? { ...f, generatedAudioUrl: audioUrl, showVoiceSelection: false } : f)),
+        prev.map((f) => (f.id === fileId ? { ...f, audioStream: response.body!, showVoiceSelection: false } : f)),
       )
+      setGeneratingAudio(null)
     } catch (error) {
       console.error("Audio generation failed:", error)
-    } finally {
+      setUploadedFiles((prev) =>
+        prev.map((f) => (f.id === fileId ? { ...f, status: "error", error: "Failed to generate audio" } : f)),
+      )
       setGeneratingAudio(null)
+    }
+  }
+
+  const handleStreamEnd = (fileId: string, blob: Blob, fileName: string) => {
+    setUploadedFiles((prev) =>
+      prev.map((f) =>
+        f.id === fileId
+          ? {
+              ...f,
+              downloadableBlob: blob,
+            }
+          : f,
+      ),
+    )
+    if(user) {
+      const handleStoreAudio = async () => {
+        await uploadAudio(blob, fileName, user.id)
+        .then(async publicUrl => publicUrl && await insertAudio(fileName, publicUrl, user.id))
+      }
+      handleStoreAudio()
     }
   }
 
   const downloadAudio = (fileId: string) => {
     const file = uploadedFiles.find((f) => f.id === fileId)
-    if (!file?.generatedAudioUrl) return
+    if (!file?.downloadableBlob) return
 
     const a = document.createElement("a")
-    a.href = file.generatedAudioUrl
+    a.href = URL.createObjectURL(file.downloadableBlob)
     a.download = `${file.file.name.replace(/\.[^/.]+$/, "")}_audio.mp3`
     document.body.appendChild(a)
     a.click()
@@ -196,7 +217,7 @@ export function FileUpload({ voices }: FileUploadProps) {
       {!canProcessDocument() && (
         <Alert variant="destructive">
           <AlertDescription>
-            You've reached your daily limit of {currentPlan.limits.dailyDocuments} documents. Upgrade to Premium for
+            You've reached your limit of {currentPlan.limits.Documents} documents. Upgrade to Premium for
             unlimited document processing!
           </AlertDescription>
         </Alert>
@@ -292,7 +313,7 @@ export function FileUpload({ voices }: FileUploadProps) {
                       {fileData.extractedText.length > 200 && "..."}
                     </div>
                     <div className="flex gap-2 mt-3">
-                      {!fileData.generatedAudioUrl && (
+                      {!fileData.audioStream && (
                         <Button
                           size="sm"
                           onClick={() => toggleVoiceSelection(fileData.id)}
@@ -303,22 +324,23 @@ export function FileUpload({ voices }: FileUploadProps) {
                       )}
                     </div>
 
-                    {fileData.showVoiceSelection && !fileData.generatedAudioUrl && (
+                    {fileData.showVoiceSelection && !fileData.audioStream && (
                       <div className="mt-4">
                         <VoiceSelection
                           text={fileData.extractedText}
-                          onGenerate={(settings) => handleGenerateAudio(fileData.id, settings)}
+                          onGenerate={(selectedVoice) => handleGenerateAudio(fileData.id, selectedVoice)}
                           isGenerating={generatingAudio === fileData.id}
                           voices={voices}
                         />
                       </div>
                     )}
 
-                    {fileData.generatedAudioUrl && (
+                    {fileData.audioStream && (
                       <div className="mt-4">
                         <AudioPlayer
-                          audioUrl={fileData.generatedAudioUrl}
+                          audioStream={fileData.audioStream}
                           fileName={`${fileData.file.name.replace(/\.[^/.]+$/, "")}_audio.mp3`}
+                          onStreamEnd={(blob) => handleStreamEnd(fileData.id, blob, `${fileData.file.name.replace(/\.[^/.]+$/, "")}_audio.mp3`)}
                           onDownload={() => downloadAudio(fileData.id)}
                         />
                       </div>
@@ -332,13 +354,4 @@ export function FileUpload({ voices }: FileUploadProps) {
       )}
     </div>
   )
-}
-
-
-// Helper function to get file icon
-function getFileIcon(fileName: string) {
-  if (fileName.endsWith(".pdf")) return "📄"
-  if (fileName.endsWith(".docx")) return "📃"
-  if (fileName.endsWith(".txt")) return "📝"
-  return "📁"
 }

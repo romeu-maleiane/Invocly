@@ -23,3 +23,14 @@ export function advancedCleanText(text: string): string {
     .replace(/\s+([.,;:!?])/g, "$1")
     .trim();
 }
+
+export function estimateDuration(text: string, wpm = 200, speed = 1.0) {
+  const words = text.trim().split(/\s+/).length;
+  const totalMinutes = words / (wpm * speed);
+  const totalSeconds = Math.round(totalMinutes * 60);
+
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+}

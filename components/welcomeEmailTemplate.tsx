@@ -115,9 +115,6 @@ export const NewUserWelcomeEmail = ({ firstName }: { firstName: string }) => {
                   🎤 <strong>Premium voices</strong> - Studio-quality, lifelike speech options
                 </Text>
                 <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
-                  🎛️ <strong>Advanced audio controls</strong> - Fine-tune speed, pitch, and more
-                </Text>
-                <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">
                   📁 <strong>50MB file size limit</strong> - Handle larger documents with ease
                 </Text>
                 <Text className="text-[#111827] text-[14px] mb-[20px] leading-[20px]">

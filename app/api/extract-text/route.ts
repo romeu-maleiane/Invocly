@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       fileSize: file.size,
     })
   } catch (error) {
-    console.error("[v0] Error extracting text:", error)
+    console.error("Error extracting text:", error)
     return NextResponse.json(
       {
         error: "Failed to extract text from file. Please try a different file or format.",
@@ -76,7 +76,7 @@ export async function extractPdfText(file: File): Promise<string> {
           return ocrText.trim();
         }
       } catch (ocrError) {
-        console.error("[v0] OCR failed:", ocrError);
+        console.error("OCR failed:", ocrError);
       }
 
       return "This PDF appears to be image-based or encrypted. Text extraction was attempted but minimal text was found.";
@@ -84,7 +84,7 @@ export async function extractPdfText(file: File): Promise<string> {
 
     return extractedText;
   } catch (error) {
-    console.error("[v0] Error extracting PDF text:", error);
+    console.error("Error extracting PDF text:", error);
     throw new Error("Unable to extract text from PDF. Please try a different file.");
   }
 }
@@ -98,7 +98,7 @@ async function performSimpleOCR(file: File): Promise<string> {
 
     return text || "";
   } catch (error) {
-    console.error("[v0] OCR processing failed:", error);
+    console.error("OCR processing failed:", error);
     throw error;
   }
 }
@@ -137,7 +137,7 @@ async function extractDocxText(file: File): Promise<string> {
 
     throw new Error("No readable text content found in DOCX file. File may be empty or contain only images.");
   } catch (error) {
-    console.error("[v0] Error extracting DOCX text:", error);
+    console.error("Error extracting DOCX text:", error);
     const errorMessage = error instanceof Error ? error.message : String(error);
     throw new Error(
       `Failed to extract text from Word document: ${errorMessage}. Please ensure the file is a valid DOCX with text content.`

@@ -67,9 +67,6 @@ export const SubscriptionExpiredEmail = ({ firstName }: { firstName: string }) =
                                     • Premium voices
                                 </Text>
                                 <Text className="text-[#111827] text-[14px] leading-[20px]">
-                                    • Advanced audio controls
-                                </Text>
-                                <Text className="text-[#111827] text-[14px] leading-[20px]">
                                     • 50MB file size limit
                                 </Text>
                                 <Text className="text-[#111827] text-[14px] mb-[8px] leading-[20px]">

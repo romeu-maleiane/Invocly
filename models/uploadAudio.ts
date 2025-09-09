@@ -1,10 +1,9 @@
 'use server'
 import { createClient } from "@/lib/supabase/server"
 
-export async function uploadAudio(audioBuffer: ArrayBuffer, fileName: string, userId: string) {
+export async function uploadAudio(audioBlob: Blob, fileName: string, userId: string) {
     const supabase = await createClient()
-    const blob = new Blob([audioBuffer], { type: 'audio/mpeg' })
-    const file = new File([blob], fileName, { type: 'audio/mpeg' })
+    const file = new File([audioBlob], fileName, { type: 'audio/mpeg' })
     
     try {
         const { error } = await supabase.storage
@@ -20,7 +19,7 @@ export async function uploadAudio(audioBuffer: ArrayBuffer, fileName: string, us
             throw error
         }
 
-        // Gerar URL pública
+
         const { data: { publicUrl } } = supabase.storage
             .from('audio')
             .getPublicUrl(`${userId}/${fileName}`)
