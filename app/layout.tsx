@@ -12,24 +12,6 @@ import GlobalContextProvider from '@/lib/globalContext'
 export const metadata: Metadata = {
   title: 'Invocly - Free Text To Speech Online App',
   description: 'Invocly is a text-to-speech web app converting PDF, DOCX & TXT into clear audio for dyslexic learners, visually impaired users, and busy multitasking students.',
-  icons: [{
-    rel: 'icon',
-    type: 'image/png',
-    sizes: '32x32',
-    url: '/favicon-32x32.png',
-  },
-  {
-    rel: 'icon',
-    type: 'image/png',
-    sizes: '16x16',
-    url: '/favicon-16x16.png',
-  },
-  {
-    rel: 'apple-touch-icon',
-    sizes: '180x180',
-    url: '/apple-touch-icon.png',
-  },
-  ]
 }
 
 export default function RootLayout({
@@ -48,6 +30,7 @@ export default function RootLayout({
             --font-mono: ${GeistMono.variable};
           }
         `}</style>
+          <link rel="icon" href="/favicon.ico" sizes='any' />
         </head>
         <body className="flex flex-col h-full custom-scrollbar">
           <main className="flex-grow">
