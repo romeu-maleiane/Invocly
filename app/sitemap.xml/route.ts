@@ -29,7 +29,7 @@ export function GET() {
   </url>
 </urlset>`
 
-  return new NextResponse(sitemap, {
+  return new Response(sitemap, {
     status: 200,
     headers: {
       "Content-Type": "application/xml",
