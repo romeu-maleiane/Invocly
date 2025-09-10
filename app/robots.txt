@@ -1,7 +1,9 @@
 User-agent: *
 Allow: /
+Allow: /sitemap.xml
+Allow: /llms.txt
 Disallow: /api/
 Disallow: /checkout/
 Disallow: /checkout-redirect/
 
-Sitemap: https://invocly.com/sitemap.xml
+Sitemap: https://www.invocly.com/sitemap.xml

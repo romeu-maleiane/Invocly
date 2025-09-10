@@ -30,6 +30,7 @@ export function GET() {
 </urlset>`
 
   return new NextResponse(sitemap, {
+    status: 200,
     headers: {
       "Content-Type": "application/xml",
     }
