@@ -1,6 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { auth } from '@clerk/nextjs/server'
-import { uploadAudio } from "@/models/uploadAudio"
 import { getVoiceId } from "@/models/getVoiceId";
 
  
