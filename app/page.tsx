@@ -1,9 +1,6 @@
 'use client'
 import Image from 'next/image'
 import { FileUpload } from "@/components/file-upload"
-import { VoiceCloning } from "@/components/voice-cloning"
-import { PricingModal } from "@/components/pricing-modal"
-import { MyAudios } from "@/components/my-audios"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -17,7 +14,17 @@ import { getVoices } from "@/lib/getVoices"
 import { AlertCircleIcon, BriefcaseBusiness, CaseSensitive, GraduationCap, Zap } from 'lucide-react'
 import { GlobalContext } from '@/lib/globalContext'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+import dynamic from 'next/dynamic'
 
+const DynamicVoiceCloning = dynamic(() => import("@/components/voice-cloning").then(mod => mod.VoiceCloning), {
+  ssr: false
+})
+const DynamicPricingModal = dynamic(() => import("@/components/pricing-modal").then(mod => mod.PricingModal), {
+  ssr: false
+})
+const DynamicMyAudios = dynamic(() => import("@/components/my-audios").then(mod => mod.MyAudios), {
+  ssr: false
+})
 
 
 export default function Home() {
@@ -149,7 +156,7 @@ export default function Home() {
 
             <TabsContent value="clone">
               {currentPlan.limits.voiceCloning ? (
-                <VoiceCloning
+                <DynamicVoiceCloning
                   onVoiceCloned={setVoices}
                   hasExistingVoice={false}
                 />
@@ -186,8 +193,8 @@ export default function Home() {
         </div>
       </div>
 
-      <PricingModal isOpen={showPricingModal} onClose={() => setShowPricingModal(false)} />
-      <MyAudios isOpen={showMyAudios} onClose={() => setShowMyAudios(false)} />
+      {showPricingModal && <DynamicPricingModal isOpen={showPricingModal} onClose={() => setShowPricingModal(false)} />}
+      {showMyAudios && <DynamicMyAudios isOpen={showMyAudios} onClose={() => setShowMyAudios(false)} />}
 
       {/* Convert Documents in 3 Simple Steps */}
       <section className="max-w-4xl mx-auto mb-24">
@@ -195,7 +202,7 @@ export default function Home() {
         <div className="grid justify-items-center grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-6 lg:px-0 px-6">
           <Card className='flex flex-col justify-start items-center  px-6 gap-1 shadow-md hover:shadow-lg hover:border-1 hover:border-blue-600'>
             <div className=''>
-              <Image className='rounded-sm' width={350} height={350} alt='upload document step 1 image' src={'/upload_document_step_1.png'}>
+              <Image className='rounded-sm' width={350} height={350} alt='upload document step 1 image' src={'/upload_document_step_1.webp'}>
 
               </Image>
             </div>
@@ -208,7 +215,7 @@ export default function Home() {
           </Card>
           <Card className='flex flex-col justify-start items-center  px-6 gap-1 shadow-md hover:shadow-lg hover:border-1 hover:border-blue-600'>
             <div className=''>
-              <Image className='rounded-sm' width={350} height={350} alt='select voice step 2 image' src={'/select_voice_step_2.png'}>
+              <Image className='rounded-sm' width={350} height={350} alt='select voice step 2 image' src={'/select_voice_step_2.webp'}>
 
               </Image>
             </div>
@@ -221,7 +228,7 @@ export default function Home() {
           </Card>
           <Card className='flex flex-col justify-start items-center px-6 gap-1 shadow-md hover:shadow-lg hover:border-1 hover:border-blue-600'>
             <div className=''>
-              <Image className='rounded-sm' width={350} height={350} alt='generate audio step 3 image' src={'/generate_audio_step_3.png'}>
+              <Image className='rounded-sm' width={350} height={350} alt='generate audio step 3 image' src={'/generate_audio_step_3.webp'}>
 
               </Image>
             </div>
@@ -241,7 +248,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto grid grid-rows-3 justify-items-center gap-6">
           <Card className='flex flex-col sm:flex-row xl:gap-4 justify-between items-center h-fit sm:w-full  px-6 shadow-md hover:shadow-lg hover:border-1 hover:border-blue-600'>
             <div className=''>
-              <Image className='rounded-sm' width={350} height={350} alt='boost productivity benefit image' src={'/boost_productivity_benefit.png'}>
+              <Image className='rounded-sm' width={350} height={350} alt='boost productivity benefit image' src={'/boost_productivity_benefit.webp'}>
 
               </Image>
             </div>
@@ -264,14 +271,14 @@ export default function Home() {
               </CardContent>
             </div>
             <div className=''>
-              <Image className='rounded-sm' width={350} height={350} alt='reduce eye fiting benefit image' src={'/reduce_eye_fiting_benefit.png'}>
+              <Image className='rounded-sm' width={350} height={350} alt='reduce eye fiting benefit image' src={'/reduce_eye_fiting_benefit.webp'}>
 
               </Image>
             </div>
           </Card>
           <Card className='flex flex-col sm:flex-row xl:gap-4 justify-between items-center h-fit sm:w-full px-6 shadow-md hover:shadow-lg hover:border-1 hover:border-blue-600'>
             <div className=''>
-              <Image className='rounded-sm' width={350} height={350} alt='improve rentention benefit image' src={'/improve_rentention_benefit.png'}>
+              <Image className='rounded-sm' width={350} height={350} alt='improve rentention benefit image' src={'/improve_rentention_benefit.webp'}>
 
               </Image>
             </div>

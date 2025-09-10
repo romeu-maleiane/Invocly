@@ -1,5 +1,6 @@
 'use client'
 
+import dynamic from "next/dynamic"
 import { useState, useCallback } from "react"
 import { useDropzone } from "react-dropzone"
 import { Button } from "@/components/ui/button"
@@ -7,13 +8,19 @@ import { Progress } from "@/components/ui/progress"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { type VoiceOption } from "./voice-selection"
 import { processExtractedText, validateTextForTTS, type ExtractionResult } from "@/lib/text-extraction"
-import { VoiceSelection, type VoiceOption } from "./voice-selection"
-import { AudioPlayer } from "./audio-player"
 import { useSubscription } from "@/hooks/use-subscription"
 import { useUser } from "@clerk/nextjs"
 import { uploadAudio } from "@/models/uploadAudio"
 import { insertAudio } from "@/models/insertAudio"
+
+const DynamicVoiceSelection = dynamic(() => import("./voice-selection").then((mod) => mod.VoiceSelection),{
+  ssr: false
+})
+const DynamicAudioPlayer = dynamic(() => import('./audio-player').then(mod => mod.AudioPlayer),{
+  ssr: false
+})
 
 interface UploadedFile {
   file: File
@@ -326,7 +333,7 @@ export function FileUpload({ voices }: FileUploadProps) {
 
                     {fileData.showVoiceSelection && !fileData.audioStream && (
                       <div className="mt-4">
-                        <VoiceSelection
+                        <DynamicVoiceSelection
                           text={fileData.extractedText}
                           onGenerate={(selectedVoice) => handleGenerateAudio(fileData.id, selectedVoice)}
                           isGenerating={generatingAudio === fileData.id}
@@ -337,7 +344,7 @@ export function FileUpload({ voices }: FileUploadProps) {
 
                     {fileData.audioStream && (
                       <div className="mt-4">
-                        <AudioPlayer
+                        <DynamicAudioPlayer
                           audioStream={fileData.audioStream}
                           fileName={`${fileData.file.name.replace(/\.[^/.]+$/, "")}_audio.mp3`}
                           onStreamEnd={(blob) => handleStreamEnd(fileData.id, blob, `${fileData.file.name.replace(/\.[^/.]+$/, "")}_audio.mp3`)}
