@@ -13,7 +13,7 @@ const nextConfig = {
   serverExternalPackages: ["pdf-parse"],
   experimental: {
     serverActions: {
-      bodySizeLimit: '1omb',
+      bodySizeLimit: '10mb',
     },
   },
 }
