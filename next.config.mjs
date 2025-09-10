@@ -10,7 +10,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  serverExternalPackages: ["pdf-parse"]
+  serverExternalPackages: ["pdf-parse"],
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '1omb',
+    },
+  },
 }
 
 export default withSentryConfig(nextConfig, {

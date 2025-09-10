@@ -1,7 +1,16 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getVoiceId } from "@/models/getVoiceId";
 
- 
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
+
+
 export async function POST(request: NextRequest) {
   try {
     const { text, selectedVoice, } = await request.json()
