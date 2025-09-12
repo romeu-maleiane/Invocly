@@ -4,7 +4,7 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from 'svix'
 import { headers } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server"
-import { sendNewUserWelcomeEmail } from "@/lib/sendEmail";
+import { createContanctOnBrevo } from "@/lib/createContactOnBrevo";
 
 export const POST = async (request: NextRequest) => {
     const CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
@@ -46,7 +46,7 @@ export const POST = async (request: NextRequest) => {
     if (event.type === 'user.created') {
         const { id, last_name, first_name, email_addresses } = event.data
         await InsertUser(id, first_name || '', last_name || '', email_addresses[0].email_address)
-        await sendNewUserWelcomeEmail({ name: first_name || '', email: email_addresses[0].email_address })
+        await createContanctOnBrevo({ first_name: first_name || '', last_name: last_name || '', email: email_addresses[0].email_address })
     }
 
 
