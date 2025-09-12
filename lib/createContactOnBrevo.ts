@@ -21,8 +21,8 @@ export const createContanctOnBrevo = async ({ first_name, last_name, email }: Cr
         const contact = new CreateContact();
         contact.email = email;
         contact.attributes = {
-            FIRSTNAME: { value: first_name },
-            LASTNAME: { value: last_name || '' },
+            FIRSTNAME: first_name || '',
+            LASTNAME: last_name || '',
         };
         contact.listIds = [5]
 
