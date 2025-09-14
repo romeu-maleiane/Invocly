@@ -13,7 +13,7 @@ function CheckoutRedirectPage() {
     }
     
     useEffect(() => {
-        redirect(`/checkout/?products=${subscriptionId}&customerExternalId=${user?.id}&customerEmail=${user?.emailAddresses[0].emailAddress}`)
+        if (user) redirect(`/checkout/?products=${subscriptionId}&customerExternalId=${user?.id}&customerEmail=${user?.emailAddresses[0].emailAddress}`)
     },[user])   
 
     return (
