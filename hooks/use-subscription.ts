@@ -61,7 +61,6 @@ export function useSubscription() {
   useEffect(() => {
     async function loadSubscription() {
       setIsLoading(true)
-      const today = new Date().toDateString()
 
       if (user) {
         const { data } = await supabase
@@ -79,7 +78,7 @@ export function useSubscription() {
         setCurrentPlan("free")
       }
 
-      const usageKey = user ? `usage_${user.id}` : "usage_guest"
+      const usageKey = "usage_guest"
       const savedUsage = Number.parseInt(localStorage?.getItem(usageKey) || "0")
       setUsage(savedUsage)
 
@@ -97,7 +96,7 @@ export function useSubscription() {
 
     const newUsage = usage + 1
     setUsage(newUsage)
-    const usageKey = user ? `usage_${user.id}` : "usage_guest"
+    const usageKey = "usage_guest"
 
     localStorage.setItem(usageKey, newUsage.toString())
   }
