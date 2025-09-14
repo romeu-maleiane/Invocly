@@ -391,18 +391,24 @@ export default function Home() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
+              <AccordionTrigger className="text-lg font-medium">What is the character limit per file?</AccordionTrigger>
+              <AccordionContent>
+                Each file works best if it’s under 20,000 characters. For longer documents, split them into smaller parts to ensure smooth and accurate conversion.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
               <AccordionTrigger className="text-lg font-medium">Is Invocly free?</AccordionTrigger>
               <AccordionContent>
                 Yes – Invocly’s web app is free to use for standard conversions. You can access its text-to-speech features without an account. (Invocly may offer premium plans for advanced features like voice cloning or higher limits.)
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-4">
+            <AccordionItem value="item-5">
               <AccordionTrigger className="text-lg font-medium">How do I get the audio after conversion?</AccordionTrigger>
               <AccordionContent>
                 After uploading and converting, Invocly lets you download the MP3 file directly.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-5">
+            <AccordionItem value="item-6">
               <AccordionTrigger className="text-lg font-medium">Is my content private?</AccordionTrigger>
               <AccordionContent>
                 Yes. Invocly processes your document on secure servers and does not share your files. Your uploaded documents are converted to speech and the result is returned to you, without storing your personal data long-term.
