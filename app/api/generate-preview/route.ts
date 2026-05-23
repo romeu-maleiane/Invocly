@@ -70,8 +70,10 @@ async function generateSpeechifyPreview(
   if (!speechifyVoiceId) {
     throw new Error("Voice not found")
   }
-  // Limit preview text length
-  const previewText = text.length > 100 ? text.substring(0, 100) + "..." : text
+  // Fix #8: cortar o preview na última palavra completa, não a meio de uma palavra
+  const previewText = text.length > 100
+    ? text.substring(0, text.lastIndexOf(" ", 100)).trim() + "..."
+    : text
 
   try {
     const response = await fetch("https://api.sws.speechify.com/v1/audio/speech", {

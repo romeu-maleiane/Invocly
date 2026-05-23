@@ -1,6 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
 import mammoth from "mammoth";
 
+// Fix #3: limites verificados antecipadamente, antes de qualquer processamento
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+const MAX_CHAR_LIMIT = 20_000;
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
@@ -10,6 +14,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 })
     }
 
+    // Fix #3: rejeitar ficheiros demasiado grandes antes de qualquer processamento
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      return NextResponse.json(
+        { error: `File is too large. Maximum allowed size is ${MAX_FILE_SIZE_BYTES / 1024 / 1024} MB.` },
+        { status: 400 }
+      )
+    }
+
     const fileType = file.type
     const fileName = file.name.toLowerCase()
 
@@ -17,8 +29,9 @@ export async function POST(request: NextRequest) {
 
     if (fileType === "text/plain" || fileName.endsWith(".txt")) {
       // Handle TXT files
-      const text = await file.text()
-      extractedText = text
+      const rawText = await file.text()
+      // Fix #4: remover BOM (Byte Order Mark) que pode aparecer em ficheiros .txt UTF-8
+      extractedText = rawText.replace(/^\uFEFF/, "")
     } else if (fileType === "application/pdf" || fileName.endsWith(".pdf")) {
       // Handle PDF files
       extractedText = await extractPdfText(file)
@@ -33,7 +46,8 @@ export async function POST(request: NextRequest) {
     }
 
     extractedText = advancedCleanText(extractedText)
-    const MAX_CHAR_LIMIT = 20000;
+
+    // Fix #3: verificar limite de caracteres após limpeza
     if (extractedText.length > MAX_CHAR_LIMIT) {
       return NextResponse.json(
         { error: `File content exceeds the maximum allowed length of ${MAX_CHAR_LIMIT} characters.` },
@@ -60,7 +74,7 @@ export async function POST(request: NextRequest) {
 import pdf from "pdf-parse/lib/pdf-parse";
 import { advancedCleanText } from "@/lib/utils";
 
-export async function extractPdfText(file: File): Promise<string> {
+async function extractPdfText(file: File): Promise<string> {
   try {
 
     const arrayBuffer = await file.arrayBuffer();
@@ -89,12 +103,24 @@ export async function extractPdfText(file: File): Promise<string> {
   }
 }
 
+// Fix #5: timeout máximo para OCR — evita bloquear o servidor indefinidamente
+const OCR_TIMEOUT_MS = 30_000; // 30 segundos
+
 async function performSimpleOCR(file: File): Promise<string> {
   try {
     const Tesseract = await import("tesseract.js");
     const blob = new Blob([await file.arrayBuffer()], { type: file.type });
 
-    const { data: { text } } = await Tesseract.recognize(blob, "eng+por");
+    const ocrPromise = Tesseract.recognize(blob, "eng+por", {
+      // Desativar logger em produção para não poluir os logs do servidor
+      logger: process.env.NODE_ENV === "development" ? (m: unknown) => console.log(m) : undefined,
+    });
+
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("OCR timeout: processing exceeded 30 seconds")), OCR_TIMEOUT_MS)
+    );
+
+    const { data: { text } } = await Promise.race([ocrPromise, timeoutPromise]);
 
     return text || "";
   } catch (error) {
@@ -106,28 +132,37 @@ async function performSimpleOCR(file: File): Promise<string> {
 
 async function extractDocxText(file: File): Promise<string> {
   try {
-
     const arrayBuffer = await file.arrayBuffer();
 
     // Converte ArrayBuffer para Buffer
     const buffer = Buffer.from(arrayBuffer);
 
-    // Extrair texto bruto
+    // Extrair texto bruto (primeira tentativa — mais fiel à estrutura original)
     const result = await mammoth.extractRawText({ buffer });
-
 
     if (result.value && result.value.trim().length > 0) {
       return result.value.trim();
     }
 
-
-    // Extrair HTML e converter para texto
+    // Fix #6: fallback via HTML, mas preservando a estrutura semântica antes de remover as tags
     const htmlResult = await mammoth.convertToHtml({ buffer });
 
     if (htmlResult.value && htmlResult.value.trim().length > 0) {
       const textFromHtml = htmlResult.value
-        .replace(/<[^>]+>/g, " ")
-        .replace(/\s+/g, " ")
+        // Converter tags de bloco em quebras de parágrafo ANTES de remover as tags
+        // Assim <h1>Título</h1><p>Texto</p> → "Título\n\nTexto" em vez de "Título Texto"
+        .replace(/<\/(?:h[1-6]|p|li|tr|div|blockquote)>/gi, "\n")
+        .replace(/<br\s*\/?>/gi, "\n")
+        // Agora remover todas as tags restantes
+        .replace(/<[^>]+>/g, "")
+        // Decodificar entidades HTML básicas
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&quot;/g, '"')
+        // Normalizar: máximo 2 quebras de linha consecutivas
+        .replace(/\n{3,}/g, "\n\n")
         .trim();
 
       if (textFromHtml.length > 0) {
