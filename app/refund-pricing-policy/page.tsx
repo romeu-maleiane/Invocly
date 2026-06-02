@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Header } from "@/components/header"
@@ -14,7 +14,7 @@ export default function RefundPricingPolicy() {
           </CardHeader>
           <CardContent className="space-y-4">
             <section>
-              <h2 className="text-xl font-semibold">Pricing Policy</h2>
+              <h2 className="type-heading font-semibold">Pricing Policy</h2>
               <p>
                 Our pricing is designed to be transparent and flexible, with different plans to suit your needs. We offer monthly plan. You can find detailed information about our plans on our pricing page.
               </p>
@@ -23,7 +23,7 @@ export default function RefundPricingPolicy() {
               </p>
             </section>
             <section>
-              <h2 className="text-xl font-semibold">Refund Policy</h2>
+              <h2 className="type-heading font-semibold">Refund Policy</h2>
               <p>
                 We offer a 14-day money-back guarantee for new customers. If you are not satisfied with our service, you can request a full refund within 14 days of your initial purchase.
               </p>
@@ -40,3 +40,4 @@ export default function RefundPricingPolicy() {
     </>
   )
 }
+

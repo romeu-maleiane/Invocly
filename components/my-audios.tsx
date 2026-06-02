@@ -92,7 +92,7 @@ export function MyAudios({ isOpen, onClose }: MyAudiosProps) {
                   <div key={audio.id} className="border rounded-lg p-4 flex items-center justify-between">
                     <div>
                       <p className="font-medium">{audio.audio_name}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="type-caption text-gray-500">
                         {format(new Date(audio.created_at), "PPP p")}
                       </p>
                     </div>

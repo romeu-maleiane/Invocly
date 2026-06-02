@@ -253,10 +253,10 @@ export function FileUpload({ voices }: FileUploadProps) {
             />
           </svg>
           <div>
-            <p className="text-xl font-medium text-gray-700 dark:text-gray-300">
+            <p className="type-heading font-medium text-gray-700 dark:text-gray-300">
               {isDragActive ? "Drop files here" : "Drag & drop files here"}
             </p>
-            <p className="text-md text-gray-500 dark:text-gray-400 mt-1">
+            <p className="type-body-16 text-gray-500 dark:text-gray-400 mt-1">
               or click to browse (PDF, DOCX, TXT - max {currentPlan.limits.maxFileSize}MB)
             </p>
           </div>
@@ -265,15 +265,15 @@ export function FileUpload({ voices }: FileUploadProps) {
 
       {uploadedFiles.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">Uploaded Files</h3>
+          <h3 className="type-heading font-semibold">Uploaded Files</h3>
           {uploadedFiles.map((fileData) => (
             <Card key={fileData.id} className="p-4">
               <CardContent className="p-0">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <div className="flex-1">
-                      <p className="font-medium text-sm overflow-hidden whitespace-nowrap text-ellipsis sm:max-w-[200px] max-w-[100px]">{fileData.file.name}</p>
-                      <p className="text-xs text-gray-500">{(fileData.file.size / 1024 / 1024).toFixed(2)} MB</p>
+                      <p className="type-heading font-medium overflow-hidden whitespace-nowrap text-ellipsis sm:max-w-[200px] max-w-[100px]">{fileData.file.name}</p>
+                      <p className="type-caption text-gray-500">{(fileData.file.size / 1024 / 1024).toFixed(2)} MB</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2"> 
@@ -307,15 +307,15 @@ export function FileUpload({ voices }: FileUploadProps) {
 
                 {fileData.status === "completed" && fileData.extractedText && fileData.extractionResult && (
                   <div className="mt-3">
-                    <div className="flex gap-4 mb-3 text-xs text-gray-600 dark:text-gray-400">
+                    <div className="flex gap-4 mb-3 type-caption text-gray-600 dark:text-gray-400">
                       <span>Words: {fileData.extractionResult.wordCount.toLocaleString()}</span>
                       <span>Est. Reading Time: {fileData.extractionResult.estimatedReadingTime} min</span>
                       {fileData.extractionResult.language && (
                         <span>Language: {fileData.extractionResult.language.toUpperCase()}</span>
                       )}
                     </div>
-                    <p className="text-sm font-medium mb-2">Extracted Text Preview:</p>
-                    <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm max-h-32 overflow-y-auto">
+                    <p className="type-caption font-medium mb-2">Extracted Text Preview:</p>
+                    <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded type-caption max-h-32 overflow-y-auto">
                       {fileData.extractedText.substring(0, 200)}
                       {fileData.extractedText.length > 200 && "..."}
                     </div>

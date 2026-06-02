@@ -185,7 +185,7 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-2xl">
+        <CardTitle className="flex items-center gap-2 type-heading">
           <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
@@ -226,7 +226,7 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
         {/* Recording Section */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <Label className="text-base font-medium">Voice Recording</Label>
+            <Label className="type-small-body font-medium">Voice Recording</Label>
             {recordingDuration > 0 && (
               <Badge variant={recordingDuration >= 30 ? "default" : "secondary"}>
                 {formatTime(recordingDuration)} / 1:00
@@ -258,8 +258,8 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-medium">{isRecording ? "Recording in progress..." : "Ready to record"}</p>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="type-body-16 font-medium">{isRecording ? "Recording in progress..." : "Ready to record"}</p>
+                    <p className="type-caption text-gray-500 mt-1">
                       Speak clearly for 30-60 seconds. Read a paragraph or speak naturally.
                     </p>
                   </div>
@@ -293,7 +293,7 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
             <div className="space-y-4">
               <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-green-800 dark:text-green-200">Recording Complete</span>
+                  <span className="type-caption font-medium text-green-800 dark:text-green-200">Recording Complete</span>
                   <Badge variant="default">{formatTime(recordingDuration)}</Badge>
                 </div>
                 <audio controls className="w-full">
@@ -343,7 +343,7 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
 
           {isProcessing && (
             <div className="space-y-2">
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between type-caption">
                 <span>Processing voice clone...</span>
                 <span>{processingProgress}%</span>
               </div>
@@ -366,8 +366,8 @@ export function VoiceCloning({ onVoiceCloned, }: VoiceCloningProps) {
 
         {/* Instructions */}
         <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-          <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Recording Tips:</h4>
-          <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+          <h4 className="type-heading font-medium text-blue-900 dark:text-blue-100 mb-2">Recording Tips:</h4>
+          <ul className="type-small-body text-blue-800 dark:text-blue-200 space-y-1">
             <li>• Speak in a quiet environment without background noise</li>
             <li>• Use your natural speaking voice and pace</li>
             <li>• Record at least 30 seconds for best quality</li>

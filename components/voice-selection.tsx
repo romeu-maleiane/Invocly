@@ -126,7 +126,7 @@ export function VoiceSelection({
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <Label className="text-base font-medium mb-3 block">Select Voice</Label>
+          <Label className="type-small-body font-medium mb-3 block">Select Voice</Label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {availableVoices.map((voice) => {
               const isPremium = voice.premium
@@ -150,23 +150,23 @@ export function VoiceSelection({
                     <div className="flex items-center gap-2">
                       {isDisabled && <LockIcon className="w-4 h-4 text-amber-600" />}
                       <div>
-                        <h4 className="font-medium text-sm">{voice.voice_name}</h4>
-                        <p className="text-xs text-gray-600 dark:text-gray-400">{voice.description}</p>
+                        <h4 className="type-heading font-medium">{voice.voice_name}</h4>
+                        <p className="type-caption text-gray-600 dark:text-gray-400">{voice.description}</p>
                       </div>
                     </div>
                     <div className="flex gap-1">
                       {voice.type === "standard" && (
-                        <Badge variant="default" className="text-xs">
+                        <Badge variant="default" className="type-caption">
                           Standard
                         </Badge>
                       )}
                       {voice.type === "cloned" && (
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge variant="secondary" className="type-caption">
                           Cloned
                         </Badge>
                       )}
                       {voice.premium && (
-                        <Badge variant="outline" className="text-xs text-amber-600 border-amber-600">
+                        <Badge variant="outline" className="type-caption text-amber-600 border-amber-600">
                           Premium
                         </Badge>
                       )}
@@ -216,15 +216,15 @@ export function VoiceSelection({
 
         <Separator />
 
-          <Label className="text-base font-medium">Audio Generation</Label>
+          <Label className="type-small-body font-medium">Audio Generation</Label>
 
         <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-gray-600 dark:text-gray-400">Text to convert:</span>
+          <div className="flex justify-between items-center type-small-body text-gray-600 dark:text-gray-400">
+            <span>Text to convert:</span>
             <span className="font-medium">{text.split(" ").length} words</span>
           </div>
-          <div className="flex justify-between items-center text-sm mt-1">
-            <span className="text-gray-600 dark:text-gray-400">Estimated duration:</span>
+          <div className="flex justify-between items-center type-small-body text-gray-600 dark:text-gray-400 mt-1">
+            <span>Estimated duration:</span>
             <span className="font-medium">{estimateDuration(text, 200, 0.85)}</span>
           </div>
         </div>
