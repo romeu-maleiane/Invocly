@@ -86,7 +86,17 @@ export default function Home() {
               <Button size='sm' className="text-sm rounded-full min:px-2 max:px-4 py-2" variant="outline" onClick={() => setShowMyAudios(true)}>
                 My Audios
               </Button>
-              <UserButton />
+              <UserButton>
+                {currentPlan.id === "premium" && (
+                  <UserButton.MenuItems>
+                    <UserButton.Action
+                      label="Manage Subscription"
+                      labelIcon={<Zap className="w-4 h-4 text-blue-600" />}
+                      onClick={() => window.location.href = '/api/billing/portal'}
+                    />
+                  </UserButton.MenuItems>
+                )}
+              </UserButton>
             </SignedIn>
           </div>
         </div>
