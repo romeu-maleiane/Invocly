@@ -38,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     if (currentPlan.id === 'free' && user)
       setShowPricingModal(true)
-  }, [currentPlan.id])
+  }, [user])
 
   useEffect(() => {
     async function loadVoices() {
