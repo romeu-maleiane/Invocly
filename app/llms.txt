@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Invocly LLMs Transparency File
-# Last updated: 2025-09-05
+# Last updated: 2026-06-18
 
 Application: Invocly
 Description: Invocly converts documents into natural audio, with optional voice cloning.

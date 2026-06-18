@@ -36,6 +36,11 @@ export default function Home() {
   const { user } = useUser()
 
   useEffect(() => {
+    if (currentPlan.id === 'free' && user)
+      setShowPricingModal(true)
+  }, [currentPlan.id])
+
+  useEffect(() => {
     async function loadVoices() {
       const fetchedVoices = await getVoices(user?.id)
       setVoices(fetchedVoices)
@@ -112,16 +117,29 @@ export default function Home() {
       <div className="container mx-auto px-4 pt-16 sm:pt-18 mb-24">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 text-sm font-normal text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800/30">
-              <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
-              Join 10,000+ users transforming their reading
-            </div>
-            <h1 className="tracking-normal text-foreground font-semibold text-4xl md:text-6xl lg:text-7xl dark:text-white mb-6 leading-tight">
-              Turn any document into <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">lifelike speech</span> instantly.
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8 font-normal leading-relaxed">
-              Simply upload your PDF, DOCX, or TXT and transform them into high-quality audio with natural-sounding AI voices.
-            </p>
+            {!user && (
+              <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 text-sm font-normal text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800/30">
+                <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
+                Join 10,000+ users transforming their reading
+              </div>
+            )}
+
+            {!user ? (
+              <h1 className="tracking-normal text-foreground font-semibold text-4xl md:text-6xl lg:text-7xl dark:text-white mb-6 leading-tight">
+                Turn any document into <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">lifelike speech</span> instantly.
+              </h1>
+            ) : (
+              <h1 className="tracking-normal text-foreground font-semibold text-4xl md:text-6xl lg:text-7xl dark:text-white mb-6 leading-tight">
+                Turn Any Document into Lifelike Speech
+              </h1>
+            )}
+
+            {!user && (
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8 font-normal leading-relaxed">
+                Simply upload your PDF, DOCX, or TXT and transform them into high-quality audio with natural-sounding AI voices.
+              </p>
+            )}
+
             {!user && (
               <div className="flex flex-col items-center justify-center gap-3">
                 <SignUpButton>
@@ -222,7 +240,7 @@ export default function Home() {
       <section className="border-y border-gray-200 dark:border-gray-800 bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm py-10 sm:py-16 mb-24">
         <div className="container mx-auto px-4">
           <p className="text-center text-sm font-semimedium text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-8">
-            Trusted by students and professionals at
+            Trusted by 10.000+ user at
           </p>
           <div className="flex flex-wrap justify-center items-center gap-10 sm:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
             <span className="text-2xl font-medium font-serif text-gray-800 dark:text-gray-300">Stanford</span>
@@ -301,7 +319,7 @@ export default function Home() {
                 and listen anywhere.
               </h2>
 
-              {!user ? 
+              {!user ?
                 (
                   <div className="mt-12 flex justify-end gap-4">
                     <SignInButton>
@@ -310,8 +328,8 @@ export default function Home() {
                       </Button>
                     </SignInButton>
                   </div>
-                ) 
-              : null}
+                )
+                : null}
             </div>
           </div>
 
