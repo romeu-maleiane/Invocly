@@ -49,7 +49,7 @@ export default function Home() {
   }, [user])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {currentPlan.id === "free" && (<Alert className='flex justify-center items-center gap-1 rounded-t-none py-2'>
         <div>
           <AlertCircleIcon size={17} color='#4a5565' />
@@ -237,17 +237,89 @@ export default function Home() {
       </div>
 
       {/* Trust Logos */}
-      <section className="border-y border-gray-200 dark:border-gray-800 bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm py-10 sm:py-16 mb-24">
-        <div className="container mx-auto px-4">
+      <section className="border-y border-gray-200 bg-blue-50  backdrop-blur-sm py-10 sm:py-16 mb-24 overflow-hidden">
+        <div className="container mx-auto  relative">
           <p className="text-center text-sm font-semimedium text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-8">
-            Trusted by 10.000+ user at
+            Trusted by 10.000+ users worldwide
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-10 sm:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-            <span className="text-2xl font-medium font-serif text-gray-800 dark:text-gray-300">Stanford</span>
-            <span className="text-2xl font-medium tracking-tighter text-gray-800 dark:text-gray-300">Google</span>
-            <span className="text-2xl font-medium font-sans text-gray-800 dark:text-gray-300">Microsoft</span>
-            <span className="text-2xl font-medium italic text-gray-800 dark:text-gray-300">Spotify</span>
-            <span className="text-2xl font-medium uppercase tracking-widest text-gray-800 dark:text-gray-300">Tesla</span>
+
+          <div className="relative overflow-hidden">
+            <div className="absolute inset-y-0 left-0 w-24 sm:w-40 z-10 pointer-events-none bg-gradient-to-r from-blue-50 to-transparent" />
+            <div className="absolute inset-y-0 right-0 w-24 sm:w-40 z-10 pointer-events-none bg-gradient-to-l from-blue-50 to-transparent" />
+
+            <div className="flex flex-col gap-8 py-6 opacity-90">
+              <div className="flex items-center overflow-hidden">
+                <div className="min-w-full flex gap-6 md:gap-16 items-center shrink-0 pr-6 md:pr-16 animate-scroll-left-fast">
+                  {[
+                    { src: "/trust_logos/logo-uc-berkeley.webp", alt: "UC Berkeley", width: 320, height: 100 },
+                    { src: "/trust_logos/logo-stanford.webp", alt: "Stanford University", width: 260, height: 100 },
+                    { src: "/trust_logos/logo-columbia.webp", alt: "Columbia University", width: 560, height: 100 },
+                    { src: "/trust_logos/logo-princeton.webp", alt: "Princeton University", width: 340, height: 100 },
+                    { src: "/trust_logos/logo-sheffield.webp", alt: "University of Sheffield", width: 302, height: 100 },
+                    { src: "/trust_logos/logo-cecos.webp", alt: "CECOS College London", width: 200, height: 100 },
+                    { src: "/trust_logos/logo-our-lady-of-fatima.webp", alt: "Our Lady of Fatima University", width: 452, height: 100 },
+                    { src: "/trust_logos/logo-batangas-state.webp", alt: "Batangas State University", width: 90, height: 100 },
+                    { src: "/trust_logos/logo-universiti-teknologi-mara.webp", alt: "Universiti Teknologi MARA", width: 200, height: 100 },
+                  ].concat([
+                    { src: "/trust_logos/logo-uc-berkeley.webp", alt: "UC Berkeley", width: 320, height: 100 },
+                    { src: "/trust_logos/logo-stanford.webp", alt: "Stanford University", width: 260, height: 100 },
+                    { src: "/trust_logos/logo-columbia.webp", alt: "Columbia University", width: 560, height: 100 },
+                    { src: "/trust_logos/logo-princeton.webp", alt: "Princeton University", width: 340, height: 100 },
+                    { src: "/trust_logos/logo-sheffield.webp", alt: "University of Sheffield", width: 302, height: 100 },
+                    { src: "/trust_logos/logo-cecos.webp", alt: "CECOS College London", width: 200, height: 100 },
+                    { src: "/trust_logos/logo-our-lady-of-fatima.webp", alt: "Our Lady of Fatima University", width: 452, height: 100 },
+                    { src: "/trust_logos/logo-batangas-state.webp", alt: "Batangas State University", width: 90, height: 100 },
+                    { src: "/trust_logos/logo-universiti-teknologi-mara.webp", alt: "Universiti Teknologi MARA", width: 200, height: 100 },
+                  ]).map((logo, index) => (
+                    <div key={`row1-${index}`} style={{ height: 50 }} className="shrink-0 flex items-center">
+                      <Image
+                        src={logo.src}
+                        alt={logo.alt}
+                        width={logo.width}
+                        height={logo.height}
+                        className="h-full w-auto object-contain grayscale opacity-60 transition duration-300 hover:opacity-100"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center overflow-hidden">
+                <div className="min-w-full flex gap-6 md:gap-16 items-center shrink-0 pr-6 md:pr-16 animate-scroll-right-fast">
+                  {[
+                    { src: "/trust_logos/logo-universiti-putra-malaysia.webp", alt: "Universiti Putra Malaysia", width: 180, height: 100 },
+                    { src: "/trust_logos/logo-srm.webp", alt: "SRM Institute of Science and Technology", width: 240, height: 160 },
+                    { src: "/trust_logos/logo-vit.webp", alt: "VIT University", width: 300, height: 100 },
+                    { src: "/trust_logos/logo-thammasat.webp", alt: "Thammasat University", width: 360, height: 100 },
+                    { src: "/trust_logos/logo-mae-fah-luang.webp", alt: "Mae Fah Luang University", width: 360, height: 100 },
+                    { src: "/trust_logos/logo-fpt.webp", alt: "FPT University", width: 200, height: 100 },
+                    { src: "/trust_logos/logo-duy-tan.webp", alt: "Duy Tan University", width: 260, height: 100 },
+                    { src: "/trust_logos/logo-middle-east-technical.webp", alt: "Middle East Technical University", width: 580, height: 100 },
+                    { src: "/trust_logos/logo-yeditepe.webp", alt: "Yeditepe University", width: 270, height: 100 },
+                  ].concat([
+                    { src: "/trust_logos/logo-universiti-putra-malaysia.webp", alt: "Universiti Putra Malaysia", width: 180, height: 100 },
+                    { src: "/trust_logos/logo-srm.webp", alt: "SRM Institute of Science and Technology", width: 240, height: 160 },
+                    { src: "/trust_logos/logo-vit.webp", alt: "VIT University", width: 300, height: 100 },
+                    { src: "/trust_logos/logo-thammasat.webp", alt: "Thammasat University", width: 360, height: 100 },
+                    { src: "/trust_logos/logo-mae-fah-luang.webp", alt: "Mae Fah Luang University", width: 360, height: 100 },
+                    { src: "/trust_logos/logo-fpt.webp", alt: "FPT University", width: 200, height: 100 },
+                    { src: "/trust_logos/logo-duy-tan.webp", alt: "Duy Tan University", width: 260, height: 100 },
+                    { src: "/trust_logos/logo-middle-east-technical.webp", alt: "Middle East Technical University", width: 580, height: 100 },
+                    { src: "/trust_logos/logo-yeditepe.webp", alt: "Yeditepe University", width: 270, height: 100 },
+                  ]).map((logo, index) => (
+                    <div key={`row2-${index}`} style={{ height: 50 }} className="shrink-0 flex items-center">
+                      <Image
+                        src={logo.src}
+                        alt={logo.alt}
+                        width={logo.width}
+                        height={logo.height}
+                        className="h-full w-auto object-contain grayscale opacity-60 transition duration-300 hover:opacity-100"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

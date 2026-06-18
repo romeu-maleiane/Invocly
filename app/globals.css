@@ -136,8 +136,31 @@
   border-radius: 9999px;
   min-height: 30px; /* limita o tamanho do thumb */
 }
-}
 
+  .animate-scroll-left-fast {
+    animation: scroll-left 50s linear infinite;
+  }
+
+  .animate-scroll-right-fast {
+    animation: scroll-left 50s linear infinite;
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-scroll-left-fast,
+    .animate-scroll-right-fast {
+      animation: none;
+    }
+  }
+}
 
 html {
   font-size: 18px;
