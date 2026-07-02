@@ -115,7 +115,7 @@ export default function Home() {
         </div>
       </header>
       <div className="container mx-auto px-4 pt-16 sm:pt-18 mb-24">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto lg:px-6">
           <div className="text-center mb-12 sm:mb-16">
             {!user && (
               <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 text-sm font-normal text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800/30">
@@ -125,17 +125,17 @@ export default function Home() {
             )}
 
             {!user ? (
-              <h1 className="tracking-normal text-foreground font-semibold text-4xl md:text-6xl lg:text-7xl dark:text-white mb-6 leading-tight">
-                Turn any document into <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">lifelike speech</span> instantly.
+              <h1 className="tracking-normal text-foreground font-semibold text-4xl md:text-6xl dark:text-white mb-6 leading-tight">
+                Invocly, Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">Text-to-Speech</span>, Every Time.
               </h1>
             ) : (
-              <h1 className="tracking-normal text-foreground font-semibold text-4xl md:text-6xl lg:text-7xl dark:text-white mb-6 leading-tight">
-                Turn Any Document into Lifelike Speech
+              <h1 className="tracking-normal text-foreground font-semibold text-4xl md:text-6xl dark:text-white mb-6 leading-tight">
+                Let Invocly Read for You
               </h1>
             )}
 
             {!user && (
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8 font-normal leading-relaxed">
+              <p className="text-lg sm:text-xl  text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8 font-normal leading-relaxed">
                 Simply upload your PDF, DOCX, or TXT and transform them into high-quality audio with natural-sounding AI voices.
               </p>
             )}
