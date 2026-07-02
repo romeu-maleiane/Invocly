@@ -1,0 +1,45 @@
+# Seed pillars for OpenSEO keyword research.
+# The research agent expands each seed into long-tail candidates — these are
+# starting points, not the final keyword list.
+
+pillars:
+  - name: accessibility_dyslexia
+    seeds:
+      - "text to speech for dyslexia"
+      - "reading tool for dyslexia"
+      - "listen instead of reading assistive technology"
+
+  - name: student_study_use
+    seeds:
+      - "convert pdf to audio to study"
+      - "listen to lecture notes"
+      - "audio textbook alternative"
+      - "text to speech for studying"
+
+  - name: document_conversion_howto
+    seeds:
+      - "convert docx to mp3"
+      - "pdf to audio online free"
+      - "how to listen to a pdf"
+
+  - name: productivity_multitasking
+    seeds:
+      - "listen to documents while driving"
+      - "listen to emails commute"
+      - "text to speech for busy professionals"
+
+# Existing invocly.com pages available for internal linking.
+# Keep this updated — the research/writing agent should not invent URLs.
+internal_pages:
+  - url: "https://invocly.com/"
+    topic: "homepage / product overview"
+  - url: "https://invocly.com/pricing"
+    topic: "pricing"
+  - url: "https://invocly.com/blog"
+    topic: "Invocly Blog - guides on audio conversion and text to speech"
+  - url: "https://invocly.com/privacy-policy"
+    topic: "privacy policy"
+  - url: "https://invocly.com/terms-of-service"
+    topic: "terms of service"
+  - url: "https://invocly.com/refund-pricing-policy"
+    topic: "refund and pricing policy"

@@ -1,0 +1,35 @@
+# Populated by the IDE research agent using OpenSEO MCP data (see AGENTS.md, Job 1).
+# blog.py reads entries with status: "new" and writes drafts for them.
+#
+# Schema per entry:
+#   id: short slug-safe id, unique
+#   keyword: target keyword from OpenSEO
+#   intent: informational | comparison | how_to
+#   search_volume: int (from openseo.keyword_research)
+#   difficulty: int 0-100 (from openseo.keyword_research)
+#   bullets: list of angles the post must cover (agent writes these, not prose)
+#   internal_links: list of {url, anchor_hint} — must exist in seo-pipeline/topics_seed.yaml internal_pages
+#   external_links: list of {url, note} — authoritative outside sources
+#   status: new | drafted | published
+
+topics:
+  - id: pdf-to-audio-study
+    keyword: "convert pdf to audio to study"
+    intent: how_to
+    search_volume: 320
+    difficulty: 14
+    bullets:
+      - "Why listening beats re-reading for retention during exam prep (briefly, with a citation)"
+      - "Step-by-step: upload a PDF and get an audio file with Invocly"
+      - "What to do with scanned/image-only PDFs (OCR limitation, be honest about it)"
+      - "Best practices: playback speed for comprehension vs. speed-listening"
+      - "Free vs paid options comparison, positioned honestly"
+    internal_links:
+      - url: "https://invocly.com/"
+        anchor_hint: "convert your PDF to audio"
+      - url: "https://invocly.com/pricing"
+        anchor_hint: "free plan limits"
+    external_links:
+      - url: "https://en.wikipedia.org/wiki/Dual_coding_theory"
+        note: "background on auditory + visual learning, not a hard citation of a specific stat"
+    status: new
