@@ -1,2 +1,9 @@
+allowBuilds:
+  '@clerk/shared': set this to true or false
+  '@sentry/cli': set this to true or false
+  '@tailwindcss/oxide': set this to true or false
+  sharp: set this to true or false
+  supabase: set this to true or false
+  tesseract.js: set this to true or false
 onlyBuiltDependencies:
   - supabase
