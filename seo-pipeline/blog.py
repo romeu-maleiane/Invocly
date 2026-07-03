@@ -17,7 +17,6 @@ Requires:
 
 import argparse
 import datetime as dt
-import json
 import pathlib
 import re
 import sys
@@ -126,27 +125,49 @@ def split_frontmatter(content: str) -> tuple[dict, str]:
     return front, body
 
 
-def build_faq_jsonld(faq: list[dict]) -> str:
-    schema = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": item["question"],
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": item["answer"],
-                },
-            }
-            for item in faq
-        ],
-    }
-    return (
-        '<script type="application/ld+json">\n'
-        + json.dumps(schema, indent=2)
-        + "\n</script>"
-    )
+
+def sanitize_body(body: str) -> str:
+    """
+    Escape characters that break the @next/mdx acorn (JSX) parser.
+
+    The MDX compiler treats `{` and `}` as JSX expression delimiters.
+    If the AI writes prose like "use the {filename} format" or
+    "press {Enter}", the compiler will crash trying to parse that as JSX.
+
+    Strategy:
+      1. Split the body on fenced code blocks (``` ... ```).
+      2. Leave code segments untouched.
+      3. In prose segments, replace bare `{` -> `\{` and `}` -> `\}`
+         but skip inline code spans (`code`).
+    """
+    # Split on fenced code blocks (``` or ~~~) — keep delimiters in list
+    segments = re.split(r'(```[\s\S]*?```|~~~[\s\S]*?~~~)', body)
+    sanitized = []
+    for i, seg in enumerate(segments):
+        is_fenced_block = i % 2 == 1  # odd indices are the captured groups
+        if is_fenced_block:
+            sanitized.append(seg)
+        else:
+            # In prose: protect inline code spans, then escape braces
+            parts = re.split(r'(`[^`]*`)', seg)
+            escaped_parts = []
+            for j, part in enumerate(parts):
+                is_inline_code = j % 2 == 1
+                if is_inline_code:
+                    escaped_parts.append(part)
+                else:
+                    part = part.replace('{', r'\{')
+                    part = part.replace('}', r'\}')
+                    escaped_parts.append(part)
+            sanitized.append(''.join(escaped_parts))
+    return ''.join(sanitized)
+
+
+# NOTE: FAQ JSON-LD is no longer embedded in MDX files.
+# It is now generated server-side in app/blog/[slug]/page.tsx
+# directly from the `faq` field in the frontmatter.
+# Embedding <script> tags in MDX breaks the @next/mdx acorn parser.
+
 
 
 def qa_check(front: dict, body: str) -> list[str]:
@@ -177,11 +198,13 @@ def write_draft(topic: dict, content: str) -> pathlib.Path:
         for p in problems:
             print(f"    - {p}")
 
-    faq_jsonld = build_faq_jsonld(front.get("faq", []))
+    # Sanitize the body to escape JSX-breaking characters ({, })
+    # that the AI may produce in prose text.
+    body = sanitize_body(body)
 
     full_content = (
         "---\n" + yaml.safe_dump(front, sort_keys=False, allow_unicode=True) + "---\n"
-        + body.rstrip() + "\n\n" + faq_jsonld + "\n"
+        + body.rstrip() + "\n"
     )
 
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
