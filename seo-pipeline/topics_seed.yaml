@@ -28,6 +28,15 @@ pillars:
       - "listen to emails commute"
       - "text to speech for busy professionals"
 
+  - name: competitor_alternatives
+    seeds:
+      - "Speechify alternative"
+      - "NaturalReader vs Speechify"
+      - "best text to speech app 2026"
+      - "free text to speech tools compared"
+      - "Invocly vs Speechify"
+      - "cheap text to speech app for students"
+
 # Existing invocly.com pages available for internal linking.
 # Keep this updated — the research/writing agent should not invent URLs.
 internal_pages:
