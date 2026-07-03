@@ -14,7 +14,7 @@ OpenSEO MCP (keyword data, SERPs, GSC)
 config/topics_queue.yaml   ← agent writes bullet-point briefs here
         │
         ▼
-scripts/blog.py             ← deterministic: brief + brand-voice.md → MDX draft
+seo-pipeline/blog.py             ← deterministic: brief + brand-voice.md → MDX draft
         │
         ▼
 blog/*.mdx         ← draft, human-reviewed via PR, merged
@@ -23,7 +23,7 @@ blog/*.mdx         ← draft, human-reviewed via PR, merged
 OpenSEO MCP GSC data checked by agent → early risers flagged
         │
         ▼
-scripts/blog.py --refresh   ← improves the existing post, not a new one
+seo-pipeline/blog.py --refresh   ← improves the existing post, not a new one
 ```
 
 The MCP tool calls (research + rank checking) only happen inside the agent's
@@ -59,17 +59,17 @@ need judgment calls: templating, file writing, frontmatter.
 
 ```bash
 # Draft every queued topic with status: new
-python scripts/blog.py --all-new
+python seo-pipeline/blog.py --all-new
 
 # Draft one specific topic
-python scripts/blog.py --topic-id pdf-to-audio-study
+python seo-pipeline/blog.py --topic-id pdf-to-audio-study
 
 # Refresh an existing post based on ranking notes
-python scripts/blog.py --refresh pdf-to-audio-study --notes "Position 14, low CTR, add FAQ"
+python seo-pipeline/blog.py --refresh pdf-to-audio-study --notes "Position 14, low CTR, add FAQ"
 ```
 
 Output lands in `blog/*.mdx` — adjust the frontmatter/output format in
-`scripts/blog.py` to match whatever your actual site (Next.js/Astro/etc.) expects
+`seo-pipeline/blog.py` to match whatever your actual site (Next.js/Astro/etc.) expects
 if MDX with this frontmatter shape isn't a direct fit.
 
 ## Cadence
