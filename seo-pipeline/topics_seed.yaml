@@ -3,11 +3,24 @@
 # starting points, not the final keyword list.
 
 pillars:
-  - name: accessibility_dyslexia
+  - name: accessibility
     seeds:
       - "text to speech for dyslexia"
       - "reading tool for dyslexia"
       - "listen instead of reading assistive technology"
+
+      - "text to speech for ADHD"
+      - "reading tool for ADHD"
+      - "listen to textbooks with ADHD"
+      - "ADHD study tools"
+
+      - "text to speech for visual impairment"
+      - "screen reader alternative"
+      - "accessible reading software"
+
+      - "text to speech for learning disabilities"
+      - "assistive reading software"
+      - "text to speech accessibility"
 
   - name: student_study_use
     seeds:
