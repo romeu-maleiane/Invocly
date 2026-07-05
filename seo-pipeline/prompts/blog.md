@@ -9,7 +9,7 @@ SEARCH INTENT: {{intent}}
 MUST COVER (these are angles, expand each into real content, don't just restate them):
 {{bullets}}
 
-INTERNAL LINKS TO INCLUDE (Use 3–6 internal links where they naturally help the reader. Only use URLs from the list above. Choose the most relevant pages based on the article's topic. Do not force links or invent URLs. Prioritize relevance over quantity, and ensure each link adds real value to the reader's context.):
+INTERNAL LINKS TO INCLUDE (use these exact URLs, natural anchor text, woven into the body):
 {{internal_links}}
 
 EXTERNAL LINKS TO CITE (use these exact URLs where relevant):

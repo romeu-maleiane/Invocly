@@ -11,7 +11,7 @@ what ranks" approach rather than volume-publishing.
 OpenSEO MCP (keyword data, SERPs, GSC)
         │  used by the agent directly
         ▼
-config/topics_queue.yaml   ← agent writes bullet-point briefs here
+seo-pipeline/topics_queue.yaml   ← agent writes bullet-point briefs here
         │
         ▼
 seo-pipeline/blog.py             ← deterministic: brief + brand-voice.md → MDX draft

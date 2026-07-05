@@ -20,7 +20,7 @@ topics:
   - url: https://en.wikipedia.org/wiki/Dual_coding_theory
     note: background on auditory + visual learning, not a hard citation of a specific
       stat
-  status: drafted
+  status: published
 - id: text-to-speech-students-disabilities
   keyword: text-to-speech software for students with disabilities
   intent: informational
@@ -42,7 +42,7 @@ topics:
     note: educational authority on TTS fundamentals
   - url: https://www.edutopia.org/article/using-text-to-speech-technology-to-support-all-students/
     note: evidence on TTS benefits for all student types
-  status: drafted
+  status: published
 - id: dyslexia-font-google-docs
   keyword: open dyslexic font for google docs
   intent: informational
@@ -64,7 +64,7 @@ topics:
     note: official Open Dyslexic creator and research
   - url: https://www.nysdsc.org/Text-to-Speech
     note: university guide on TTS for dyslexia
-  status: drafted
+  status: published
 - id: listen-lecture-notes-study
   keyword: listen to lecture notes while studying
   intent: how_to
@@ -86,4 +86,4 @@ topics:
     note: cognitive science backing multisensory study methods
   - url: https://www.edutopia.org/article/using-text-to-speech-technology-to-support-all-students/
     note: classroom best practices
-  status: drafted
+  status: published

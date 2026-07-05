@@ -27,7 +27,7 @@ before starting either job. If it's not connected, stop and ask the human to con
    - Not already covered by an existing post in `blog/`
 
 2. **Write bullet-point briefs**, not full outlines. For each chosen keyword, append an
-   entry to `config/topics_queue.yaml` with:
+   entry to `seo-pipeline/topics_queue.yaml` with:
    - `keyword`, `intent` (informational/comparison/how-to), `search_volume`, `difficulty`
    - 4–6 bullet points of what the post must cover (not prose — just the angles)
    - `internal_links`: 1–3 relevant Invocly pages (pull real URLs from the site, don't invent them)
@@ -42,7 +42,20 @@ before starting either job. If it's not connected, stop and ask the human to con
    This writes a full MDX draft to `blog/` using `brand-voice.md` as the style
    guide and marks the queue entry `status: drafted`.
 
-4. **QA pass** on each draft before it goes further. `blog.py` runs cheap structural
+4. **Update `topic_seed.yaml`** internal_pages after     generated 
+
+   After a blog post is successfully generated and stored, the system MUST automatically append it to `seo-pipeline/topic_seed.yaml` under `internal_pages`.
+
+   This ensures newly generated content becomes immediately available for internal linking in future SEO research and writing cycles.
+
+   The appended entry must follow this structure:
+
+   ```yaml
+   - url: "https://invocly.com/blog/<slug>"
+     topic: "<post title>"
+   ```
+
+5. **QA pass** on each draft before it goes further. `blog.py` runs cheap structural
    checks automatically and prints warnings (FAQ count, title/description length,
    missing Quick Answer blockquote, non-question H2s) — treat those as a starting
    checklist, not the full review:
@@ -62,11 +75,11 @@ before starting either job. If it's not connected, stop and ask the human to con
    - Reads like it was written by someone who understands dyslexia/accessibility/studying,
      not generic AI filler. If it sounds like every other SaaS blog post, rewrite the intro.
 
-5. **Open a PR**, don't push to main. Title it `blog: <keyword>`. Include the brief in the
+6. **Open a PR**, don't push to main. Title it `blog: <keyword>`. Include the brief in the
    PR description so the human reviewer can see what it was supposed to cover. Wait for
    human merge — do not self-merge.
 
-6. Mark the queue entry `status: published` only after the PR is merged.
+7. Mark the queue entry `status: published` only after the PR is merged.
 
 ---
 
