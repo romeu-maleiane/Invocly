@@ -1,4 +1,30 @@
 topics:
+- id: how-to-listen-to-a-pdf
+  keyword: how to listen to a pdf
+  intent: how_to
+  search_volume: null
+  difficulty: null
+  bullets:
+  - Compare built-in read-aloud options in Adobe Acrobat, Microsoft Edge, and mobile
+    accessibility tools
+  - Show when uploading a PDF to Invocly is easier than using a built-in reader
+  - Explain limits for scanned/image-only PDFs and when OCR is needed
+  - Cover study, dyslexia, eye-strain, and commuting use cases without overstating
+    benefits
+  - Include practical listening tips for speed, voice choice, and comprehension
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: listen to PDFs with natural text-to-speech
+  - url: https://invocly.com/pricing
+    anchor_hint: Invocly plan options
+  - url: https://invocly.com/blog
+    anchor_hint: more text-to-speech guides
+  external_links:
+  - url: https://www.adobe.com/acrobat/hub/how-to-read-pdf-aloud.html
+    note: Adobe guide ranking for PDF read-aloud instructions
+  - url: https://www.microsoft.com/en-us/edge/features/read-aloud
+    note: Microsoft Edge documentation for reading PDFs aloud
+  status: drafted
 - id: pdf-to-audio-study
   keyword: convert pdf to audio to study
   intent: how_to
