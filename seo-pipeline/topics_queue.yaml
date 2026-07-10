@@ -1,4 +1,33 @@
 topics:
+- id: listen-to-documents-while-driving
+  keyword: listen to documents while driving
+  intent: how_to
+  search_volume: null
+  difficulty: null
+  bullets:
+  - Explain how to prepare PDFs, DOCX files, and plain-text documents for listening
+    before a trip
+  - Set clear safety boundaries: queue audio and choose playback settings before driving,
+      with no on-road interaction
+  - Compare built-in phone and browser read-aloud options with a document-to-speech
+    workflow
+  - Cover practical listening settings such as voice choice, speed, Bluetooth, and
+    resuming long documents
+  - Explain which documents work well and why scanned or image-only PDFs may need
+    OCR first
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: turn a document into audio before your drive
+  - url: https://invocly.com/pricing
+    anchor_hint: Invocly plan options for document listening
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: how to listen to a PDF
+  external_links:
+  - url: https://www.adobe.com/acrobat/hub/how-to-read-pdf-aloud.html
+    note: Adobe's documentation for listening to PDF files aloud
+  - url: https://www.nhtsa.gov/risky-driving/distracted-driving
+    note: NHTSA guidance for keeping phone interaction out of the driving task
+  status: drafted
 - id: how-to-listen-to-a-pdf
   keyword: how to listen to a pdf
   intent: how_to
