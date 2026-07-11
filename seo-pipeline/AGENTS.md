@@ -18,9 +18,10 @@ before starting either job. If it's not connected, stop and ask the human to con
 
 ## Job 1 — Research & Publish (run 1–2x/week)
 
-1. **Research keywords with OpenSEO MCP**, not from memory. For each pillar in
+1. **Research keywords with OpenSEO MCP**, not from memory. For the choosen pillar in
    `seo-pipeline/topics_seed.yaml`, call `research_keywords` on the seed terms, then
    `get_serp_results` on the 3–5 best candidates to see who currently ranks and why.
+   Choose 2-3 best keywords to write bullet-point briefs.
    Prioritize keywords that are:
    - Long-tail (3+ words), clearly matched to one of Invocly's actual use cases
    - Low-to-medium difficulty (don't chase head terms this early)
