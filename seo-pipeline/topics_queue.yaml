@@ -1,4 +1,31 @@
 topics:
+- id: speechify-free-alternative
+  keyword: speechify free alternative
+  intent: comparison
+  search_volume: 480
+  difficulty: 0
+  bullets:
+  - Define what a genuinely free text-to-speech option should include and distinguish
+    free plans from limited trials
+  - Compare document support, voice quality, playback controls, audio export, privacy,
+    and usage limits without inventing feature claims
+  - Show free built-in options in Microsoft Edge and Apple devices alongside dedicated
+    document-to-speech tools
+  - Explain where Invocly fits for PDF, DOCX, and TXT listening, including honest
+    plan and scanned-PDF limitations
+  - Give decision guidance for students, accessibility users, and professionals based
+    on file type and listening frequency
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: convert documents to natural-sounding speech
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: practical ways to listen to a PDF
+  external_links:
+  - url: https://www.microsoft.com/en-us/edge/features/read-aloud
+    note: official Microsoft documentation for the free Edge Read Aloud feature
+  - url: https://support.apple.com/en-sg/guide/iphone/iph96b214f0/ios
+    note: official Apple documentation for Speak Screen and listening to on-screen text
+  status: drafted
 - id: how-to-listen-to-a-pdf
   keyword: how to listen to a pdf
   intent: how_to

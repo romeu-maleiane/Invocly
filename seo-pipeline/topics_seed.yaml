@@ -55,8 +55,6 @@ pillars:
 internal_pages:
   - url: "https://invocly.com/"
     topic: "homepage / product overview"
-  - url: "https://invocly.com/pricing"
-    topic: "pricing"
   - url: "https://invocly.com/blog"
     topic: "Invocly Blog - guides on audio conversion and text to speech"
   - url: "https://invocly.com/privacy-policy"
@@ -67,3 +65,5 @@ internal_pages:
     topic: "refund and pricing policy"
   - url: "https://invocly.com/blog/how-to-listen-to-a-pdf"
     topic: "How to Listen to a PDF: A Practical Guide"
+  - url: "https://invocly.com/blog/speechify-free-alternative"
+    topic: "Speechify Free Alternative: 3 Options for Documents"
