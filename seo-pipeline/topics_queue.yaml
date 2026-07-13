@@ -1,4 +1,90 @@
 topics:
+- id: dyslexia-tools-for-reading
+  keyword: dyslexia tools for reading
+  intent: informational
+  search_volume: 1000
+  difficulty: 11
+  bullets:
+  - 'Explain the main reading-tool categories: text-to-speech, display controls, scanning
+    tools, and writing support; distinguish support from dyslexia treatment'
+  - Help readers match a tool to the specific barrier, such as decoding dense text,
+    keeping place, or accessing a printed document
+  - Show a practical document-to-speech workflow for PDFs, DOCX files, and TXT files,
+    including the limitation for image-only PDFs
+  - Cover built-in browser and device accessibility options before dedicated tools
+  - Give a short, non-ranked checklist for choosing tools at school, work, or home
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: convert a readable document to speech
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to a PDF
+  - url: https://invocly.com/blog
+    anchor_hint: more practical text-to-speech guides
+  external_links:
+  - url: https://dyslexia.yale.edu/resources/tools-technology/
+    note: Yale Center for Dyslexia & Creativity overview of tools and technology
+  - url: https://dyslexiaida.org/effective-reading-instruction-for-students-with-dyslexia/
+    note: International Dyslexia Association guidance distinguishing instruction from
+      accommodations
+  status: drafted
+- id: dyslexia-apps-for-students
+  keyword: dyslexia apps for students
+  intent: informational
+  search_volume: 40
+  difficulty: 6
+  bullets:
+  - 'Organize app types by student task: listening to assigned reading, writing, spelling,
+    planning, and reading practice'
+  - Explain when text-to-speech is useful for accessing teacher-provided digital documents
+    and when it cannot replace structured literacy instruction
+  - Include a short checklist for school compatibility, privacy, headphones, and whether
+    a student can use the app independently
+  - Cover free built-in accessibility options alongside dedicated apps without pretending
+    every student needs the same tool
+  - Show how to prepare a PDF, DOCX, or TXT assignment for a focused listening session
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: turn a class document into audio
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to an assigned PDF
+  - url: https://invocly.com/blog/text-to-speech-software-for-students-with-disabilities
+    anchor_hint: text-to-speech options for students with disabilities
+  external_links:
+  - url: https://dyslexiahelp.umich.edu/tools/apps/
+    note: University of Michigan DyslexiaHelp app resource
+  - url: https://www.callscotland.org.uk/downloads/posters-and-leaflets/android-apps-for-learners-with-dyslexia/
+    note: CALL Scotland resource on Android apps for learners with dyslexia
+  status: drafted
+- id: text-to-speech-for-adhd
+  keyword: text to speech for ADHD
+  intent: informational
+  search_volume: 30
+  difficulty: 0
+  bullets:
+  - Explain text-to-speech as one reading-access strategy for people with ADHD, without
+    making medical or guaranteed focus claims
+  - Give a step-by-step workflow for listening to a document in short sections, pausing
+    to annotate, and resuming without losing place
+  - Cover useful controls such as speed, voice choice, and short listening blocks,
+    plus when slower playback is more practical
+  - Compare built-in read-aloud options with a document-to-speech tool for PDFs, DOCX
+    files, and TXT files
+  - 'State the limits clearly: text-to-speech cannot replace individual clinical,
+    educational, or workplace accommodation advice'
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: listen to a document in manageable sections
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to a PDF
+  - url: https://invocly.com/blog/listen-to-lecture-notes-while-studying
+    anchor_hint: listen to lecture notes while studying
+  external_links:
+  - url: https://www.additudemag.com/text-to-speech-to-text-tools-students-adhd/
+    note: ADDitude guide to text-to-speech and speech-to-text tools for students with
+      ADHD
+  - url: https://www.cdc.gov/adhd/about/index.html
+    note: CDC overview of ADHD for context on individualized support
+  status: drafted
 - id: speechify-free-alternative
   keyword: speechify free alternative
   intent: comparison
@@ -24,7 +110,8 @@ topics:
   - url: https://www.microsoft.com/en-us/edge/features/read-aloud
     note: official Microsoft documentation for the free Edge Read Aloud feature
   - url: https://support.apple.com/en-sg/guide/iphone/iph96b214f0/ios
-    note: official Apple documentation for Speak Screen and listening to on-screen text
+    note: official Apple documentation for Speak Screen and listening to on-screen
+      text
   status: drafted
 - id: listen-to-documents-while-driving
   keyword: listen to documents while driving
