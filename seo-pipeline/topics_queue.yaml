@@ -1,4 +1,91 @@
 topics:
+- id: google-chrome-text-to-speech
+  keyword: google chrome text to speech
+  intent: informational
+  search_volume: 260
+  difficulty: 27
+  bullets:
+  - Explain the difference between Chrome browser capabilities, Chromebook accessibility
+    features, and third-party Chrome extensions
+  - Show a safe setup workflow for having a webpage, Google Doc, or text-based PDF
+    read aloud
+  - Cover the practical controls that matter during focused work: voice, speed, pause,
+      and resume
+  - Explain that scanned or image-only PDFs need OCR before text-to-speech can read
+    their contents
+  - Help readers choose between a browser extension and a document-to-speech workflow
+    without making unverified feature claims
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: turn a PDF, DOCX, or TXT document into audio
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to a PDF
+  - url: https://invocly.com/blog/listen-to-documents-while-driving
+    anchor_hint: prepare a document for hands-free listening
+  external_links:
+  - url: https://support.google.com/chromebook/answer/9032490
+    note: Google Chromebook Help on text-to-speech and ChromeVox
+  - url: https://chromewebstore.google.com/detail/read-aloud-a-text-to-spee/hdhinadidafjejdhmfkjgnolgimiaplp
+    note: Chrome Web Store listing for a commonly surfaced read-aloud extension
+  status: drafted
+- id: firefox-text-to-speech
+  keyword: firefox text to speech
+  intent: informational
+  search_volume: 210
+  difficulty: 0
+  bullets:
+  - Explain that Firefox users generally add a text-to-speech extension rather than
+    relying on a universal built-in read-aloud control
+  - Give a focused setup path for reading webpage text aloud and testing voice and
+    playback controls before a long session
+  - Separate browser-page listening from converting a PDF, DOCX, or TXT document to
+    audio
+  - Cover what readers should check before installing an extension: supported content,
+      permissions, privacy, and offline needs
+  - State the limitation for scanned or image-only PDFs and point readers to OCR as
+    the prerequisite
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: convert a document into audio
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: practical PDF listening options
+  - url: https://invocly.com/blog/listen-to-documents-while-driving
+    anchor_hint: queue document audio before a drive
+  external_links:
+  - url: https://addons.mozilla.org/en-US/firefox/addon/read-aloud/
+    note: Mozilla Add-ons listing for the surfaced Read Aloud extension
+  - url: https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox
+    note: Mozilla Support guidance for managing extension shortcuts
+  status: drafted
+- id: listen-to-word-documents
+  keyword: listen to word documents
+  intent: how_to
+  search_volume: 10
+  difficulty: 62
+  bullets:
+  - Show how to use Microsoft Word Read Aloud to listen to a selected passage or an
+    entire document
+  - Explain useful listening controls, including speed, voice, pause, and resuming
+    during editing or review
+  - Cover when native Word Read Aloud is enough and when converting a DOCX file to
+    audio is more practical for a longer session
+  - Include a quick pre-listening check for headings, comments, tables, and document
+    text quality
+  - Explain how to prepare listening before driving or another activity that should
+    not involve device interaction
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: turn a Word document into audio
+  - url: https://invocly.com/blog/listen-to-documents-while-driving
+    anchor_hint: prepare your audio before a drive
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to other document formats
+  external_links:
+  - url: https://support.microsoft.com/en-us/word/listen-to-your-word-documents
+    note: Microsoft Support instructions for Word Read Aloud
+  - url: https://support.microsoft.com/en-us/office/immersive-reader-5feba7bf-c2ac-4d3f-bb59-2c25e7b846e1
+    note: Microsoft Support overview of Immersive Reader
+  status: drafted
 - id: dyslexia-tools-for-reading
   keyword: dyslexia tools for reading
   intent: informational
