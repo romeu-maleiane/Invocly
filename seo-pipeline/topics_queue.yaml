@@ -1,4 +1,91 @@
 topics:
+- id: how-to-listen-to-textbooks
+  keyword: how to listen to textbooks
+  intent: how_to
+  search_volume: 20
+  difficulty: 36
+  bullets:
+  - Show the practical routes for listening to a textbook: publisher-provided audio,
+      accessible-library formats, built-in read-aloud, and text-to-speech for a readable
+      digital file
+  - Give a step-by-step workflow for checking a PDF or e-textbook, choosing a listening
+    method, and testing a short chapter before committing to a long session
+  - Explain the limits for scanned, image-only, DRM-protected, or inaccessible textbook
+    files without suggesting that a reader can bypass publisher access controls
+  - Cover useful study controls: section-sized listening blocks, speed, pause-and-recall
+      prompts, and following along with headings or page numbers
+  - Include accessibility and copyright context, with a clear note to use legitimately
+    obtained course materials and institution-supported formats where available
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: convert a readable PDF, DOCX, or TXT study file into audio
+  - url: https://invocly.com/blog/convert-pdf-to-audio-to-study
+    anchor_hint: convert a PDF to audio for study
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to a digital textbook PDF
+  external_links:
+  - url: https://ecampusontario.pressbooks.pub/georgianoer/chapter/text-to-speech/
+    note: Ontario postsecondary resource on using text-to-speech for textbooks
+  - url: https://www.bookshare.org/
+    note: accessible ebook and audiobook service for eligible readers
+  status: drafted
+- id: listening-comprehension-vs-reading-comprehension
+  keyword: listening comprehension vs reading comprehension
+  intent: informational
+  search_volume: 40
+  difficulty: 0
+  bullets:
+  - Explain the distinct skills involved in understanding spoken and written language,
+    without presenting either format as universally better
+  - Show students how text-to-speech can provide access to an assigned digital text
+    while active reading and note-taking still matter
+  - Compare a short fiction passage with a dense nonfiction chapter, including why
+    format and task can change the result
+  - Give a small self-test workflow using short sections, recall questions, and playback-speed
+    adjustments
+  - State clearly that listening support is an accommodation or study option, not
+    a replacement for reading instruction or individual advice
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: turn a readable PDF, DOCX, or TXT file into audio
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to a digital PDF
+  - url: https://invocly.com/blog/listen-to-lecture-notes-while-studying
+    anchor_hint: use audio alongside lecture-note review
+  external_links:
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC4681499/
+    note: NIH-hosted review of listening comprehension research
+  - url: https://www.cehd.udel.edu/reading-versus-listening/
+    note: University of Delaware overview of reading versus listening for learning
+  status: drafted
+- id: listening-vs-reading-retention
+  keyword: listening vs reading retention
+  intent: informational
+  search_volume: 10
+  difficulty: null
+  bullets:
+  - Answer the retention question without claiming that audio or reading always wins
+  - Explain how material complexity, attention, repetition, and the learner's task
+    affect what is remembered
+  - Give a concrete study workflow: listen in short blocks, pause for a retrieval
+      prompt, then revisit the relevant page or note
+  - Cover why audio can make document access more practical while passive playback
+    is a poor substitute for active recall
+  - Include an honest comparison of listening during a focused study session versus
+    during a commute or other attention-demanding activity
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: make a readable study document available as audio
+  - url: https://invocly.com/blog/convert-pdf-to-audio-to-study
+    anchor_hint: convert a PDF to audio for study
+  - url: https://invocly.com/blog/listen-to-lecture-notes-while-studying
+    anchor_hint: pair audio with lecture-note review
+  external_links:
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC6603442/
+    note: NIH-hosted study comparing text and audio information retention
+  - url: https://www.cehd.udel.edu/reading-versus-listening/
+    note: University of Delaware overview of reading versus listening for learning
+  status: drafted
 - id: google-chrome-text-to-speech
   keyword: google chrome text to speech
   intent: informational
