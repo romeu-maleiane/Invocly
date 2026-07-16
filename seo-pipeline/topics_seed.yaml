@@ -38,8 +38,13 @@ pillars:
   - name: productivity_multitasking
     seeds:
       - "listen to documents while driving"
-      - "listen to emails commute"
-      - "text to speech for busy professionals"
+      - "listen to documents while commuting"
+      - "consume documents faster"
+      - "reduce screen time at work"
+      - "review documents on the go"
+      - "listen to reports instead of reading"
+      - "how busy professionals consume long documents"
+      - "multitask while reading documents"
 
   - name: competitor_alternatives
     seeds:
@@ -49,6 +54,17 @@ pillars:
       - "free text to speech tools compared"
       - "Invocly vs Speechify"
       - "cheap text to speech app for students"
+
+  - name: case_studies
+    seeds:
+      - "how students study with audio"
+      - "listening to textbooks instead of reading"
+      - "studying with dyslexia"
+      - "studying with ADHD"
+      - "listening to documents at work"
+      - "how professionals consume long documents"
+      - "learning with audio instead of reading"
+      - "real study workflows with AI"
 
 # Existing invocly.com pages available for internal linking.
 # Keep this updated — the research/writing agent should not invent URLs.
