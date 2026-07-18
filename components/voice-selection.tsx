@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator"
 import { useSubscription } from "@/hooks/use-subscription"
 import { LockIcon } from "lucide-react"
 import { estimateDuration } from "@/lib/utils"
+import { type ListeningStyle } from "@/lib/speech-direction"
 
 export interface VoiceOption {
   voice_id: string
@@ -24,7 +25,7 @@ export interface VoiceOption {
 
 interface VoiceSelectionProps {
   text: string
-  onGenerate: (selectedVoice: string) => void
+  onGenerate: (selectedVoice: string, listeningStyle: ListeningStyle) => void
   isGenerating?: boolean
   voices: VoiceOption[]
 }
@@ -36,13 +37,14 @@ export function VoiceSelection({
   voices = [],
 }: VoiceSelectionProps) {
   const [selectedVoice, setSelectedVoice] = useState<string>("erin")
+  const [listeningStyle, setListeningStyle] = useState<ListeningStyle>("natural")
   const [isPlayingPreview, setIsPlayingPreview] = useState<string | null>(null)
   const { currentPlan } = useSubscription()
 
   const availableVoices: VoiceOption[] = voices
 
   const handleGenerate = () => {
-    onGenerate(selectedVoice)
+    onGenerate(selectedVoice, listeningStyle)
   }
 
   const playPreview = async (voiceId: string) => {
@@ -213,6 +215,39 @@ export function VoiceSelection({
             })}
           </div>
         </div>
+
+        <Separator />
+
+        <fieldset>
+          <legend className="type-small-body font-medium mb-1">Listening style</legend>
+          <p className="type-caption text-gray-600 dark:text-gray-400 mb-3">
+            Applies subtle pacing and delivery adjustments to the whole document.
+          </p>
+          <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Listening style">
+            {([
+              ["natural", "Natural", "Balanced, everyday reading"],
+              ["focused", "Focused", "Slower, clearer delivery"],
+              ["relaxed", "Relaxed", "Gentle pace for long sessions"],
+              ["engaging", "Engaging", "Warm, lively narration"],
+            ] as const).map(([value, label, description]) => (
+              <button
+                key={value}
+                type="button"
+                role="radio"
+                aria-checked={listeningStyle === value}
+                onClick={() => setListeningStyle(value)}
+                className={`min-h-11 rounded-md border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 ${
+                  listeningStyle === value
+                    ? "border-blue-600 bg-blue-50 text-blue-950 dark:bg-blue-950 dark:text-blue-50"
+                    : "border-gray-200 hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-500"
+                }`}
+              >
+                <span className="block type-small-body font-medium">{label}</span>
+                <span className="block type-caption text-gray-600 dark:text-gray-400">{description}</span>
+              </button>
+            ))}
+          </div>
+        </fieldset>
 
         <Separator />
 
