@@ -1,12 +1,59 @@
 import { type NextRequest, NextResponse } from "next/server"
 import mammoth from "mammoth";
+import { auth } from "@clerk/nextjs/server";
+import { createClient } from "@/lib/supabase/server";
 
-// Fix #3: limites verificados antecipadamente, antes de qualquer processamento
-const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+const FREE_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
+const PREMIUM_MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024;
+const REQUEST_OVERHEAD_BYTES = 1024 * 1024;
 const MAX_CHAR_LIMIT = 20_000;
+const OCR_POLL_INTERVAL_MS = 4_000;
+const OCR_MAX_POLL_ATTEMPTS = 12;
+
+class OcrExtractionError extends Error {
+  constructor(message: string, readonly status: number) {
+    super(message)
+  }
+}
+
+async function getMaximumFileSize(userId: string | null) {
+  if (!userId) return FREE_MAX_FILE_SIZE_BYTES
+
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from("users")
+      .select("plan")
+      .eq("id", userId)
+      .single()
+
+    if (error) throw error
+
+    return data?.plan?.trim().toLowerCase() === "premium"
+      ? PREMIUM_MAX_FILE_SIZE_BYTES
+      : FREE_MAX_FILE_SIZE_BYTES
+  } catch (error) {
+    // A failed entitlement lookup must never grant a larger upload allowance.
+    console.error("Unable to determine upload limit:", error)
+    return FREE_MAX_FILE_SIZE_BYTES
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
+    const { userId } = await auth()
+    const maximumFileSize = await getMaximumFileSize(userId)
+    const contentLength = Number(request.headers.get("content-length"))
+
+    // Content-Length includes multipart boundaries, so allow a small envelope;
+    // the exact File.size check below remains the final authority.
+    if (Number.isFinite(contentLength) && contentLength > maximumFileSize + REQUEST_OVERHEAD_BYTES) {
+      return NextResponse.json(
+        { error: `File is too large. Maximum allowed size is ${maximumFileSize / 1024 / 1024} MB.` },
+        { status: 400 },
+      )
+    }
+
     const formData = await request.formData()
     const file = formData.get("file") as File
 
@@ -15,9 +62,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Fix #3: rejeitar ficheiros demasiado grandes antes de qualquer processamento
-    if (file.size > MAX_FILE_SIZE_BYTES) {
+    if (file.size > maximumFileSize) {
       return NextResponse.json(
-        { error: `File is too large. Maximum allowed size is ${MAX_FILE_SIZE_BYTES / 1024 / 1024} MB.` },
+        { error: `File is too large. Maximum allowed size is ${maximumFileSize / 1024 / 1024} MB.` },
         { status: 400 }
       )
     }
@@ -61,6 +108,10 @@ export async function POST(request: NextRequest) {
       fileSize: file.size,
     })
   } catch (error) {
+    if (error instanceof OcrExtractionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status })
+    }
+
     console.error("Error extracting text:", error)
     return NextResponse.json(
       {
@@ -84,51 +135,107 @@ async function extractPdfText(file: File): Promise<string> {
     const extractedText = data.text.trim();
 
     if (extractedText.length < 10) {
-      try {
-        const ocrText = await performSimpleOCR(file);
-        if (ocrText && ocrText.trim().length > 10) {
-          return ocrText.trim();
-        }
-      } catch (ocrError) {
-        console.error("OCR failed:", ocrError);
-      }
-
-      return "This PDF appears to be image-based or encrypted. Text extraction was attempted but minimal text was found.";
+      return extractScannedPdfText(file);
     }
 
     return extractedText;
   } catch (error) {
+    if (error instanceof OcrExtractionError) throw error
     console.error("Error extracting PDF text:", error);
     throw new Error("Unable to extract text from PDF. Please try a different file.");
   }
 }
 
-// Fix #5: timeout máximo para OCR — evita bloquear o servidor indefinidamente
-const OCR_TIMEOUT_MS = 30_000; // 30 segundos
+async function extractScannedPdfText(file: File): Promise<string> {
+  const endpoint = process.env.AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT?.replace(/\/$/, "")
+  const apiKey = process.env.AZURE_DOCUMENT_INTELLIGENCE_KEY
 
-async function performSimpleOCR(file: File): Promise<string> {
-  try {
-    const Tesseract = await import("tesseract.js");
-    const blob = new Blob([await file.arrayBuffer()], { type: file.type });
-
-    const ocrPromise = Tesseract.recognize(blob, "eng+por", {
-      // Desativar logger em produção para não poluir os logs do servidor
-      logger: process.env.NODE_ENV === "development" ? (m: unknown) => console.log(m) : undefined,
-    });
-
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error("OCR timeout: processing exceeded 30 seconds")), OCR_TIMEOUT_MS)
-    );
-
-    const { data: { text } } = await Promise.race([ocrPromise, timeoutPromise]);
-
-    return text || "";
-  } catch (error) {
-    console.error("OCR processing failed:", error);
-    throw error;
+  if (!endpoint || !apiKey) {
+    throw new OcrExtractionError(
+      "Scanned-PDF reading is not configured yet. Please contact support.",
+      503,
+    )
   }
-}
 
+  let endpointUrl: URL
+  try {
+    endpointUrl = new URL(endpoint)
+  } catch {
+    throw new OcrExtractionError("Scanned-PDF reading is temporarily unavailable.", 503)
+  }
+
+  const analyzeResponse = await fetch(
+    `${endpoint}/documentintelligence/documentModels/prebuilt-read:analyze?api-version=2024-11-30`,
+    {
+      method: "POST",
+      headers: {
+        // This function is reached only from the PDF path. Browsers sometimes
+        // report an uploaded PDF as application/octet-stream, which Azure rejects.
+        "Content-Type": "application/pdf",
+        "Ocp-Apim-Subscription-Key": apiKey,
+      },
+      body: Buffer.from(await file.arrayBuffer()),
+    },
+  )
+
+  if (!analyzeResponse.ok) {
+    const providerError = (await analyzeResponse.text()).slice(0, 1_000)
+    console.error("Azure OCR submission failed:", {
+      status: analyzeResponse.status,
+      providerError,
+    })
+    throw new OcrExtractionError("We couldn't read this scanned PDF. Please try again.", 502)
+  }
+
+  const operationLocation = analyzeResponse.headers.get("operation-location")
+  if (!operationLocation) {
+    throw new OcrExtractionError("Scanned-PDF reading returned an invalid response.", 502)
+  }
+
+  let operationUrl: URL
+  try {
+    operationUrl = new URL(operationLocation)
+  } catch {
+    throw new OcrExtractionError("Scanned-PDF reading returned an invalid response.", 502)
+  }
+
+  if (operationUrl.protocol !== "https:" || operationUrl.host !== endpointUrl.host) {
+    throw new OcrExtractionError("Scanned-PDF reading returned an invalid response.", 502)
+  }
+
+  for (let attempt = 0; attempt < OCR_MAX_POLL_ATTEMPTS; attempt += 1) {
+    await new Promise((resolve) => setTimeout(resolve, OCR_POLL_INTERVAL_MS))
+
+    const resultResponse = await fetch(operationUrl, {
+      headers: { "Ocp-Apim-Subscription-Key": apiKey },
+    })
+
+    if (!resultResponse.ok) {
+      console.error("Azure OCR status check failed:", resultResponse.status)
+      throw new OcrExtractionError("We couldn't read this scanned PDF. Please try again.", 502)
+    }
+
+    const result = await resultResponse.json() as {
+      status?: string
+      analyzeResult?: { content?: string }
+    }
+    const status = result.status?.toLowerCase()
+
+    if (status === "succeeded") {
+      const text = result.analyzeResult?.content?.trim()
+      if (!text) {
+        throw new OcrExtractionError("No readable text was found in this scanned PDF.", 422)
+      }
+      return text
+    }
+
+    if (status === "failed") {
+      throw new OcrExtractionError("We couldn't read this scanned PDF. Please try a clearer file.", 422)
+    }
+  }
+
+  throw new OcrExtractionError("Scanned-PDF reading is taking longer than expected. Please try again.", 504)
+}
 
 async function extractDocxText(file: File): Promise<string> {
   try {
