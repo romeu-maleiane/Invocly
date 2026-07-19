@@ -14,6 +14,7 @@ import { useSubscription } from "@/hooks/use-subscription"
 import { useUser } from "@clerk/nextjs"
 import { uploadAudio } from "@/models/uploadAudio"
 import { insertAudio } from "@/models/insertAudio"
+import { type ListeningStyle } from "@/lib/speech-direction"
 
 const DynamicVoiceSelection = dynamic(() => import("./voice-selection").then((mod) => mod.VoiceSelection),{
   ssr: false
@@ -153,7 +154,7 @@ export function FileUpload({ voices }: FileUploadProps) {
     setUploadedFiles((prev) => prev.map((f) => (f.id === id ? { ...f, showVoiceSelection: !f.showVoiceSelection } : f)))
   }
 
-  const handleGenerateAudio = async (fileId: string, selectedVoice: string) => {
+  const handleGenerateAudio = async (fileId: string, selectedVoice: string, listeningStyle: ListeningStyle) => {
     const file = uploadedFiles.find((f) => f.id === fileId)
     if (!file?.extractedText) return
 
@@ -166,6 +167,7 @@ export function FileUpload({ voices }: FileUploadProps) {
         body: JSON.stringify({
           text: file.extractedText,
           selectedVoice,
+          listeningStyle,
         }),
       })
 
@@ -335,7 +337,7 @@ export function FileUpload({ voices }: FileUploadProps) {
                       <div className="mt-4">
                         <DynamicVoiceSelection
                           text={fileData.extractedText}
-                          onGenerate={(selectedVoice) => handleGenerateAudio(fileData.id, selectedVoice)}
+                          onGenerate={(selectedVoice, listeningStyle) => handleGenerateAudio(fileData.id, selectedVoice, listeningStyle)}
                           isGenerating={generatingAudio === fileData.id}
                           voices={voices}
                         />
