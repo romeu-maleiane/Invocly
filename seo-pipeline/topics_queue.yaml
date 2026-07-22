@@ -37,6 +37,63 @@ topics:
   - url: https://chadd.org/attention-article/study-skills-for-thriving-with-adhd/
     note: CHADD study-skills guidance
   status: drafted
+- id: studying-with-dyslexia
+  keyword: studying with dyslexia
+  intent: informational
+  search_volume: 20
+  difficulty: 1
+  bullets:
+  - Give practical study routines
+  - Cover audio alongside notes and active recall
+  - Separate support from treatment
+  - Address exams and dense reading
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: turn study files into audio
+  - url: https://invocly.com/blog/dyslexia-apps-for-students
+    anchor_hint: dyslexia apps for students
+  external_links:
+  - url: https://dyslexia.yale.edu/resources/dyslexic-kids-adults/tips-from-students/
+    note: Yale student tips
+  status: drafted
+- id: dyslexia-software-for-adults
+  keyword: dyslexia software for adults
+  intent: informational
+  search_volume: 20
+  difficulty: 1
+  bullets:
+  - Organize tools by adult task
+  - Cover document listening and writing support
+  - Include privacy and workplace compatibility
+  - Avoid medical claims
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: listen to readable documents
+  - url: https://invocly.com/blog/dyslexia-tools-for-reading
+    anchor_hint: dyslexia reading tools
+  external_links:
+  - url: https://abilitynet.org.uk/news-blogs/dyslexia-tools-software-and-free-resources
+    note: AbilityNet dyslexia software resource
+  status: drafted
+- id: tools-for-dyslexia-at-work
+  keyword: tools for dyslexia at work
+  intent: informational
+  search_volume: 10
+  difficulty: 0
+  bullets:
+  - Focus on employee workflows and adjustments
+  - Cover text-to-speech for readable work documents
+  - Include privacy and employer coordination
+  - Avoid legal or medical advice
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: turn a readable work document into audio
+  - url: https://invocly.com/blog/listen-to-documents-while-driving
+    anchor_hint: prepare document audio safely
+  external_links:
+  - url: https://www.bdadyslexia.org.uk/advice/employers/how-can-i-support-my-dyslexic-employees/reasonable-adjustments-in-the-workplace
+    note: British Dyslexia Association workplace adjustments
+  status: drafted
 - id: free-pdf-text-to-speech
   keyword: free pdf text to speech
   intent: how_to
@@ -100,17 +157,16 @@ topics:
   search_volume: 20
   difficulty: 36
   bullets:
-  - Show the practical routes for listening to a textbook: publisher-provided audio,
-      accessible-library formats, built-in read-aloud, and text-to-speech for a readable
-      digital file
-  - Give a step-by-step workflow for checking a PDF or e-textbook, choosing a listening
-    method, and testing a short chapter before committing to a long session
-  - Explain the limits for scanned, image-only, DRM-protected, or inaccessible textbook
-    files without suggesting that a reader can bypass publisher access controls
-  - Cover useful study controls: section-sized listening blocks, speed, pause-and-recall
-      prompts, and following along with headings or page numbers
-  - Include accessibility and copyright context, with a clear note to use legitimately
-    obtained course materials and institution-supported formats where available
+  - Show the practical routes for listening to a textbook: publisher-provided audio, accessible-library
+      formats, built-in read-aloud, and text-to-speech for a readable digital file
+  - Give a step-by-step workflow for checking a PDF or e-textbook, choosing a listening method, and testing
+    a short chapter before committing to a long session
+  - Explain the limits for scanned, image-only, DRM-protected, or inaccessible textbook files without
+    suggesting that a reader can bypass publisher access controls
+  - Cover useful study controls: section-sized listening blocks, speed, pause-and-recall prompts, and
+      following along with headings or page numbers
+  - Include accessibility and copyright context, with a clear note to use legitimately obtained course
+    materials and institution-supported formats where available
   internal_links:
   - url: https://invocly.com/
     anchor_hint: convert a readable PDF, DOCX, or TXT study file into audio
@@ -130,16 +186,15 @@ topics:
   search_volume: 40
   difficulty: 0
   bullets:
-  - Explain the distinct skills involved in understanding spoken and written language,
-    without presenting either format as universally better
-  - Show students how text-to-speech can provide access to an assigned digital text
-    while active reading and note-taking still matter
-  - Compare a short fiction passage with a dense nonfiction chapter, including why
-    format and task can change the result
-  - Give a small self-test workflow using short sections, recall questions, and playback-speed
-    adjustments
-  - State clearly that listening support is an accommodation or study option, not
-    a replacement for reading instruction or individual advice
+  - Explain the distinct skills involved in understanding spoken and written language, without presenting
+    either format as universally better
+  - Show students how text-to-speech can provide access to an assigned digital text while active reading
+    and note-taking still matter
+  - Compare a short fiction passage with a dense nonfiction chapter, including why format and task can
+    change the result
+  - Give a small self-test workflow using short sections, recall questions, and playback-speed adjustments
+  - State clearly that listening support is an accommodation or study option, not a replacement for reading
+    instruction or individual advice
   internal_links:
   - url: https://invocly.com/
     anchor_hint: turn a readable PDF, DOCX, or TXT file into audio
@@ -160,14 +215,13 @@ topics:
   difficulty: null
   bullets:
   - Answer the retention question without claiming that audio or reading always wins
-  - Explain how material complexity, attention, repetition, and the learner's task
-    affect what is remembered
-  - Give a concrete study workflow: listen in short blocks, pause for a retrieval
-      prompt, then revisit the relevant page or note
-  - Cover why audio can make document access more practical while passive playback
-    is a poor substitute for active recall
-  - Include an honest comparison of listening during a focused study session versus
-    during a commute or other attention-demanding activity
+  - Explain how material complexity, attention, repetition, and the learner's task affect what is remembered
+  - Give a concrete study workflow: listen in short blocks, pause for a retrieval prompt, then revisit
+      the relevant page or note
+  - Cover why audio can make document access more practical while passive playback is a poor substitute
+    for active recall
+  - Include an honest comparison of listening during a focused study session versus during a commute or
+    other attention-demanding activity
   internal_links:
   - url: https://invocly.com/
     anchor_hint: make a readable study document available as audio
@@ -187,16 +241,13 @@ topics:
   search_volume: 260
   difficulty: 27
   bullets:
-  - Explain the difference between Chrome browser capabilities, Chromebook accessibility
-    features, and third-party Chrome extensions
-  - Show a safe setup workflow for having a webpage, Google Doc, or text-based PDF
-    read aloud
-  - Cover the practical controls that matter during focused work: voice, speed, pause,
-      and resume
-  - Explain that scanned or image-only PDFs need OCR before text-to-speech can read
-    their contents
-  - Help readers choose between a browser extension and a document-to-speech workflow
-    without making unverified feature claims
+  - Explain the difference between Chrome browser capabilities, Chromebook accessibility features, and
+    third-party Chrome extensions
+  - Show a safe setup workflow for having a webpage, Google Doc, or text-based PDF read aloud
+  - Cover the practical controls that matter during focused work: voice, speed, pause, and resume
+  - Explain that scanned or image-only PDFs need OCR before text-to-speech can read their contents
+  - Help readers choose between a browser extension and a document-to-speech workflow without making unverified
+    feature claims
   internal_links:
   - url: https://invocly.com/
     anchor_hint: turn a PDF, DOCX, or TXT document into audio
@@ -216,16 +267,14 @@ topics:
   search_volume: 210
   difficulty: 0
   bullets:
-  - Explain that Firefox users generally add a text-to-speech extension rather than
-    relying on a universal built-in read-aloud control
-  - Give a focused setup path for reading webpage text aloud and testing voice and
-    playback controls before a long session
-  - Separate browser-page listening from converting a PDF, DOCX, or TXT document to
-    audio
-  - Cover what readers should check before installing an extension: supported content,
-      permissions, privacy, and offline needs
-  - State the limitation for scanned or image-only PDFs and point readers to OCR as
-    the prerequisite
+  - Explain that Firefox users generally add a text-to-speech extension rather than relying on a universal
+    built-in read-aloud control
+  - Give a focused setup path for reading webpage text aloud and testing voice and playback controls before
+    a long session
+  - Separate browser-page listening from converting a PDF, DOCX, or TXT document to audio
+  - Cover what readers should check before installing an extension: supported content, permissions, privacy,
+      and offline needs
+  - State the limitation for scanned or image-only PDFs and point readers to OCR as the prerequisite
   internal_links:
   - url: https://invocly.com/
     anchor_hint: convert a document into audio
@@ -245,16 +294,13 @@ topics:
   search_volume: 10
   difficulty: 62
   bullets:
-  - Show how to use Microsoft Word Read Aloud to listen to a selected passage or an
-    entire document
-  - Explain useful listening controls, including speed, voice, pause, and resuming
-    during editing or review
-  - Cover when native Word Read Aloud is enough and when converting a DOCX file to
-    audio is more practical for a longer session
-  - Include a quick pre-listening check for headings, comments, tables, and document
-    text quality
-  - Explain how to prepare listening before driving or another activity that should
-    not involve device interaction
+  - Show how to use Microsoft Word Read Aloud to listen to a selected passage or an entire document
+  - Explain useful listening controls, including speed, voice, pause, and resuming during editing or review
+  - Cover when native Word Read Aloud is enough and when converting a DOCX file to audio is more practical
+    for a longer session
+  - Include a quick pre-listening check for headings, comments, tables, and document text quality
+  - Explain how to prepare listening before driving or another activity that should not involve device
+    interaction
   internal_links:
   - url: https://invocly.com/
     anchor_hint: turn a Word document into audio
@@ -274,12 +320,12 @@ topics:
   search_volume: 1000
   difficulty: 11
   bullets:
-  - 'Explain the main reading-tool categories: text-to-speech, display controls, scanning
-    tools, and writing support; distinguish support from dyslexia treatment'
-  - Help readers match a tool to the specific barrier, such as decoding dense text,
-    keeping place, or accessing a printed document
-  - Show a practical document-to-speech workflow for PDFs, DOCX files, and TXT files,
-    including the limitation for image-only PDFs
+  - 'Explain the main reading-tool categories: text-to-speech, display controls, scanning tools, and writing
+    support; distinguish support from dyslexia treatment'
+  - Help readers match a tool to the specific barrier, such as decoding dense text, keeping place, or
+    accessing a printed document
+  - Show a practical document-to-speech workflow for PDFs, DOCX files, and TXT files, including the limitation
+    for image-only PDFs
   - Cover built-in browser and device accessibility options before dedicated tools
   - Give a short, non-ranked checklist for choosing tools at school, work, or home
   internal_links:
@@ -293,8 +339,7 @@ topics:
   - url: https://dyslexia.yale.edu/resources/tools-technology/
     note: Yale Center for Dyslexia & Creativity overview of tools and technology
   - url: https://dyslexiaida.org/effective-reading-instruction-for-students-with-dyslexia/
-    note: International Dyslexia Association guidance distinguishing instruction from
-      accommodations
+    note: International Dyslexia Association guidance distinguishing instruction from accommodations
   status: drafted
 - id: dyslexia-apps-for-students
   keyword: dyslexia apps for students
@@ -302,14 +347,14 @@ topics:
   search_volume: 40
   difficulty: 6
   bullets:
-  - 'Organize app types by student task: listening to assigned reading, writing, spelling,
-    planning, and reading practice'
-  - Explain when text-to-speech is useful for accessing teacher-provided digital documents
-    and when it cannot replace structured literacy instruction
-  - Include a short checklist for school compatibility, privacy, headphones, and whether
-    a student can use the app independently
-  - Cover free built-in accessibility options alongside dedicated apps without pretending
-    every student needs the same tool
+  - 'Organize app types by student task: listening to assigned reading, writing, spelling, planning, and
+    reading practice'
+  - Explain when text-to-speech is useful for accessing teacher-provided digital documents and when it
+    cannot replace structured literacy instruction
+  - Include a short checklist for school compatibility, privacy, headphones, and whether a student can
+    use the app independently
+  - Cover free built-in accessibility options alongside dedicated apps without pretending every student
+    needs the same tool
   - Show how to prepare a PDF, DOCX, or TXT assignment for a focused listening session
   internal_links:
   - url: https://invocly.com/
@@ -330,16 +375,15 @@ topics:
   search_volume: 30
   difficulty: 0
   bullets:
-  - Explain text-to-speech as one reading-access strategy for people with ADHD, without
-    making medical or guaranteed focus claims
-  - Give a step-by-step workflow for listening to a document in short sections, pausing
-    to annotate, and resuming without losing place
-  - Cover useful controls such as speed, voice choice, and short listening blocks,
-    plus when slower playback is more practical
-  - Compare built-in read-aloud options with a document-to-speech tool for PDFs, DOCX
-    files, and TXT files
-  - 'State the limits clearly: text-to-speech cannot replace individual clinical,
-    educational, or workplace accommodation advice'
+  - Explain text-to-speech as one reading-access strategy for people with ADHD, without making medical
+    or guaranteed focus claims
+  - Give a step-by-step workflow for listening to a document in short sections, pausing to annotate, and
+    resuming without losing place
+  - Cover useful controls such as speed, voice choice, and short listening blocks, plus when slower playback
+    is more practical
+  - Compare built-in read-aloud options with a document-to-speech tool for PDFs, DOCX files, and TXT files
+  - 'State the limits clearly: text-to-speech cannot replace individual clinical, educational, or workplace
+    accommodation advice'
   internal_links:
   - url: https://invocly.com/
     anchor_hint: listen to a document in manageable sections
@@ -349,8 +393,7 @@ topics:
     anchor_hint: listen to lecture notes while studying
   external_links:
   - url: https://www.additudemag.com/text-to-speech-to-text-tools-students-adhd/
-    note: ADDitude guide to text-to-speech and speech-to-text tools for students with
-      ADHD
+    note: ADDitude guide to text-to-speech and speech-to-text tools for students with ADHD
   - url: https://www.cdc.gov/adhd/about/index.html
     note: CDC overview of ADHD for context on individualized support
   status: drafted
@@ -360,16 +403,16 @@ topics:
   search_volume: 480
   difficulty: 0
   bullets:
-  - Define what a genuinely free text-to-speech option should include and distinguish
-    free plans from limited trials
-  - Compare document support, voice quality, playback controls, audio export, privacy,
-    and usage limits without inventing feature claims
-  - Show free built-in options in Microsoft Edge and Apple devices alongside dedicated
-    document-to-speech tools
-  - Explain where Invocly fits for PDF, DOCX, and TXT listening, including honest
-    plan and scanned-PDF limitations
-  - Give decision guidance for students, accessibility users, and professionals based
-    on file type and listening frequency
+  - Define what a genuinely free text-to-speech option should include and distinguish free plans from
+    limited trials
+  - Compare document support, voice quality, playback controls, audio export, privacy, and usage limits
+    without inventing feature claims
+  - Show free built-in options in Microsoft Edge and Apple devices alongside dedicated document-to-speech
+    tools
+  - Explain where Invocly fits for PDF, DOCX, and TXT listening, including honest plan and scanned-PDF
+    limitations
+  - Give decision guidance for students, accessibility users, and professionals based on file type and
+    listening frequency
   internal_links:
   - url: https://invocly.com/
     anchor_hint: convert documents to natural-sounding speech
@@ -379,8 +422,7 @@ topics:
   - url: https://www.microsoft.com/en-us/edge/features/read-aloud
     note: official Microsoft documentation for the free Edge Read Aloud feature
   - url: https://support.apple.com/en-sg/guide/iphone/iph96b214f0/ios
-    note: official Apple documentation for Speak Screen and listening to on-screen
-      text
+    note: official Apple documentation for Speak Screen and listening to on-screen text
   status: drafted
 - id: listen-to-documents-while-driving
   keyword: listen to documents while driving
@@ -388,16 +430,12 @@ topics:
   search_volume: null
   difficulty: null
   bullets:
-  - Explain how to prepare PDFs, DOCX files, and plain-text documents for listening
-    before a trip
-  - Set clear safety boundaries: queue audio and choose playback settings before driving,
-      with no on-road interaction
-  - Compare built-in phone and browser read-aloud options with a document-to-speech
-    workflow
-  - Cover practical listening settings such as voice choice, speed, Bluetooth, and
-    resuming long documents
-  - Explain which documents work well and why scanned or image-only PDFs may need
-    OCR first
+  - Explain how to prepare PDFs, DOCX files, and plain-text documents for listening before a trip
+  - Set clear safety boundaries: queue audio and choose playback settings before driving, with no on-road
+      interaction
+  - Compare built-in phone and browser read-aloud options with a document-to-speech workflow
+  - Cover practical listening settings such as voice choice, speed, Bluetooth, and resuming long documents
+  - Explain which documents work well and why scanned or image-only PDFs may need OCR first
   internal_links:
   - url: https://invocly.com/
     anchor_hint: turn a document into audio before your drive
@@ -415,12 +453,10 @@ topics:
   search_volume: null
   difficulty: null
   bullets:
-  - Compare built-in read-aloud options in Adobe Acrobat, Microsoft Edge, and mobile
-    accessibility tools
+  - Compare built-in read-aloud options in Adobe Acrobat, Microsoft Edge, and mobile accessibility tools
   - Show when uploading a PDF to Invocly is easier than using a built-in reader
   - Explain limits for scanned/image-only PDFs and when OCR is needed
-  - Cover study, dyslexia, eye-strain, and commuting use cases without overstating
-    benefits
+  - Cover study, dyslexia, eye-strain, and commuting use cases without overstating benefits
   - Include practical listening tips for speed, voice choice, and comprehension
   internal_links:
   - url: https://invocly.com/
@@ -441,8 +477,7 @@ topics:
   search_volume: 320
   difficulty: 14
   bullets:
-  - Why listening beats re-reading for retention during exam prep (briefly, with a
-    citation)
+  - Why listening beats re-reading for retention during exam prep (briefly, with a citation)
   - 'Step-by-step: upload a PDF and get an audio file with Invocly'
   - What to do with scanned/image-only PDFs (OCR limitation, be honest about it)
   - 'Best practices: playback speed for comprehension vs. speed-listening'
@@ -454,8 +489,7 @@ topics:
     anchor_hint: free plan limits
   external_links:
   - url: https://en.wikipedia.org/wiki/Dual_coding_theory
-    note: background on auditory + visual learning, not a hard citation of a specific
-      stat
+    note: background on auditory + visual learning, not a hard citation of a specific stat
   status: published
 - id: text-to-speech-students-disabilities
   keyword: text-to-speech software for students with disabilities

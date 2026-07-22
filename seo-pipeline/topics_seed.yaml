@@ -1,121 +1,106 @@
-# Seed pillars for OpenSEO keyword research.
-# The research agent expands each seed into long-tail candidates — these are
-# starting points, not the final keyword list.
-
 pillars:
-  - name: accessibility
-    seeds:
-      - "text to speech for dyslexia"
-      - "reading tool for dyslexia"
-      - "listen instead of reading assistive technology"
-
-      - "text to speech for ADHD"
-      - "reading tool for ADHD"
-      - "listen to textbooks with ADHD"
-      - "ADHD study tools"
-
-      - "text to speech for visual impairment"
-      - "screen reader alternative"
-      - "accessible reading software"
-
-      - "text to speech for learning disabilities"
-      - "assistive reading software"
-      - "text to speech accessibility"
-
-  - name: student_study_use
-    seeds:
-      - "convert pdf to audio to study"
-      - "listen to lecture notes"
-      - "audio textbook alternative"
-      - "text to speech for studying"
-
-  - name: document_conversion_howto
-    seeds:
-      - "convert docx to mp3"
-      - "pdf to audio online free"
-      - "how to listen to a pdf"
-
-  - name: productivity_multitasking
-    seeds:
-      - "listen to documents while driving"
-      - "listen to documents while commuting"
-      - "consume documents faster"
-      - "reduce screen time at work"
-      - "review documents on the go"
-      - "listen to reports instead of reading"
-      - "how busy professionals consume long documents"
-      - "multitask while reading documents"
-
-  - name: competitor_alternatives
-    seeds:
-      - "Speechify alternative"
-      - "NaturalReader vs Speechify"
-      - "best text to speech app 2026"
-      - "free text to speech tools compared"
-      - "Invocly vs Speechify"
-      - "cheap text to speech app for students"
-
-  - name: case_studies
-    seeds:
-      - "how students study with audio"
-      - "listening to textbooks instead of reading"
-      - "studying with dyslexia"
-      - "studying with ADHD"
-      - "listening to documents at work"
-      - "how professionals consume long documents"
-      - "learning with audio instead of reading"
-      - "real study workflows with AI"
-
-# Existing invocly.com pages available for internal linking.
-# Keep this updated — the research/writing agent should not invent URLs.
+- name: accessibility
+  seeds:
+  - text to speech for dyslexia
+  - reading tool for dyslexia
+  - listen instead of reading assistive technology
+  - text to speech for ADHD
+  - reading tool for ADHD
+  - listen to textbooks with ADHD
+  - ADHD study tools
+  - text to speech for visual impairment
+  - screen reader alternative
+  - accessible reading software
+  - text to speech for learning disabilities
+  - assistive reading software
+  - text to speech accessibility
+- name: student_study_use
+  seeds:
+  - convert pdf to audio to study
+  - listen to lecture notes
+  - audio textbook alternative
+  - text to speech for studying
+- name: document_conversion_howto
+  seeds:
+  - convert docx to mp3
+  - pdf to audio online free
+  - how to listen to a pdf
+- name: productivity_multitasking
+  seeds:
+  - listen to documents while driving
+  - listen to documents while commuting
+  - consume documents faster
+  - reduce screen time at work
+  - review documents on the go
+  - listen to reports instead of reading
+  - how busy professionals consume long documents
+  - multitask while reading documents
+- name: competitor_alternatives
+  seeds:
+  - Speechify alternative
+  - NaturalReader vs Speechify
+  - best text to speech app 2026
+  - free text to speech tools compared
+  - Invocly vs Speechify
+  - cheap text to speech app for students
+- name: case_studies
+  seeds:
+  - how students study with audio
+  - listening to textbooks instead of reading
+  - studying with dyslexia
+  - studying with ADHD
+  - listening to documents at work
+  - how professionals consume long documents
+  - learning with audio instead of reading
+  - real study workflows with AI
 internal_pages:
-  - url: "https://invocly.com/"
-    topic: "homepage / product overview"
-  - url: "https://invocly.com/blog"
-    topic: "Invocly Blog - guides on audio conversion and text to speech"
-  - url: "https://invocly.com/privacy-policy"
-    topic: "privacy policy"
-  - url: "https://invocly.com/terms-of-service"
-    topic: "terms of service"
-  - url: "https://invocly.com/refund-pricing-policy"
-    topic: "refund and pricing policy"
-  - url: "https://invocly.com/blog/how-to-listen-to-a-pdf"
-    topic: "How to Listen to a PDF: A Practical Guide"
-  - url: "https://invocly.com/blog/speechify-free-alternative"
-    topic: "Speechify Free Alternative: 3 Options for Documents"
-  - url: "https://invocly.com/blog/listen-to-documents-while-driving"
-    topic: "How to Listen to Documents While Driving Safely"
-  - url: "https://invocly.com/blog/dyslexia-tools-for-reading"
-    topic: "Effective Dyslexia Tools for Reading and Accessibility"
-  - url: "https://invocly.com/blog/dyslexia-apps-for-students"
-    topic: "The Best Dyslexia Apps for Students: A Practical Guide"
-  - url: "https://invocly.com/blog/text-to-speech-for-adhd"
-    topic: "Using Text to Speech for ADHD: A Practical Guide"
-  - url: "https://invocly.com/blog/google-chrome-text-to-speech"
-    topic: "How to Use Google Chrome Text to Speech: A Complete Guide"
-  - url: "https://invocly.com/blog/firefox-text-to-speech"
-    topic: "Firefox Text to Speech: How to Read Webpages Aloud"
-  - url: "https://invocly.com/blog/listen-to-word-documents"
-    topic: "How to Listen to Word Documents on Your Commute"
-  - url: "https://invocly.com/blog/how-to-listen-to-textbooks"
-    topic: "How to Listen to Textbooks: A Practical Guide for Students"
-  - url: "https://invocly.com/blog/listening-comprehension-vs-reading-comprehension"
-    topic: "Listening Comprehension vs Reading Comprehension Explained"
-  - url: "https://invocly.com/blog/listening-vs-reading-retention"
-    topic: "Listening vs Reading Retention: Which Works Better?"
-  - url: "https://invocly.com/blog/free-pdf-text-to-speech"
-    topic: "Free PDF Text to Speech: How to Listen to Your Files"
-  - url: "https://invocly.com/blog/best-text-to-speech-for-students"
-    topic: "Best Text to Speech for Students: Top Tools Compared"
-  - url: "https://invocly.com/blog/text-to-speech-for-textbooks"
-    topic: "Text to Speech for Textbooks: A Student's Study Guide"
-  - url: "https://invocly.com/blog/studying-with-adhd"
-    topic: "Studying with ADHD: Practical Strategies That Work"
-  - url: "https://invocly.com/blog/study-tips-for-adhd-adults"
-    topic: "Study Tips for ADHD Adults: 7 Practical Rules"
-  - url: "https://invocly.com/blog/studying-with-dyslexia"
-    topic: "Studying with Dyslexia: Strategies That Work"
-  - url: "https://invocly.com/blog/dyslexia-software-for-adults"
-    topic: "Dyslexia Software for Adults: A Practical Workplace Guide"
-  - url: "https://invocly.com/blog/tools-for-dyslexia-at-work"
-    topic: "Tools for Dyslexia at Work: Practical Guide"
+- url: https://invocly.com/
+  topic: homepage / product overview
+- url: https://invocly.com/blog
+  topic: Invocly Blog - guides on audio conversion and text to speech
+- url: https://invocly.com/privacy-policy
+  topic: privacy policy
+- url: https://invocly.com/terms-of-service
+  topic: terms of service
+- url: https://invocly.com/refund-pricing-policy
+  topic: refund and pricing policy
+- url: https://invocly.com/blog/how-to-listen-to-a-pdf
+  topic: 'How to Listen to a PDF: A Practical Guide'
+- url: https://invocly.com/blog/speechify-free-alternative
+  topic: 'Speechify Free Alternative: 3 Options for Documents'
+- url: https://invocly.com/blog/listen-to-documents-while-driving
+  topic: How to Listen to Documents While Driving Safely
+- url: https://invocly.com/blog/dyslexia-tools-for-reading
+  topic: Effective Dyslexia Tools for Reading and Accessibility
+- url: https://invocly.com/blog/dyslexia-apps-for-students
+  topic: 'The Best Dyslexia Apps for Students: A Practical Guide'
+- url: https://invocly.com/blog/text-to-speech-for-adhd
+  topic: 'Using Text to Speech for ADHD: A Practical Guide'
+- url: https://invocly.com/blog/google-chrome-text-to-speech
+  topic: 'How to Use Google Chrome Text to Speech: A Complete Guide'
+- url: https://invocly.com/blog/firefox-text-to-speech
+  topic: 'Firefox Text to Speech: How to Read Webpages Aloud'
+- url: https://invocly.com/blog/listen-to-word-documents
+  topic: How to Listen to Word Documents on Your Commute
+- url: https://invocly.com/blog/how-to-listen-to-textbooks
+  topic: 'How to Listen to Textbooks: A Practical Guide for Students'
+- url: https://invocly.com/blog/listening-comprehension-vs-reading-comprehension
+  topic: Listening Comprehension vs Reading Comprehension Explained
+- url: https://invocly.com/blog/listening-vs-reading-retention
+  topic: 'Listening vs Reading Retention: Which Works Better?'
+- url: https://invocly.com/blog/free-pdf-text-to-speech
+  topic: 'Free PDF Text to Speech: How to Listen to Your Files'
+- url: https://invocly.com/blog/best-text-to-speech-for-students
+  topic: 'Best Text to Speech for Students: Top Tools Compared'
+- url: https://invocly.com/blog/text-to-speech-for-textbooks
+  topic: 'Text to Speech for Textbooks: A Student''s Study Guide'
+- url: https://invocly.com/blog/studying-with-adhd
+  topic: 'Studying with ADHD: Practical Strategies That Work'
+- url: https://invocly.com/blog/study-tips-for-adhd-adults
+  topic: 'Study Tips for ADHD Adults: 7 Practical Rules'
+- url: https://invocly.com/blog/studying-with-dyslexia
+  topic: 'Studying with Dyslexia: Strategies That Work'
+- url: https://invocly.com/blog/dyslexia-software-for-adults
+  topic: 'Dyslexia Software for Adults: A Practical Workplace Guide'
+- url: https://invocly.com/blog/tools-for-dyslexia-at-work
+  topic: 'Tools for Dyslexia at Work: Practical Guide'
