@@ -27,6 +27,11 @@ before starting either job. If it's not connected, stop and ask the human to con
    do not reject the entire pillar simply because fewer than 3 valid opportunities
    were found.
 
+   When a relevant measured keyword is available, include at least one measured topic
+   in a batch of up to 3. Do not force this requirement when the available measured
+   options are generic, duplicate existing coverage, or poorly matched to Invocly.
+   Include no more than one topic with `search_volume: unknown` in a batch of up to 3.
+
    Prioritize topics that are:
 
    - Relevant to a real Invocly audience problem, workflow, or use case
@@ -38,15 +43,24 @@ before starting either job. If it's not connected, stop and ask the human to con
    Prefer long-tail keywords, but do not require every selected topic to be an exact
    3+ word keyword returned by the research tool.
 
-   A topic may be selected with `search_volume: unknown` when there is credible
-   evidence of demand from at least two of the following:
+   A topic may be selected with `search_volume: unknown` only when it has at least
+   one strong demand signal or at least two independent moderate demand signals.
 
-   - Relevant organic search results
-   - Google autocomplete, related searches, or People Also Ask
-   - Several closely related long-tail keyword variations
-   - Competitor content addressing the same audience problem
-   - Repeated questions or discussions in relevant communities
-   - A clear and concrete Invocly use case
+   Strong signals include:
+
+   - Multiple relevant organic results targeting substantially the same intent
+   - Existing Search Console impressions for the topic or close variations
+   - A measurable cluster of related keywords sharing the same intent
+   - Competitor pages with evidence of organic visibility for the topic
+
+   Moderate signals include:
+
+   - Google autocomplete, People Also Ask, or related searches
+   - Repeated questions in relevant communities
+   - Multiple competitors independently covering the same audience problem
+   - A clear upward trend or sustained interest in Google Trends
+
+   Product relevance alone is not evidence of search demand.
 
    Never invent search volume or keyword difficulty. Record unavailable values as
    `unknown`.
