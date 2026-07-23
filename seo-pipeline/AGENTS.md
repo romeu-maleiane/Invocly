@@ -27,6 +27,10 @@ before starting either job. If it's not connected, stop and ask the human to con
    do not reject the entire pillar simply because fewer than 3 valid opportunities
    were found.
 
+   When a relevant measured keyword is available, include at least one measured topic
+   in a batch of up to 3. Do not force this requirement when the available measured
+   options are generic, duplicate existing coverage, or poorly matched to Invocly.
+
    Prioritize topics that are:
 
    - Relevant to a real Invocly audience problem, workflow, or use case
