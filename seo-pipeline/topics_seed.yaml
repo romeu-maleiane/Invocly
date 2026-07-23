@@ -1,19 +1,26 @@
 pillars:
 - name: accessibility
   seeds:
-  - text to speech for dyslexia
-  - reading tool for dyslexia
-  - listen instead of reading assistive technology
-  - text to speech for ADHD
-  - reading tool for ADHD
-  - listen to textbooks with ADHD
-  - ADHD study tools
-  - text to speech for visual impairment
-  - screen reader alternative
-  - accessible reading software
-  - text to speech for learning disabilities
-  - assistive reading software
-  - text to speech accessibility
+  - "text to speech for dyslexia"
+  - "read aloud tools for dyslexia"
+  - "PDF reader for dyslexia"
+  - "listen to textbooks with dyslexia"
+  - "text to speech for adults with dyslexia"
+
+  - "text to speech for ADHD"
+  - "ADHD reading tools"
+  - "listen to textbooks with ADHD"
+  - "how to focus on reading with ADHD"
+
+  - "text to speech for learning disabilities"
+  - "assistive technology for reading difficulties"
+  - "multisensory reading tools"
+  - "accessible reading tools for students"
+
+  - "text to speech for low vision"
+  - "PDF reader for visually impaired users"
+  - "read documents aloud for low vision"
+  - "accessible document reader"
 - name: student_study_use
   seeds:
   - convert pdf to audio to study
