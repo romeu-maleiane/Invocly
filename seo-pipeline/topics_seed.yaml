@@ -38,9 +38,24 @@ pillars:
   - "text to speech for college students"
 - name: document_conversion_howto
   seeds:
-  - convert docx to mp3
-  - pdf to audio online free
-  - how to listen to a pdf
+  - "how to listen to a PDF"
+  - "convert PDF to audio"
+  - "PDF to audio converter"
+  - "PDF read aloud"
+  - "turn PDF into an audiobook"
+  - "convert PDF to MP3"
+  - "PDF to audio online free"
+
+  - "convert DOCX to MP3"
+  - "convert Word document to audio"
+  - "listen to a Word document"
+
+  - "convert TXT to audio"
+  - "convert text file to MP3"
+
+  - "convert documents to audio"
+  - "document to speech converter"
+  - "read documents aloud"
 - name: productivity_multitasking
   seeds:
   - listen to pdf while commuting
