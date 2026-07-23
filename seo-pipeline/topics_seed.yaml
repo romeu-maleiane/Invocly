@@ -23,10 +23,19 @@ pillars:
   - "accessible document reader"
 - name: student_study_use
   seeds:
-  - convert pdf to audio to study
-  - listen to lecture notes
-  - audio textbook alternative
-  - text to speech for studying
+  - "convert PDF to audio for studying"
+  - "listen to lecture notes"
+  - "listen to textbooks"
+  - "textbook audio reader"
+  - "read study notes aloud"
+  - "listen to research papers"
+  - "PDF reader for students"
+  - "audio study tools"
+  - "how to study by listening"
+  - "listen to notes while commuting"
+  - "turn lecture notes into audio"
+  - "text to speech for exam preparation"
+  - "text to speech for college students"
 - name: document_conversion_howto
   seeds:
   - convert docx to mp3
