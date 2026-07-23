@@ -18,18 +18,57 @@ before starting either job. If it's not connected, stop and ask the human to con
 
 ## Job 1 — Research & Publish (run 1–2x/week)
 
-1. **Research keywords with OpenSEO MCP**, not from memory. For the choosen pillar in
+1. **Research keywords with OpenSEO MCP**, not from memory. For the chosen pillar in
    `seo-pipeline/topics_seed.yaml`, call `research_keywords` on the seed terms, then
-   `get_serp_results` on the 3–5 best candidates to see who currently ranks and why.
-   Choose 2-3 best keywords to write bullet-point briefs.
-   Prioritize keywords that are:
-   - Long-tail (3+ words), clearly matched to one of Invocly's actual use cases
-   - Low-to-medium difficulty (don't chase head terms this early)
-   - Not already covered by an existing post in `blog/`
+   use `get_serp_results` on the 3–5 most promising candidates to understand search
+   intent, the pages currently ranking, and the content gaps.
+
+   Select up to 3 strong topics for bullet-point briefs. One strong topic is enough;
+   do not reject the entire pillar simply because fewer than 3 valid opportunities
+   were found.
+
+   Prioritize topics that are:
+
+   - Relevant to a real Invocly audience problem, workflow, or use case
+   - Specific enough to support a focused and useful article
+   - Low-to-medium difficulty when reliable difficulty data is available
+   - Supported by clear search intent, even when exact search volume is unavailable
+   - Not substantially covered by an existing post in `blog/`
+
+   Prefer long-tail keywords, but do not require every selected topic to be an exact
+   3+ word keyword returned by the research tool.
+
+   A topic may be selected with `search_volume: unknown` when there is credible
+   evidence of demand from at least two of the following:
+
+   - Relevant organic search results
+   - Google autocomplete, related searches, or People Also Ask
+   - Several closely related long-tail keyword variations
+   - Competitor content addressing the same audience problem
+   - Repeated questions or discussions in relevant communities
+   - A clear and concrete Invocly use case
+
+   Never invent search volume or keyword difficulty. Record unavailable values as
+   `unknown`.
+
+   Do not reject a topic as a duplicate only because it shares words such as PDF,
+   audio, listen, reading, document, or text to speech with an existing article.
+   Treat it as a duplicate only when the existing article addresses substantially
+   the same primary question, search intent, audience, and workflow.
+
+   The target keyword does not need to explicitly mention text to speech, PDF,
+   document-to-audio, or Invocly. It is sufficiently product-relevant when Invocly
+   can naturally and meaningfully help solve part of the reader's problem.
+
+   For productivity, case-study, and problem-first pillars, prioritize concrete
+   audiences, situations, document types, and workflows. Avoid generic productivity
+   topics that cannot be naturally connected to consuming written content.
 
 2. **Write bullet-point briefs**, not full outlines. For each chosen keyword, append an
    entry to `seo-pipeline/topics_queue.yaml` with:
    - `keyword`, `intent` (informational/comparison/how-to), `search_volume`, `difficulty`
+      - Use `unknown` when reliable volume or difficulty data is unavailable
+      - Never estimate or invent keyword metrics
    - 4–6 bullet points of what the post must cover (not prose — just the angles)
    - `internal_links`: 1–3 relevant Invocly pages (pull real URLs from the site, don't invent them)
    - `external_links`: 1–2 authoritative outside sources worth citing (studies, docs — not competitors)

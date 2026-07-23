@@ -27,32 +27,51 @@ pillars:
   - how to listen to a pdf
 - name: productivity_multitasking
   seeds:
-  - listen to documents while driving
-  - listen to documents while commuting
-  - consume documents faster
-  - reduce screen time at work
-  - review documents on the go
-  - listen to reports instead of reading
-  - how busy professionals consume long documents
-  - multitask while reading documents
+  - listen to pdf while commuting
+  - listen to documents while working
+  - listen to reports on the go
+  - read work documents aloud
+  - listen to long articles while walking
+  - turn reports into audio
+  - listen to documents hands free
+  - review documents during commute
+  - how to keep up with professional reading
+  - how to get through long work documents
+  - ways to reduce screen reading at work
+  - how to review reports more efficiently
+  - productivity tools for document heavy work
+  - how professionals manage long reading lists
+  - audio workflow for busy professionals
 - name: competitor_alternatives
   seeds:
-  - Speechify alternative
-  - NaturalReader vs Speechify
-  - best text to speech app 2026
-  - free text to speech tools compared
-  - Invocly vs Speechify
-  - cheap text to speech app for students
+  - "Speechify alternatives"
+  - "NaturalReader alternatives"
+  - "ElevenReader alternatives"
+  - "Speechify vs NaturalReader"
+  - "Speechify vs ElevenReader"
+  - "Invocly vs Speechify"
+  - "Invocly vs NaturalReader"
+  - "best text to speech apps"
+  - "best text to speech apps for students"
+  - "best apps to read PDFs aloud"
+  - "best PDF audio readers"
+  - "best apps for listening to documents"
+  - "free text to speech apps"
+  - "free alternatives to Speechify"
+  - "affordable text to speech apps for students"
 - name: case_studies
   seeds:
-  - how students study with audio
-  - listening to textbooks instead of reading
-  - studying with dyslexia
-  - studying with ADHD
-  - listening to documents at work
-  - how professionals consume long documents
-  - learning with audio instead of reading
-  - real study workflows with AI
+  - how students listen to textbooks
+  - student listening workflow for lecture notes
+  - dyslexia student audio study workflow
+  - ADHD student listening workflow
+  - how university students review long PDFs
+  - how professionals listen to work documents
+  - how busy professionals manage long reading lists
+  - how commuters listen to work documents
+  - how researchers review long papers
+  - how consultants consume client reports
+  - real document listening workflows
 internal_pages:
 - url: https://invocly.com/
   topic: homepage / product overview
@@ -104,3 +123,9 @@ internal_pages:
   topic: 'Dyslexia Software for Adults: A Practical Workplace Guide'
 - url: https://invocly.com/blog/tools-for-dyslexia-at-work
   topic: 'Tools for Dyslexia at Work: Practical Guide'
+- url: https://invocly.com/blog/how-to-have-documents-read-to-you
+  topic: 'How to Have Documents Read to You: Step-by-Step Guide'
+- url: https://invocly.com/blog/how-to-keep-up-with-professional-reading
+  topic: 'How to Keep Up with Professional Reading: A Practical Guide'
+- url: https://invocly.com/blog/how-to-get-through-long-work-documents
+  topic: How to Get Through Long Work Documents Fast
