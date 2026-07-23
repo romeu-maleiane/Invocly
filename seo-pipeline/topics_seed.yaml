@@ -1,61 +1,55 @@
 pillars:
 - name: accessibility
   seeds:
-  - "text to speech for dyslexia"
-  - "read aloud tools for dyslexia"
-  - "PDF reader for dyslexia"
-  - "listen to textbooks with dyslexia"
-  - "text to speech for adults with dyslexia"
-
-  - "text to speech for ADHD"
-  - "ADHD reading tools"
-  - "listen to textbooks with ADHD"
-  - "how to focus on reading with ADHD"
-
-  - "text to speech for learning disabilities"
-  - "assistive technology for reading difficulties"
-  - "multisensory reading tools"
-  - "accessible reading tools for students"
-
-  - "text to speech for low vision"
-  - "PDF reader for visually impaired users"
-  - "read documents aloud for low vision"
-  - "accessible document reader"
+  - text to speech for dyslexia
+  - read aloud tools for dyslexia
+  - PDF reader for dyslexia
+  - listen to textbooks with dyslexia
+  - text to speech for adults with dyslexia
+  - text to speech for ADHD
+  - ADHD reading tools
+  - listen to textbooks with ADHD
+  - how to focus on reading with ADHD
+  - text to speech for learning disabilities
+  - assistive technology for reading difficulties
+  - multisensory reading tools
+  - accessible reading tools for students
+  - text to speech for low vision
+  - PDF reader for visually impaired users
+  - read documents aloud for low vision
+  - accessible document reader
 - name: student_study_use
   seeds:
-  - "convert PDF to audio for studying"
-  - "listen to lecture notes"
-  - "listen to textbooks"
-  - "textbook audio reader"
-  - "read study notes aloud"
-  - "listen to research papers"
-  - "PDF reader for students"
-  - "audio study tools"
-  - "how to study by listening"
-  - "listen to notes while commuting"
-  - "turn lecture notes into audio"
-  - "text to speech for exam preparation"
-  - "text to speech for college students"
+  - convert PDF to audio for studying
+  - listen to lecture notes
+  - listen to textbooks
+  - textbook audio reader
+  - read study notes aloud
+  - listen to research papers
+  - PDF reader for students
+  - audio study tools
+  - how to study by listening
+  - listen to notes while commuting
+  - turn lecture notes into audio
+  - text to speech for exam preparation
+  - text to speech for college students
 - name: document_conversion_howto
   seeds:
-  - "how to listen to a PDF"
-  - "convert PDF to audio"
-  - "PDF to audio converter"
-  - "PDF read aloud"
-  - "turn PDF into an audiobook"
-  - "convert PDF to MP3"
-  - "PDF to audio online free"
-
-  - "convert DOCX to MP3"
-  - "convert Word document to audio"
-  - "listen to a Word document"
-
-  - "convert TXT to audio"
-  - "convert text file to MP3"
-
-  - "convert documents to audio"
-  - "document to speech converter"
-  - "read documents aloud"
+  - how to listen to a PDF
+  - convert PDF to audio
+  - PDF to audio converter
+  - PDF read aloud
+  - turn PDF into an audiobook
+  - convert PDF to MP3
+  - PDF to audio online free
+  - convert DOCX to MP3
+  - convert Word document to audio
+  - listen to a Word document
+  - convert TXT to audio
+  - convert text file to MP3
+  - convert documents to audio
+  - document to speech converter
+  - read documents aloud
 - name: productivity_multitasking
   seeds:
   - listen to pdf while commuting
@@ -75,21 +69,21 @@ pillars:
   - audio workflow for busy professionals
 - name: competitor_alternatives
   seeds:
-  - "Speechify alternatives"
-  - "NaturalReader alternatives"
-  - "ElevenReader alternatives"
-  - "Speechify vs NaturalReader"
-  - "Speechify vs ElevenReader"
-  - "Invocly vs Speechify"
-  - "Invocly vs NaturalReader"
-  - "best text to speech apps"
-  - "best text to speech apps for students"
-  - "best apps to read PDFs aloud"
-  - "best PDF audio readers"
-  - "best apps for listening to documents"
-  - "free text to speech apps"
-  - "free alternatives to Speechify"
-  - "affordable text to speech apps for students"
+  - Speechify alternatives
+  - NaturalReader alternatives
+  - ElevenReader alternatives
+  - Speechify vs NaturalReader
+  - Speechify vs ElevenReader
+  - Invocly vs Speechify
+  - Invocly vs NaturalReader
+  - best text to speech apps
+  - best text to speech apps for students
+  - best apps to read PDFs aloud
+  - best PDF audio readers
+  - best apps for listening to documents
+  - free text to speech apps
+  - free alternatives to Speechify
+  - affordable text to speech apps for students
 - name: case_studies
   seeds:
   - how students listen to textbooks
@@ -160,3 +154,9 @@ internal_pages:
   topic: 'How to Keep Up with Professional Reading: A Practical Guide'
 - url: https://invocly.com/blog/how-to-get-through-long-work-documents
   topic: How to Get Through Long Work Documents Fast
+- url: https://invocly.com/blog/how-researchers-review-long-papers
+  topic: How Researchers Review Long Papers (Step-by-Step)
+- url: https://invocly.com/blog/how-consultants-review-client-reports
+  topic: How Consultants Review Client Reports Efficiently
+- url: https://invocly.com/blog/how-university-students-review-long-pdfs
+  topic: How University Students Review Long PDFs Efficiently

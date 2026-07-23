@@ -1,4 +1,70 @@
 topics:
+- id: researchers-review-long-papers
+  keyword: how researchers review long papers
+  intent: informational
+  search_volume: unknown
+  difficulty: unknown
+  bullets:
+  - Focus on researchers screening a long paper before deciding on a deep read
+  - Cover abstract, figures, methods, and conclusion as distinct reading passes
+  - Explain when audio can help with narrative background and when visual review is
+    essential
+  - Include citation, equation, table, and source-verification limits
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: make a readable research paper available as audio
+  - url: https://invocly.com/blog/how-to-have-documents-read-to-you
+    anchor_hint: have a readable document read aloud
+  external_links:
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7392212/
+    note: PLOS ten simple rules for reading a scientific paper
+  - url: https://web.cs.wpi.edu/~rich/courses/howto.html
+    note: Worcester Polytechnic Institute guide to reading research papers
+  status: drafted
+- id: consultants-review-client-reports
+  keyword: how consultants review client reports
+  intent: informational
+  search_volume: unknown
+  difficulty: unknown
+  bullets:
+  - Address consultants reviewing client reports, progress updates, and background
+    packs
+  - Give a question-first workflow for scope, decisions, risks, and action items
+  - Use audio only for suitable narrative sections; keep data, tables, and recommendations
+    visual
+  - Cover confidentiality, client approval, and secure handling before uploading a
+    file
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: turn a readable client document into audio
+  - url: https://invocly.com/blog/how-to-get-through-long-work-documents
+    anchor_hint: get through long work documents
+  external_links:
+  - url: https://www.cmu.edu/tcinc/students/course_documents/11/ReviewerGuidelines.pdf
+    note: Carnegie Mellon reviewer guidelines for consulting reports
+  status: drafted
+- id: university-students-review-long-pdfs
+  keyword: how university students review long PDFs
+  intent: informational
+  search_volume: unknown
+  difficulty: unknown
+  bullets:
+  - Focus on university students handling long assigned PDFs, articles, and textbook
+    chapters
+  - Give a section-first workflow using syllabus questions, headings, and short recall
+    notes
+  - Explain where audio supports readable text while diagrams, equations, and citations
+    need visual checking
+  - Include scanned-PDF and academic-integrity boundaries
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: make a readable study PDF available as audio
+  - url: https://invocly.com/blog/how-to-listen-to-textbooks
+    anchor_hint: listen to textbooks
+  external_links:
+  - url: https://www.adobe.com/acrobat/hub/how-to-read-pdf-aloud.html
+    note: Adobe guidance on reading PDFs aloud
+  status: drafted
 - id: have-documents-read-to-you
   keyword: how to have documents read to you
   intent: how_to
