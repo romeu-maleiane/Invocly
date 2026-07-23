@@ -31,7 +31,7 @@ QUEUE_PATH = PIPELINE_DIR / "topics_queue.yaml"
 BRAND_VOICE_PATH = PIPELINE_DIR / "brand-voice.md"
 PROMPT_PATH = PIPELINE_DIR / "prompts" / "blog.md"
 POSTS_DIR = ROOT / "app" / "blog" / "_posts"
-MODEL = "gemini-3.5-flash"
+MODEL = "gemini-3.6-flash"
 
 client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 

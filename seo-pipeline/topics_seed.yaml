@@ -44,12 +44,21 @@ pillars:
   - audio workflow for busy professionals
 - name: competitor_alternatives
   seeds:
-  - Speechify alternative
-  - NaturalReader vs Speechify
-  - best text to speech app 2026
-  - free text to speech tools compared
-  - Invocly vs Speechify
-  - cheap text to speech app for students
+  - "Speechify alternatives"
+  - "NaturalReader alternatives"
+  - "ElevenReader alternatives"
+  - "Speechify vs NaturalReader"
+  - "Speechify vs ElevenReader"
+  - "Invocly vs Speechify"
+  - "Invocly vs NaturalReader"
+  - "best text to speech apps"
+  - "best text to speech apps for students"
+  - "best apps to read PDFs aloud"
+  - "best PDF audio readers"
+  - "best apps for listening to documents"
+  - "free text to speech apps"
+  - "free alternatives to Speechify"
+  - "affordable text to speech apps for students"
 - name: case_studies
   seeds:
   - how students listen to textbooks
