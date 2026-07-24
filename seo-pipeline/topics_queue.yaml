@@ -1,4 +1,46 @@
 topics:
+- id: naturalreader-alternative
+  keyword: naturalreader alternative
+  intent: commercial
+  search_volume: 50
+  difficulty: 0
+  bullets:
+  - Compare alternatives for listening to readable PDFs, Word files, and web text
+  - Use transparent criteria: document support, voices, privacy, controls, and price
+      model
+  - Include Invocly only where its document-to-audio workflow fits
+  - Avoid unsupported competitor feature or pricing claims
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: convert a readable document into audio
+  - url: https://invocly.com/blog/speechify-free-alternative
+    anchor_hint: free Speechify alternatives
+  external_links:
+  - url: https://www.naturalreaders.com/
+    note: NaturalReader official product information
+  status: drafted
+- id: naturalreader-vs-speechify
+  keyword: naturalreader vs speechify
+  intent: commercial
+  search_volume: 40
+  difficulty: 0
+  bullets:
+  - Compare the two tools by document workflow, voice controls, accessibility, and
+    pricing approach
+  - Separate verified product facts from subjective listening preferences
+  - Help readers choose based on PDF, Word, study, and professional-reading use cases
+  - Include Invocly as a separate document-to-audio option without claiming parity
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: convert a readable document into audio
+  - url: https://invocly.com/blog/speechify-free-alternative
+    anchor_hint: compare free Speechify alternatives
+  external_links:
+  - url: https://speechify.com/product-reviews/vs/speechify-vs-natural-reader/
+    note: Speechify comparison page
+  - url: https://www.naturalreaders.com/
+    note: NaturalReader official product information
+  status: drafted
 - id: researchers-review-long-papers
   keyword: how researchers review long papers
   intent: informational
