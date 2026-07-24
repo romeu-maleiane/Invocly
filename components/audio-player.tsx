@@ -26,6 +26,7 @@ export function AudioPlayer({
   const [playbackRate, setPlaybackRate] = useState([1.0])
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isStreamComplete, setIsStreamComplete] = useState(false)
+  const [streamError, setStreamError] = useState<string | null>(null)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -49,57 +50,174 @@ export function AudioPlayer({
     if (!audio) return
 
     const objectUrl = URL.createObjectURL(mediaSource)
+    let completedAudioUrl: string | undefined
+    let reader: ReadableStreamDefaultReader<Uint8Array> | undefined
+    let sourceBuffer: SourceBuffer | undefined
+    let cancelled = false
+    let streamEnded = false
+    let finalised = false
+    let usingCompletedAudio = false
+    const pendingChunks: Uint8Array[] = []
+    const allChunks: Uint8Array[] = []
+
+    // Keep a short playable window in MediaSource. The complete MP3 is kept
+    // separately so pausing never fills the browser's SourceBuffer.
+    const INITIAL_BUFFER_SECONDS = 10
+    const MAX_BUFFERED_AHEAD_SECONDS = 45
+    const RETAINED_BEHIND_SECONDS = 20
+
     audio.src = objectUrl
     audio.load()
+    setIsStreamComplete(false)
+    setStreamError(null)
+
+    const getBufferedAhead = () => {
+      if (!sourceBuffer) return 0
+
+      const ranges = sourceBuffer.buffered
+      for (let index = 0; index < ranges.length; index += 1) {
+        const start = ranges.start(index)
+        const end = ranges.end(index)
+        if (audio.currentTime >= start && audio.currentTime <= end) {
+          return end - audio.currentTime
+        }
+      }
+
+      return 0
+    }
+
+    const reportStreamError = (error: unknown) => {
+      console.error("Audio streaming error:", error)
+      setStreamError("Audio streaming was interrupted. Please generate it again.")
+      setIsPlaying(false)
+    }
+
+    const finaliseAudio = () => {
+      if (finalised || cancelled || !streamEnded) return
+      finalised = true
+      usingCompletedAudio = true
+
+      const blob = new Blob(allChunks, { type: "audio/mpeg" })
+      completedAudioUrl = URL.createObjectURL(blob)
+      const resumeAt = audio.currentTime
+      const shouldResume = !audio.paused
+
+      const useCompletedAudio = () => {
+        if (cancelled) return
+
+        const duration = Number.isFinite(audio.duration) ? audio.duration : 0
+        audio.currentTime = Math.min(resumeAt, duration || resumeAt)
+        setCurrentTime(audio.currentTime)
+        setTotalDuration(duration)
+        setIsStreamComplete(true)
+        onStreamEnd(blob)
+
+        if (shouldResume) {
+          audio.play().catch((error) => console.log("Autoplay failed", error))
+        }
+      }
+
+      audio.addEventListener("loadedmetadata", useCompletedAudio, { once: true })
+      audio.src = completedAudioUrl
+      audio.load()
+
+      if (mediaSource.readyState === "open" && sourceBuffer && !sourceBuffer.updating) {
+        mediaSource.endOfStream()
+      }
+    }
+
+    const pumpSourceBuffer = () => {
+      if (cancelled || usingCompletedAudio || !sourceBuffer || sourceBuffer.updating || mediaSource.readyState !== "open") {
+        return
+      }
+
+      const removalEnd = audio.currentTime - RETAINED_BEHIND_SECONDS
+      if (removalEnd > 0 && sourceBuffer.buffered.length > 0 && sourceBuffer.buffered.start(0) < removalEnd) {
+        sourceBuffer.remove(0, removalEnd)
+        return
+      }
+
+      if (pendingChunks.length === 0) return
+
+      const bufferLimit = audio.paused ? INITIAL_BUFFER_SECONDS : MAX_BUFFERED_AHEAD_SECONDS
+      if (getBufferedAhead() >= bufferLimit) return
+
+      const nextChunk = pendingChunks.shift()
+      if (!nextChunk) return
+
+      try {
+        sourceBuffer.appendBuffer(nextChunk)
+      } catch (error) {
+        // QuotaExceededError means the browser needs consumed data removed
+        // before accepting another segment. Keep the segment queued and retry
+        // after the remove operation finishes.
+        if (error instanceof DOMException && error.name === "QuotaExceededError" && sourceBuffer.buffered.length > 0) {
+          pendingChunks.unshift(nextChunk)
+          const start = sourceBuffer.buffered.start(0)
+          const end = Math.max(start, audio.currentTime - 1)
+          if (end > start) {
+            sourceBuffer.remove(start, end)
+            return
+          }
+        }
+
+        reportStreamError(error)
+      }
+    }
 
     const onSourceOpen = () => {
       try {
-        const sourceBuffer = mediaSource.addSourceBuffer("audio/mpeg")
-        const reader = audioStream.getReader()
-        const chunks: BlobPart[] = []
+        sourceBuffer = mediaSource.addSourceBuffer("audio/mpeg")
+        reader = audioStream.getReader()
+        sourceBuffer.addEventListener("updateend", pumpSourceBuffer)
 
-        const processStream = () => {
-          reader
-            .read()
-            .then(({ done, value }) => {
-              if (done) {
-                if (!sourceBuffer.updating && mediaSource.readyState === "open") {
-                  mediaSource.endOfStream()
-                  const blob = new Blob(chunks, { type: "audio/mpeg" })
-                  onStreamEnd(blob)
-                  setIsStreamComplete(true)
-                  setTotalDuration(mediaSource.duration)
-                }
-                return
-              }
+        const readStream = async () => {
+          try {
+            while (!cancelled) {
+              const { done, value } = await reader!.read()
+              if (done) break
+              if (!value) continue
 
-              chunks.push(new Uint8Array(value))
-              if (!sourceBuffer.updating) {
-                sourceBuffer.appendBuffer(new Uint8Array(value))
-              } else {
-                sourceBuffer.addEventListener("updateend", () => processStream(), { once: true })
-              }
-            })
-            .catch((err) => {
-              console.error("Stream reading error:", err)
-            })
+              const chunk = new Uint8Array(value)
+              allChunks.push(chunk)
+              pendingChunks.push(chunk)
+              pumpSourceBuffer()
+            }
+
+            streamEnded = true
+            finaliseAudio()
+          } catch (error) {
+            if (!cancelled) reportStreamError(error)
+          }
         }
 
-        sourceBuffer.addEventListener("updateend", processStream)
-        processStream()
+        void readStream()
       } catch (error) {
-        console.error("MediaSource or SourceBuffer error:", error)
+        reportStreamError(error)
       }
     }
 
     mediaSource.addEventListener("sourceopen", onSourceOpen)
+    audio.addEventListener("play", pumpSourceBuffer)
+    audio.addEventListener("timeupdate", pumpSourceBuffer)
 
-    audio.play().catch((e) => console.log("Autoplay failed", e))
-    setIsPlaying(true)
+    audio
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch((error) => {
+        console.log("Autoplay failed", error)
+        setIsPlaying(false)
+      })
 
     return () => {
+      cancelled = true
+      void reader?.cancel()
       mediaSource.removeEventListener("sourceopen", onSourceOpen)
+      audio.removeEventListener("play", pumpSourceBuffer)
+      audio.removeEventListener("timeupdate", pumpSourceBuffer)
+      sourceBuffer?.removeEventListener("updateend", pumpSourceBuffer)
       URL.revokeObjectURL(objectUrl)
+      if (completedAudioUrl) URL.revokeObjectURL(completedAudioUrl)
     }
   }, [audioStream])
 
@@ -147,7 +265,7 @@ export function AudioPlayer({
             <div>
               <h4 className="font-medium text-sm">{fileName}</h4>
               <p className="text-xs text-gray-500">
-                {!isStreamComplete ? "Streaming Audio..." : "Generated Audio"}
+                {streamError ?? (!isStreamComplete ? "Streaming Audio..." : "Generated Audio")}
               </p>
             </div>
             <Badge variant="secondary">MP3</Badge>
