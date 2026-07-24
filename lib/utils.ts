@@ -25,7 +25,7 @@ export function advancedCleanText(text: string): string {
     .replace(/\n{3,}/g, "\n\n")
     // Quebras de linha simples (dentro de um parágrafo) → espaço
     // Mas preservar duplas (separação de parágrafo)
-    .replace(/([^\n])\n([^\n])/g, "$1 $2")
+    .replace(/\n(?!\n)/g, " ")
     // Remover caracteres de controlo e não-imprimíveis, mas preservar:
     // - ASCII imprimível (\x20-\x7E)
     // - Latin Extended (À-ÿ, inclui PT, ES, FR, DE, etc.)

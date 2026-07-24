@@ -125,13 +125,81 @@ export async function POST(request: NextRequest) {
 import pdf from "pdf-parse/lib/pdf-parse";
 import { advancedCleanText } from "@/lib/utils";
 
+type PdfTextItem = {
+  str: string
+  transform: number[]
+  width: number
+  height?: number
+  hasEOL?: boolean
+}
+
+function isPdfTextItem(item: unknown): item is PdfTextItem {
+  return Boolean(
+    item &&
+    typeof item === "object" &&
+    typeof (item as PdfTextItem).str === "string" &&
+    Array.isArray((item as PdfTextItem).transform),
+  )
+}
+
+/**
+ * pdf-parse's default renderer concatenates every text item on a line. Slide
+ * PDFs commonly store each word as a separate positioned item, so that turns
+ * "Certo homem" into "Certohomem". Rebuild lines from their PDF coordinates
+ * and only insert a space when there is a visible gap between two items.
+ */
+async function renderPdfPage(pageData: {
+  getTextContent: (options: { normalizeWhitespace: boolean; disableCombineTextItems: boolean }) => Promise<{ items: unknown[] }>
+}): Promise<string> {
+  const textContent = await pageData.getTextContent({
+    normalizeWhitespace: true,
+    disableCombineTextItems: false,
+  })
+
+  let text = ""
+  let previous: { x: number; y: number; width: number; height: number; hasEOL: boolean } | undefined
+
+  for (const rawItem of textContent.items) {
+    if (!isPdfTextItem(rawItem) || !rawItem.str) continue
+
+    const x = rawItem.transform[4] ?? 0
+    const y = rawItem.transform[5] ?? 0
+    // Some pdf.js versions report item.height as the squared font size (for
+    // example 729 for a 27pt font). The transform scale is the reliable value.
+    const fontScale = Math.abs(rawItem.transform[3] ?? 0)
+    const height = fontScale > 0 ? fontScale : Math.max(rawItem.height ?? 0, 1)
+
+    if (previous) {
+      const sameLine = Math.abs(y - previous.y) <= Math.max(height, previous.height) * 0.35
+      const gap = x - (previous.x + previous.width)
+      const spaceThreshold = Math.max(1, Math.min(height, previous.height) * 0.1)
+
+      if (!sameLine || previous.hasEOL || gap < -spaceThreshold) {
+        text += "\n"
+      } else if (gap > spaceThreshold && !/\s$/.test(text) && !/^\s/.test(rawItem.str)) {
+        text += " "
+      }
+    }
+
+    text += rawItem.str
+    previous = { x, y, width: rawItem.width ?? 0, height, hasEOL: Boolean(rawItem.hasEOL) }
+  }
+
+  return text
+}
+
 async function extractPdfText(file: File): Promise<string> {
   try {
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const data = await pdf(buffer);
+    // @types/pdf-parse is outdated and omits the documented options argument.
+    const parsePdf = pdf as unknown as (
+      data: Buffer,
+      options: { pagerender: typeof renderPdfPage },
+    ) => Promise<{ text: string }>
+    const data = await parsePdf(buffer, { pagerender: renderPdfPage });
     const extractedText = data.text.trim();
 
     if (extractedText.length < 10) {
