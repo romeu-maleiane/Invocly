@@ -1,76 +1,77 @@
-﻿"use client"
+import type { Metadata } from "next"
+import { LegalPage, type LegalSection } from "@/components/legal-page"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Header } from "@/components/header"
-
-export default function TermsOfService() {
-  return (
-    <>
-      <Header />
-      <div className="container mx-auto px-4 py-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Terms of Service</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <section>
-              <h2 className="type-heading font-semibold">1. Introduction</h2>
-              <p>
-                Welcome to Invocly! These Terms of Service ("Terms") govern your use of our website and services. By using our services, you agree to these Terms.
-              </p>
-            </section>
-            <section>
-              <h2 className="type-heading font-semibold">2. Our Services</h2>
-              <p>
-                Invocly provides a service that converts text from various document formats into audio files. We offer different subscription plans with varying features and limits.
-              </p>
-            </section>
-            <section>
-              <h2 className="type-heading font-semibold">3. User Accounts</h2>
-              <p>
-                To access certain features, you must create an account. You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.
-              </p>
-            </section>
-            <section>
-              <h2 className="type-heading font-semibold">4. User Content</h2>
-              <p>
-                You retain ownership of the content you upload to our service. By uploading content, you grant us a non-exclusive license to use, process, and store your content to provide our services to you.
-              </p>
-            </section>
-            <section>
-              <h2 className="type-heading font-semibold">5. Prohibited Activities</h2>
-              <p>
-                You may not use our services for any illegal or unauthorized purpose. You may not upload content that is infringing, defamatory, or otherwise unlawful.
-              </p>
-            </section>
-            <section>
-              <h2 className="type-heading font-semibold">6. Termination</h2>
-              <p>
-                We may terminate or suspend your account at any time, without prior notice or liability, for any reason, including if you breach these Terms.
-              </p>
-            </section>
-            <section>
-              <h2 className="type-heading font-semibold">7. Disclaimer of Warranties</h2>
-              <p>
-                Our services are provided "as is" and "as available" without any warranties of any kind. We do not warrant that our services will be uninterrupted or error-free.
-              </p>
-            </section>
-            <section>
-              <h2 className="type-heading font-semibold">8. Limitation of Liability</h2>
-              <p>
-                In no event shall Invocly be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, or other intangible losses.
-              </p>
-            </section>
-            <section>
-              <h2 className="type-heading font-semibold">9. Changes to Terms</h2>
-              <p>
-                We reserve the right to modify these Terms at any time. We will notify you of any changes by posting the new Terms on our website.
-              </p>
-            </section>
-          </CardContent>
-        </Card>
-      </div>
-    </>
-  )
+export const metadata: Metadata = {
+  title: "Terms of Service | Invocly",
+  description: "The terms that govern your use of Invocly's document-to-audio service, accounts, subscriptions, and uploaded content.",
 }
 
+const sections: LegalSection[] = [
+  {
+    id: "introduction",
+    title: "Introduction",
+    content: <p>Welcome to Invocly. These Terms of Service (“Terms”) govern your use of our website and services. By accessing or using Invocly, you agree to be bound by these Terms.</p>,
+  },
+  {
+    id: "our-services",
+    title: "Our services",
+    content: <p>Invocly converts text from supported document formats into audio files. We offer free and paid plans with different features, usage limits, voice options, and file-size limits.</p>,
+  },
+  {
+    id: "user-accounts",
+    title: "User accounts",
+    content: <p>Some features require an account. You are responsible for keeping your account credentials confidential and for activity that takes place through your account. Please provide accurate information and notify us if you believe your account has been compromised.</p>,
+  },
+  {
+    id: "user-content",
+    title: "Your content",
+    content: <p>You retain ownership of the content you upload. You grant Invocly a limited, non-exclusive right to process and temporarily store that content only as needed to provide the document-to-audio service to you.</p>,
+  },
+  {
+    id: "prohibited-activities",
+    title: "Prohibited activities",
+    content: (
+      <div className="space-y-4">
+        <p>You may not use Invocly for illegal, harmful, or unauthorized purposes. This includes:</p>
+        <ul>
+          <li>Uploading content that infringes intellectual-property or privacy rights.</li>
+          <li>Uploading unlawful, defamatory, malicious, or abusive content.</li>
+          <li>Attempting to disrupt, reverse engineer, or gain unauthorized access to the service.</li>
+          <li>Using voice features to impersonate or deceive others without permission.</li>
+        </ul>
+      </div>
+    ),
+  },
+  {
+    id: "termination",
+    title: "Suspension and termination",
+    content: <p>We may suspend or terminate access when these Terms are breached, the service is misused, or doing so is necessary to protect Invocly, our users, or third parties. You may stop using the service at any time and can manage an active subscription from your account.</p>,
+  },
+  {
+    id: "warranties",
+    title: "Disclaimer of warranties",
+    content: <p>Invocly is provided “as is” and “as available,” without warranties of any kind to the extent permitted by law. We do not guarantee that the service will always be uninterrupted, error-free, or suitable for every purpose.</p>,
+  },
+  {
+    id: "liability",
+    title: "Limitation of liability",
+    content: <p>To the extent permitted by law, Invocly will not be liable for indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or other intangible losses resulting from your use of the service.</p>,
+  },
+  {
+    id: "changes",
+    title: "Changes to these terms",
+    content: <p>We may update these Terms as the service evolves. The latest version will be posted on this page with a revised update date. Continued use of Invocly after an update means you accept the revised Terms.</p>,
+  },
+]
+
+export default function TermsOfServicePage() {
+  return (
+    <LegalPage
+      eyebrow="Legal"
+      title="Terms of Service"
+      description="Clear rules for using Invocly, managing your account, and working with document and voice features."
+      updatedAt="July 27, 2026"
+      sections={sections}
+    />
+  )
+}

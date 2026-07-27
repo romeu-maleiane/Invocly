@@ -7,14 +7,15 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertTitle } from "@/components/ui/alert"
 import { useSubscription } from "@/hooks/use-subscription"
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
-import { useState, useEffect, useContext } from "react"
+import { SignInButton, SignUpButton, useUser } from '@clerk/nextjs'
+import { useState, useEffect, useContext, useRef } from "react"
 import { VoiceOption } from "@/components/voice-selection"
 import { getVoices } from "@/lib/getVoices"
 import { AlertCircleIcon, BriefcaseBusiness, CaseSensitive, GraduationCap, Zap, Headphones, Eye, Star, Quote, ChevronRight, ArrowRight, Shield, Sparkles } from 'lucide-react'
 import { GlobalContext } from '@/lib/globalContext'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import dynamic from 'next/dynamic'
+import { Header } from '@/components/header'
 
 const DynamicVoiceCloning = dynamic(() => import("@/components/voice-cloning").then(mod => mod.VoiceCloning), {
   ssr: false
@@ -28,17 +29,52 @@ const DynamicMyAudios = dynamic(() => import("@/components/my-audios").then(mod 
 
 
 export default function Home() {
-  const { currentPlan, } = useSubscription()
+  const {
+    currentPlan,
+    isLoading: isSubscriptionLoading,
+    isPlanConfirmed,
+  } = useSubscription()
   const { remainingDocs } = useContext(GlobalContext)
   const [showPricingModal, setShowPricingModal] = useState(false)
   const [showMyAudios, setShowMyAudios] = useState(false)
   const [voices, setVoices] = useState<VoiceOption[]>([])
   const { user } = useUser()
+  const autoShownPricingUserIds = useRef(new Set<string>())
 
   useEffect(() => {
-    if (currentPlan.id === 'free' && user)
-      setShowPricingModal(true)
-  }, [user])
+    const userId = user?.id
+
+    if (!userId) {
+      setShowPricingModal(false)
+      return
+    }
+
+    if (isSubscriptionLoading) return
+
+    if (!isPlanConfirmed) {
+      setShowPricingModal(false)
+      return
+    }
+
+    if (currentPlan.id !== "free") {
+      setShowPricingModal(false)
+      return
+    }
+
+    const storageKey = `invocly:pricing-modal:auto-shown:${userId}`
+
+    if (autoShownPricingUserIds.current.has(userId)) return
+
+    try {
+      if (sessionStorage.getItem(storageKey)) return
+      sessionStorage.setItem(storageKey, "true")
+    } catch {
+      // The in-memory guard still prevents repeated openings when storage is unavailable.
+    }
+
+    autoShownPricingUserIds.current.add(userId)
+    setShowPricingModal(true)
+  }, [currentPlan.id, isPlanConfirmed, isSubscriptionLoading, user?.id])
 
   useEffect(() => {
     async function loadVoices() {
@@ -66,54 +102,7 @@ export default function Home() {
         )}
       </Alert>)}
 
-      <header className="flex justify-between items-center p-4  dark:bg-gray-800 ">
-        <div className="flex items-center">
-          <Image src='/placeholder-logo.png' alt='Logo' width={40} height={20} className="h-10 w-auto" />
-        </div>
-
-        <div className="flex items-center gap-2 sm:gap-4">
-          {user && (<div className='flex items-center gap-2 sm:gap-4'>
-            <Badge variant={currentPlan.id === "premium" ? "default" : "secondary"} className={`text-sm py-1 ${currentPlan.id === "premium" ? 'bg-blue-600' : ''} rounded-full`}>
-              {currentPlan.name} Plan
-            </Badge>
-          </div>)}
-
-          <div className='flex items-center gap-2 sm:gap-4'>
-            <SignedOut>
-              <SignInButton>
-                <Button
-                  className="inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-2xl border border-white/70 bg-white/50 px-5 text-base font-medium text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_10px_28px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-300 hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15"
-                >
-                  <span className="text-nowrap">Sign In</span>
-                </Button>
-              </SignInButton>
-              <SignUpButton>
-                <Button
-                  className="inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-2xl border border-blue-500/20 bg-blue-500/10 px-5 text-base font-medium text-blue-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_10px_28px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-300 hover:bg-blue-500/15 hover:border-blue-500/30 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 disabled:pointer-events-none disabled:opacity-50"
-                >
-                  Try for free
-                </Button>
-              </SignUpButton>
-            </SignedOut>
-            <SignedIn>
-              <Button className="inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-2xl border border-white/70 bg-white/50 px-5 text-base font-medium text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_10px_28px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-300 hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15" variant="outline" onClick={() => setShowMyAudios(true)}>
-                My Audios
-              </Button>
-              <UserButton>
-                {currentPlan.id === "premium" && (
-                  <UserButton.MenuItems>
-                    <UserButton.Action
-                      label="Manage Subscription"
-                      labelIcon={<Zap className="w-4 h-4 text-blue-600" />}
-                      onClick={() => window.location.href = '/api/billing/portal'}
-                    />
-                  </UserButton.MenuItems>
-                )}
-              </UserButton>
-            </SignedIn>
-          </div>
-        </div>
-      </header>
+      <Header onMyAudios={() => setShowMyAudios(true)} />
       <div className="container mx-auto px-4 pt-16 sm:pt-18 mb-24">
         <div className="max-w-6xl mx-auto lg:px-6">
           <div className="text-center mb-12 sm:mb-16">
