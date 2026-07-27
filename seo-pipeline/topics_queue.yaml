@@ -1,4 +1,67 @@
 topics:
+- id: convert-text-file-to-mp3
+  keyword: convert text file to mp3
+  intent: how_to
+  search_volume: 20
+  difficulty: 22
+  bullets:
+  - Give a direct TXT-to-MP3 workflow for readable plain-text files
+  - Cover text cleanup, voice choice, speed, and a short export checklist
+  - Explain the difference between live read-aloud and saved audio files
+  - Cover privacy checks before processing sensitive text
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: convert a readable text file into audio
+  - url: https://invocly.com/blog/how-to-have-documents-read-to-you
+    anchor_hint: have a document read aloud
+  external_links:
+  - url: https://www.zamzar.com/convert/txt-to-mp3/
+    note: TXT-to-MP3 conversion workflow example
+  status: drafted
+- id: convert-docx-to-mp3
+  keyword: convert docx to mp3
+  intent: how_to
+  search_volume: 10
+  difficulty: unknown
+  bullets:
+  - Give a practical DOCX-to-MP3 workflow for readable Word documents
+  - Cover headings, comments, tables, and document cleanup before listening
+  - Explain when native Word Read Aloud is enough versus saved audio
+  - Include privacy and file-check steps for workplace or study documents
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: convert a readable Word document into audio
+  - url: https://invocly.com/blog/listen-to-word-documents
+    anchor_hint: listen to Word documents
+  external_links:
+  - url: https://www.zamzar.com/convert/docx-to-mp3/
+    note: DOCX-to-MP3 conversion workflow example
+  - url: https://support.microsoft.com/en-us/word/listen-to-your-word-documents
+    note: Microsoft Support guidance on Word Read Aloud
+  status: drafted
+- id: text-to-speech-for-low-vision
+  keyword: text to speech for low vision
+  intent: informational
+  search_volume: 10
+  difficulty: unknown
+  bullets:
+  - Explain text-to-speech as one reading-access option for people with low vision
+  - Cover readable PDFs, Word documents, and text files plus limits of scanned pages
+  - Include practical controls such as voice, speed, headphones, and short listening
+    sections
+  - Distinguish text-to-speech from screen magnification and screen-reader navigation
+  - Avoid medical claims and frame tool choice as individual accessibility support
+  internal_links:
+  - url: https://invocly.com/
+    anchor_hint: make a readable document available as audio
+  - url: https://invocly.com/blog/how-to-have-documents-read-to-you
+    anchor_hint: have documents read aloud
+  external_links:
+  - url: https://www.perkins.org/resource/how-to-use-text-to-speech-with-low-vision/
+    note: Perkins guidance on text-to-speech with low vision
+  - url: https://nfb.org/programs-services/knfb-reader
+    note: National Federation of the Blind resource on reading access
+  status: drafted
 - id: naturalreader-alternative
   keyword: naturalreader alternative
   intent: commercial
