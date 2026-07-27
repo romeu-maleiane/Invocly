@@ -1,0 +1,5 @@
+export const navbarSecondaryButtonClass =
+  "inline-flex h-10 px-6 items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-2xl border border-white/70 bg-white/50 px-5 text-base font-medium text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_10px_28px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-300 hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15"
+
+export const navbarPrimaryButtonClass =
+  "inline-flex h-10 px-6 items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-2xl border border-blue-500/20 bg-blue-500/10 px-5 text-base font-medium text-blue-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_10px_28px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-300 hover:border-blue-500/30 hover:bg-blue-500/15 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 disabled:pointer-events-none disabled:opacity-50"

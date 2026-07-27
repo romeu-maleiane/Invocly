@@ -51,43 +51,65 @@ export const PLANS: Record<string, SubscriptionPlan> = {
 }
 
 export function useSubscription() {
-  const { user } = useUser()
+  const { isLoaded: isUserLoaded, user } = useUser()
   const [currentPlan, setCurrentPlan] = useState<string>("free")
   const [usage, setUsage] = useState<number>(0)
   const {setRemainingDocs} = useContext(GlobalContext)
   const [isLoading, setIsLoading] = useState(true)
+  const [isPlanConfirmed, setIsPlanConfirmed] = useState(false)
+  const [resolvedIdentity, setResolvedIdentity] = useState<string | null>(null)
   const supabase = createClient()
+  const activeIdentity = isUserLoaded ? user?.id ?? "guest" : null
 
   useEffect(() => {
+    if (!isUserLoaded || !activeIdentity) return
+
+    let cancelled = false
+
     async function loadSubscription() {
       setIsLoading(true)
+      let nextPlan = "free"
+      let nextUsage = 0
+      let nextPlanConfirmed = !user
 
-      if (user) {
-        const { data } = await supabase
-          .from("users")
-          .select("plan")
-          .eq("id", user.id)
-          .single()
+      try {
+        if (user) {
+          const { data, error } = await supabase
+            .from("users")
+            .select("plan")
+            .eq("id", user.id)
+            .maybeSingle()
 
-        if (data) {
-          setCurrentPlan(data.plan.trim())
-        } else {
-          setCurrentPlan("free")
+          if (error) throw error
+
+          const normalizedPlan = data?.plan?.trim().toLowerCase()
+          nextPlan = normalizedPlan && PLANS[normalizedPlan] ? normalizedPlan : "free"
+          nextPlanConfirmed = true
         }
-      } else {
-        setCurrentPlan("free")
+
+        const savedUsage = Number.parseInt(localStorage.getItem("usage_guest") || "0")
+        nextUsage = Number.isNaN(savedUsage) ? 0 : savedUsage
+      } catch {
+        nextPlan = "free"
+        nextUsage = 0
+        nextPlanConfirmed = false
+      } finally {
+        if (!cancelled) {
+          setCurrentPlan(nextPlan)
+          setUsage(nextUsage)
+          setIsPlanConfirmed(nextPlanConfirmed)
+          setResolvedIdentity(activeIdentity)
+          setIsLoading(false)
+        }
       }
-
-      const usageKey = "usage_guest"
-      const savedUsage = Number.parseInt(localStorage?.getItem(usageKey) || "0")
-      setUsage(savedUsage)
-
-
-      setIsLoading(false)
     }
 
     loadSubscription()
-  }, [user])
+
+    return () => {
+      cancelled = true
+    }
+  }, [activeIdentity, isUserLoaded])
 
   const incrementUsage = () => {
     if (currentPlan === "premium" && user) {
@@ -121,7 +143,8 @@ export function useSubscription() {
   return {
     currentPlan: PLANS[currentPlan],
     usage,
-    isLoading,
+    isLoading: isLoading || !isUserLoaded || resolvedIdentity !== activeIdentity,
+    isPlanConfirmed: isPlanConfirmed && resolvedIdentity === activeIdentity,
     incrementUsage,
     canUseFeature,
     canProcessDocument,

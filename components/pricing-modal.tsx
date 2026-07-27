@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogTitle } from "@/components/ui/dialog"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -123,6 +124,9 @@ export function PricingModal({ isOpen, onClose}: PricingModalProps) {
 
         <div className="text-center text-sm text-gray-500 mt-3">
           <p>✨ 14-day money-back guarantee • Cancel anytime • Secure payment</p>
+          <Link href="/pricing" onClick={onClose} className="mt-2 inline-flex min-h-11 items-center justify-center font-medium text-blue-600 underline-offset-4 hover:underline">
+            View full plan details
+          </Link>
         </div>
       </DialogContent>
     </Dialog>
