@@ -1,4 +1,76 @@
 topics:
+- id: how-to-study-textbooks
+  keyword: how to study textbooks
+  intent: informational
+  search_volume: 720
+  difficulty: 0
+  bullets:
+  - Give a practical textbook-study workflow: preview, questions, active recall, and
+      review
+  - Explain when listening to a readable chapter can support a visual reading pass
+  - Cover notes, diagrams, and end-of-chapter questions as separate study tasks
+  - Avoid presenting audio as a replacement for visual material or active practice
+  internal_links:
+  - url: https://invocly.com/blog/how-to-listen-to-textbooks
+    anchor_hint: listen to textbooks
+  - url: https://invocly.com/blog/text-to-speech-for-textbooks
+    anchor_hint: text to speech for textbooks
+  - url: https://invocly.com/
+    anchor_hint: turn a readable textbook chapter into audio
+  external_links:
+  - url: https://www.learningscientists.org/blog/2016/2/12-1
+    note: Learning Scientists textbook-study guidance
+  - url: https://learningcenter.unc.edu/tips-and-tools/reading-textbooks-effectively/
+    note: UNC textbook reading guidance
+  status: drafted
+- id: how-to-read-with-adhd
+  keyword: how to read with ADHD
+  intent: informational
+  search_volume: 320
+  difficulty: 0
+  bullets:
+  - Give a document-reading routine using short sections, a clear purpose, and active
+    recall
+  - Cover distraction reduction, breaks, and externalizing notes without medical claims
+  - Explain how audio can support readable documents alongside visual reading
+  - Distinguish general strategies from individual diagnosis or treatment advice
+  internal_links:
+  - url: https://invocly.com/blog/text-to-speech-for-adhd
+    anchor_hint: text to speech for ADHD
+  - url: https://invocly.com/blog/studying-with-adhd
+    anchor_hint: studying with ADHD
+  - url: https://invocly.com/
+    anchor_hint: make a readable document available as audio
+  external_links:
+  - url: https://chadd.org/attention-article/study-skills-for-thriving-with-adhd/
+    note: CHADD study-skills guidance
+  - url: https://dres.illinois.edu/education/study-skills-and-learning-strategies-resources/strategies-techniques-for-adhd/
+    note: University of Illinois ADHD study strategies
+  status: drafted
+- id: academic-reading
+  keyword: academic reading
+  intent: informational
+  search_volume: 210
+  difficulty: 2
+  bullets:
+  - Give a higher-education workflow for chapters, papers, and long readable PDFs
+  - Cover purpose-first reading, annotation, short summaries, and retrieval questions
+  - Explain where listening can help with narrative passages and where visual review
+    remains essential
+  - Separate academic reading strategy from exam-specific or IELTS preparation
+  internal_links:
+  - url: https://invocly.com/blog/how-researchers-review-long-papers
+    anchor_hint: review long research papers
+  - url: https://invocly.com/blog/how-university-students-review-long-pdfs
+    anchor_hint: review long university PDFs
+  - url: https://invocly.com/
+    anchor_hint: make a readable academic document available as audio
+  external_links:
+  - url: https://writingcenter.unc.edu/esl/resources/academic-reading-strategies/
+    note: UNC academic reading strategies
+  - url: https://academicresourcecenter.harvard.edu/2023/10/02/reading/
+    note: Harvard Academic Resource Center reading guidance
+  status: drafted
 - id: convert-text-file-to-mp3
   keyword: convert text file to mp3
   intent: how_to
