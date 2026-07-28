@@ -1,4 +1,105 @@
 topics:
+- id: improve-reading-comprehension-adults
+  keyword: how to improve reading comprehension adults
+  intent: informational
+  search_volume: 210
+  difficulty: 2
+  bullets:
+  - Give adult learners a practical routine for purpose-setting, section summaries,
+    and recall
+  - Cover workplace, professional-development, and continuing-education documents
+  - Explain audio as an optional way to revisit readable prose, not a guaranteed comprehension
+    fix
+  - Avoid diagnostic, clinical, or universal retention claims
+  internal_links:
+  - url: https://invocly.com/blog/listening-comprehension-vs-reading-comprehension
+    anchor_hint: listening and reading comprehension
+  - url: https://invocly.com/blog/how-to-get-through-long-work-documents
+    anchor_hint: get through long work documents
+  - url: https://invocly.com/
+    anchor_hint: make a readable document available as audio
+  external_links:
+  - url: https://learningcenter.unc.edu/tips-and-tools/reading-comprehension-tips/
+    note: UNC reading comprehension guidance
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3474365/
+    note: Research on adult reading comprehension strategies
+  status: drafted
+- id: adhd-reading-tools
+  keyword: ADHD reading tools
+  intent: informational
+  search_volume: 210
+  difficulty: 3
+  bullets:
+  - Organize tools by task: staying on a line, reading readable documents aloud, note
+      capture, and distraction reduction
+  - Include selection criteria for document format, controls, privacy, and personal
+    workflow
+  - Position Invocly only as an option for readable PDF, DOCX, and TXT documents
+  - Avoid medical claims, treatment language, and unsupported competitor comparisons
+  internal_links:
+  - url: https://invocly.com/blog/text-to-speech-for-adhd
+    anchor_hint: text to speech for ADHD
+  - url: https://invocly.com/blog/how-to-read-with-adhd
+    anchor_hint: read with ADHD
+  - url: https://invocly.com/
+    anchor_hint: make a readable document available as audio
+  external_links:
+  - url: https://www.adcet.edu.au/inclusive-technology/adhd/for-reading
+    note: ADCET reading technology guidance for ADHD
+  - url: https://chadd.org/attention-article/study-skills-for-thriving-with-adhd/
+    note: CHADD study-skills guidance
+  status: drafted
+- id: bionic-reading-vs-text-to-speech
+  keyword: bionic reading
+  intent: comparison
+  search_volume: 4400
+  difficulty: 36
+  bullets:
+  - Explain what Bionic Reading changes visually and what text-to-speech changes audibly
+  - Compare the approaches by task: scanning, sustained readable-document reading,
+      accessibility, and visual material
+  - State clearly that Invocly is a document-to-audio option and does not provide
+    Bionic Reading formatting
+  - Avoid claims that either approach improves reading speed, comprehension, or ADHD
+    outcomes for everyone
+  internal_links:
+  - url: https://invocly.com/blog/listening-comprehension-vs-reading-comprehension
+    anchor_hint: listening and reading comprehension
+  - url: https://invocly.com/blog/text-to-speech-for-adhd
+    anchor_hint: text to speech for ADHD
+  - url: https://invocly.com/
+    anchor_hint: convert a readable document into audio
+  external_links:
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12565662/
+    note: Research on Bionic Reading and eye movements
+  - url: https://www.indwes.edu/articles/2022/09/what-is-bionic-reading
+    note: University overview of Bionic Reading
+  status: drafted
+- id: reading-fatigue
+  keyword: reading fatigue
+  intent: informational
+  search_volume: 140
+  difficulty: 0
+  bullets:
+  - Address fatigue from long document-reading sessions without diagnosing a cause
+  - Cover pacing, breaks, display adjustments, document structure, and switching between
+    visual and audio review
+  - Explain that persistent or concerning symptoms should be discussed with an appropriate
+    professional
+  - Frame Invocly as one optional way to listen to compatible document passages
+  internal_links:
+  - url: https://invocly.com/blog/how-to-get-through-long-work-documents
+    anchor_hint: get through long work documents
+  - url: https://invocly.com/blog/text-to-speech-for-low-vision
+    anchor_hint: text to speech for low vision
+  - url: https://invocly.com/
+    anchor_hint: make a readable document available as audio
+  external_links:
+  - url: https://sheffield.ac.uk/english/undergraduate/blog/academic-fatigue
+    note: University of Sheffield discussion of academic reading fatigue
+  - url: https://www.perkins.org/resource/how-to-use-text-to-speech-with-low-vision/
+    note: Perkins guidance on text-to-speech with low vision
+  status: drafted
 - id: how-to-study-textbooks
   keyword: how to study textbooks
   intent: informational
