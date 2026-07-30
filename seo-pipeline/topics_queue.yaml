@@ -1,4 +1,97 @@
 topics:
+- id: free-text-to-speech-app
+  keyword: free text to speech app
+  intent: comparison
+  search_volume: 1600
+  difficulty: 32
+  bullets:
+  - Compare free text-to-speech app options by document support, controls, privacy,
+    and limits
+  - Distinguish app-store readers, browser tools, and document-to-audio workflows
+  - Explain how to assess a free tier without making unverified Invocly pricing claims
+  - Include readable PDF, DOCX, and TXT use cases rather than voice-generation use
+    cases
+  internal_links:
+  - url: https://invocly.com/blog/free-pdf-text-to-speech
+    anchor_hint: free PDF text to speech
+  - url: https://invocly.com/blog/best-text-to-speech-for-students
+    anchor_hint: best text to speech for students
+  - url: https://invocly.com/
+    anchor_hint: convert a readable document into audio
+  external_links:
+  - url: https://www.pcmag.com/picks/best-text-to-speech-tools
+    note: Independent text-to-speech app roundup
+  status: drafted
+- id: pdf-audio-reader
+  keyword: pdf audio reader
+  intent: commercial
+  search_volume: 1600
+  difficulty: 16
+  bullets:
+  - Help readers choose a PDF audio reader for readable digital PDFs
+  - Compare live read-aloud, saved audio, voice controls, and scanned-PDF limitations
+  - Cover privacy checks for work and study documents
+  - Differentiate this product-selection guide from existing how-to and free-PDF posts
+  internal_links:
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to a PDF
+  - url: https://invocly.com/blog/free-pdf-text-to-speech
+    anchor_hint: free PDF text to speech
+  - url: https://invocly.com/
+    anchor_hint: make a readable PDF available as audio
+  external_links:
+  - url: https://www.adobe.com/acrobat/hub/how-to-read-pdf-aloud.html
+    note: Adobe guidance on reading PDFs aloud
+  status: drafted
+- id: elevenreader-vs-speechify
+  keyword: elevenreader vs speechify
+  intent: comparison
+  search_volume: 50
+  difficulty: 0
+  bullets:
+  - Compare ElevenReader and Speechify only on verifiable document-reading criteria
+  - Separate document support, listening controls, privacy, and pricing model from
+    subjective preference
+  - Include Invocly as a separate readable-document-to-audio option without claiming
+    feature parity
+  - Avoid unverified competitor pricing, feature, or performance claims
+  internal_links:
+  - url: https://invocly.com/blog/speechify-free-alternative
+    anchor_hint: free Speechify alternatives
+  - url: https://invocly.com/blog/naturalreader-vs-speechify
+    anchor_hint: NaturalReader versus Speechify
+  - url: https://invocly.com/
+    anchor_hint: convert a readable document into audio
+  external_links:
+  - url: https://www.w3.org/WAI/perspective-videos/voice/
+    note: W3C overview of text-to-speech access
+  status: drafted
+- id: speechify-reviews
+  keyword: speechify reviews
+  intent: commercial
+  search_volume: 3600
+  difficulty: 0
+  bullets:
+  - Summarize how to evaluate Speechify reviews without presenting a fabricated score
+    or verdict
+  - Separate review-source quality, document workflow, controls, privacy, and pricing
+    considerations
+  - Help document readers decide whether a dedicated document-to-audio workflow fits
+    their needs
+  - Include Invocly as a separate option without unverified competitor claims
+  internal_links:
+  - url: https://invocly.com/blog/speechify-free-alternative
+    anchor_hint: free Speechify alternatives
+  - url: https://invocly.com/blog/naturalreader-vs-speechify
+    anchor_hint: NaturalReader versus Speechify
+  - url: https://invocly.com/
+    anchor_hint: make a readable document available as audio
+  external_links:
+  - url: https://www.gartner.com/reviews/product/speechify
+    note: Gartner Peer Insights Speechify reviews
+  - url: https://www.trustpilot.com/review/speechify.com
+    note: Trustpilot Speechify review listings
+  status: drafted
 - id: improve-reading-comprehension-adults
   keyword: how to improve reading comprehension adults
   intent: informational
