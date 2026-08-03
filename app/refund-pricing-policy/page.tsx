@@ -41,7 +41,7 @@ const sections: LegalSection[] = [
   {
     id: "request-refund",
     title: "Requesting a refund",
-    content: <p>To request an eligible refund, email <a href="mailto:support@invocly.com">support@invocly.com</a> from the address connected to your account. Include enough information for us to locate the subscription and briefly explain the request.</p>,
+    content: <p>To request an eligible refund, email <a href="mailto:hello@invocly.com">hello@invocly.com</a> from the address connected to your account. Include enough information for us to locate the subscription and briefly explain the request.</p>,
   },
 ]
 
