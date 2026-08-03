@@ -5,6 +5,7 @@ import { Heart } from "lucide-react"
 const footerLinks = [
   { href: "/pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
   { href: "/terms-of-service", label: "Terms" },
   { href: "/privacy-policy", label: "Privacy" },
   { href: "/refund-pricing-policy", label: "Refunds" },
