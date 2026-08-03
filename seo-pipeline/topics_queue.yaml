@@ -1,4 +1,55 @@
 topics:
+- id: google-doc-text-to-speech
+  keyword: google doc text to speech
+  intent: how-to
+  search_volume: 210
+  difficulty: 18
+  bullets:
+  - Explain practical Google Docs read-aloud options without implying Google Docs
+    has a built-in text-to-speech feature
+  - Compare browser extensions, device accessibility features, and exporting a readable
+    document for document-to-audio tools
+  - Cover a short quality check for headings, comments, links, and shared-document
+    permissions
+  - Position Invocly only as an option after exporting a compatible readable PDF,
+    DOCX, or TXT file
+  internal_links:
+  - url: https://invocly.com/blog/google-chrome-text-to-speech
+    anchor_hint: Google Chrome text to speech
+  - url: https://invocly.com/blog/how-to-have-documents-read-to-you
+    anchor_hint: have documents read aloud
+  - url: https://invocly.com/
+    anchor_hint: make a readable exported document available as audio
+  external_links:
+  - url: https://www.w3.org/WAI/perspective-videos/voice/
+    note: W3C overview of text-to-speech access
+  status: drafted
+- id: how-to-proofread-a-document
+  keyword: how to proofread a document
+  intent: how-to
+  search_volume: 70
+  difficulty: 19
+  bullets:
+  - Give a proofreading sequence for content, structure, formatting, and final error
+    checks
+  - Explain listening as an optional final pass for hearing awkward phrasing or missed
+    words, not as a substitute for editing
+  - Cover version control, comments, names, figures, and confidential-work safeguards
+  - Position Invocly only as an option for a compatible readable draft; avoid accuracy
+    guarantees
+  internal_links:
+  - url: https://invocly.com/blog/listen-to-word-documents
+    anchor_hint: listen to Word documents
+  - url: https://invocly.com/blog/how-to-have-documents-read-to-you
+    anchor_hint: have a document read aloud
+  - url: https://invocly.com/
+    anchor_hint: make a readable draft available as audio
+  external_links:
+  - url: https://owl.purdue.edu/owl/general_writing/the_writing_process/proofreading/index.html
+    note: Purdue OWL proofreading guidance
+  - url: https://www.touro.edu/departments/writing-center/tutorials/seven-steps-to-effective-proofreading/
+    note: Touro University proofreading methods
+  status: drafted
 - id: listen-to-research-papers
   keyword: listen to research papers
   intent: how-to
