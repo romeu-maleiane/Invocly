@@ -1,4 +1,124 @@
 topics:
+- id: dyslexia-reading-programs
+  keyword: dyslexia reading programs
+  intent: informational
+  search_volume: 1000
+  difficulty: 17
+  bullets:
+  - Explain the difference between structured literacy programs, tutoring, and general
+    reading tools
+  - Help families and adult learners evaluate goals, evidence, delivery, and practitioner
+    qualifications
+  - Position document audio only as support for accessible reading materials, not
+    as instruction or treatment
+  - Avoid cure claims, universal recommendations, and clinical advice
+  internal_links:
+  - url: https://invocly.com/blog/dyslexia-tools-for-reading
+    anchor_hint: dyslexia tools for reading
+  - url: https://invocly.com/blog/dyslexia-apps-for-students
+    anchor_hint: dyslexia apps for students
+  - url: https://invocly.com/blog/studying-with-dyslexia
+    anchor_hint: studying with dyslexia
+  external_links:
+  - url: https://dyslexiahelp.umich.edu/tools/reading-programs/
+    note: University of Michigan overview of reading programs
+  status: drafted
+- id: read-aloud-apps
+  keyword: read aloud apps
+  intent: comparison
+  search_volume: 1000
+  difficulty: 74
+  bullets:
+  - Compare read-aloud app categories by text source, document support, voice controls,
+    and accessibility needs
+  - Distinguish screen readers, built-in device options, browser tools, and dedicated
+    document readers
+  - Give a realistic test workflow using a representative readable document
+  - Avoid unsupported pricing, privacy, mobile-platform, or performance claims about
+    Invocly
+  internal_links:
+  - url: https://invocly.com/blog/free-text-to-speech-app
+    anchor_hint: free text to speech app options
+  - url: https://invocly.com/blog/how-to-have-documents-read-to-you
+    anchor_hint: have documents read aloud
+  - url: https://invocly.com/blog/pdf-audio-reader-guide
+    anchor_hint: PDF audio reader guide
+  external_links:
+  - url: https://www.w3.org/WAI/perspective-videos/voice/
+    note: W3C overview of text-to-speech access
+  status: drafted
+- id: reader-pen-for-dyslexia
+  keyword: reader pen for dyslexia
+  intent: comparison
+  search_volume: 320
+  difficulty: 0
+  bullets:
+  - Compare reader pens for printed text with text-to-speech tools for readable digital
+    documents
+  - Cover scanning accuracy, vocabulary support, headphones, portability, and school
+    or workplace rules
+  - State plainly that Invocly is not a reader pen and only fits compatible digital
+    documents
+  - Avoid treatment claims and product recommendations not supported by evidence
+  internal_links:
+  - url: https://invocly.com/blog/dyslexia-tools-for-reading
+    anchor_hint: dyslexia reading tools
+  - url: https://invocly.com/blog/dyslexia-apps-for-students
+    anchor_hint: dyslexia apps for students
+  - url: https://invocly.com/
+    anchor_hint: make a readable digital document available as audio
+  external_links:
+  - url: https://www.callscotland.org.uk/blog/scanning-pens-what-are-the-benefits-and-what-are-the-options/
+    note: CALL Scotland guide to scanning pens
+  status: drafted
+- id: pdf-read-aloud-android
+  keyword: pdf read aloud android
+  intent: how-to
+  search_volume: 170
+  difficulty: 8
+  bullets:
+  - Give an Android decision process for readable PDFs, scanned PDFs, and accessibility
+    needs
+  - Cover built-in and app-based read-aloud approaches, then test with a representative
+    document
+  - Explain format, privacy, and browser-compatibility checks before using any web-based
+    tool
+  - Do not claim Invocly has a native Android app or guarantee mobile feature support
+  internal_links:
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to a PDF
+  - url: https://invocly.com/blog/free-pdf-text-to-speech
+    anchor_hint: free PDF text to speech
+  - url: https://invocly.com/blog/pdf-audio-reader-guide
+    anchor_hint: PDF audio reader options
+  external_links:
+  - url: https://www.adobe.com/acrobat/hub/how-to-read-pdf-aloud.html
+    note: Adobe guidance on reading PDFs aloud
+  status: drafted
+- id: read-aloud-apps-for-iphone
+  keyword: read aloud apps for iphone
+  intent: comparison
+  search_volume: 50
+  difficulty: 14
+  bullets:
+  - Compare iPhone read-aloud options by source text, document format, accessibility
+    controls, and privacy
+  - Distinguish built-in iPhone spoken-content features from dedicated read-aloud
+    apps
+  - Include a short test checklist for readable PDFs and longer documents
+  - Do not say Invocly is an iPhone app or promise iPhone support; tell readers to
+    verify current compatibility
+  internal_links:
+  - url: https://invocly.com/blog/free-text-to-speech-app
+    anchor_hint: free text to speech app options
+  - url: https://invocly.com/blog/how-to-listen-to-a-pdf
+    anchor_hint: listen to PDFs
+  - url: https://invocly.com/blog/pdf-audio-reader-guide
+    anchor_hint: PDF audio reader guide
+  external_links:
+  - url: https://support.apple.com/en-sg/guide/iphone/iph96b214f0/ios
+    note: Apple guidance on listening to on-screen text
+  status: drafted
 - id: free-text-to-speech-app
   keyword: free text to speech app
   intent: comparison
