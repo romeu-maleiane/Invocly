@@ -1,4 +1,31 @@
 topics:
+- id: listen-to-research-papers
+  keyword: listen to research papers
+  intent: how-to
+  search_volume: 10
+  difficulty: 2
+  bullets:
+  - Give researchers and graduate students a practical workflow for listening to readable
+    paper sections
+  - Separate narrative sections that can suit audio from figures, equations, tables,
+    citations, and methods that need visual review
+  - Cover a short test process for PDF text quality, note capture, and privacy before
+    processing unpublished work
+  - Position Invocly only as an option for compatible readable documents, not as a
+    research database or comprehension guarantee
+  internal_links:
+  - url: https://invocly.com/blog/how-researchers-review-long-papers
+    anchor_hint: review long research papers
+  - url: https://invocly.com/blog/how-to-master-academic-reading-in-college
+    anchor_hint: academic reading workflow
+  - url: https://invocly.com/
+    anchor_hint: make a readable document available as audio
+  external_links:
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7392212/
+    note: PLOS guide to reading scientific papers
+  - url: https://authorservices.taylorandfrancis.com/blog/news-updates/listen-to-the-latest-research-with-readspeaker/
+    note: Publisher perspective on audio access to research
+  status: drafted
 - id: dyslexia-reading-programs
   keyword: dyslexia reading programs
   intent: informational
