@@ -20,19 +20,85 @@ pillars:
   - accessible document reader
 - name: student_study_use
   seeds:
-  - convert PDF to audio for studying
-  - listen to lecture notes
-  - listen to textbooks
-  - textbook audio reader
-  - read study notes aloud
-  - listen to research papers
-  - PDF reader for students
-  - audio study tools
-  - how to study by listening
-  - listen to notes while commuting
-  - turn lecture notes into audio
-  - text to speech for exam preparation
-  - text to speech for college students
+  # Academic documents and course materials
+  - listen to assigned readings
+  - convert course readings to audio
+  - read class handouts aloud
+  - listen to study guides
+  - turn revision notes into audio
+  - convert exam notes to MP3
+  - listen to textbook chapters
+  - read academic articles aloud
+  - listen to journal articles
+  - listen to scientific papers for class
+  - read a syllabus aloud
+  - listen to lecture slides
+  - convert lecture slide PDFs to audio
+  - listen to Google Docs study notes
+  - audio reader for course materials
+  - listen to school PDFs on phone
+  - convert study documents to MP3
+  - listen to dissertation chapters
+  - listen to thesis research
+  - read essay drafts aloud for proofreading
+
+  # Study behaviors and learning workflows
+  - study with audio while walking
+  - study with audio while exercising
+  - study during a campus commute
+  - listen and read at the same time for studying
+  - follow along while listening to textbooks
+  - best listening speed for studying
+  - how to take notes while listening to a textbook
+  - how to take notes while listening to a PDF
+  - how to use text to speech with active recall
+  - how to review a chapter with audio
+  - how to review assigned reading efficiently
+  - how to study dense reading assignments
+  - how to finish assigned reading faster
+  - how to manage a heavy college reading load
+  - how to reduce screen time while studying
+  - how to study when tired of reading
+  - how to stay focused during long readings
+  - audio revision techniques for exams
+  - audio first study routine
+  - voice first study workflow
+  - how to create an audio study queue
+  - how to split long textbooks into audio sections
+  - offline audio study materials
+  - listen to study materials before bed
+  - listen to notes while doing chores
+
+  # Disciplines and student segments
+  - text to speech for law students
+  - text to speech for medical students
+  - text to speech for nursing students
+  - text to speech for graduate students
+  - text to speech for PhD students
+  - text to speech for ESL students
+  - text to speech for international students
+  - text to speech for online students
+  - text to speech for distance learning
+  - text to speech for student athletes
+  - text to speech for adult learners
+  - text to speech for history students
+  - text to speech for literature students
+  - text to speech for psychology students
+  - listen to case law for law school
+  - listen to medical school notes
+  - listen to nursing school notes
+  - listen to academic PDFs in a second language
+
+  # Exam-specific discovery
+  - audio study material for SAT
+  - audio study material for MCAT
+  - audio study material for bar exam
+  - audio study material for AP exams
+  - listen to exam study guides
+  - turn test review sheets into audio
+  - listen to revision notes before an exam
+  - audio cramming study routine
+  - last minute exam review with audio
 - name: document_conversion_howto
   seeds:
   - how to listen to a PDF
@@ -52,21 +118,108 @@ pillars:
   - read documents aloud
 - name: productivity_multitasking
   seeds:
-  - listen to pdf while commuting
-  - listen to documents while working
-  - listen to reports on the go
-  - read work documents aloud
-  - listen to long articles while walking
-  - turn reports into audio
-  - listen to documents hands free
-  - review documents during commute
-  - how to keep up with professional reading
-  - how to get through long work documents
-  - ways to reduce screen reading at work
-  - how to review reports more efficiently
-  - productivity tools for document heavy work
-  - how professionals manage long reading lists
-  - audio workflow for busy professionals
+  # Specific workplace documents
+  - listen to email attachments
+  - read long email threads aloud
+  - listen to meeting transcripts
+  - listen to meeting notes
+  - listen to briefing documents
+  - listen to policy documents
+  - listen to company policies
+  - listen to standard operating procedures
+  - listen to training manuals
+  - listen to onboarding documents
+  - listen to contracts
+  - listen to legal documents
+  - listen to client briefs
+  - listen to client materials
+  - listen to business proposals
+  - listen to market research reports
+  - listen to industry reports
+  - listen to white papers
+  - listen to technical documentation
+  - listen to professional newsletters
+  - listen to saved articles
+  - listen to Google Docs for work
+  - listen to internal company documents
+  - listen to product information
+  - listen to compliance documents
+  - listen to research updates
+  - listen to quarterly reports
+  - listen to annual reports
+  - listen to project documentation
+
+  # Conversion and portability
+  - convert Word documents to MP3 for work
+  - convert business reports to MP3
+  - convert company documents to audio
+  - turn market reports into audio
+  - turn newsletters into audio
+  - turn email attachments into audio
+  - save work documents as audio
+  - offline document listening for travel
+  - offline PDF listening for work
+  - listen to work documents on a plane
+  - listen to work documents on a train
+  - listen to business documents on phone
+  - portable audio reader for work documents
+
+  # Reading-load and time-management problems
+  - create an audio reading queue
+  - manage a professional reading backlog
+  - catch up on reading during commute
+  - catch up on industry reading
+  - reduce screen fatigue from work documents
+  - reduce eye strain from long reports
+  - stay current with industry reading
+  - review documents away from a screen
+  - process information without sitting at a desk
+  - get through a business reading backlog
+  - organize a weekly professional reading list
+  - listen to documents between meetings
+  - listen to documents while exercising
+  - listen to documents while traveling
+  - listen to reports while doing admin work
+  - hands free professional reading
+  - audio first knowledge management
+
+  # Review, meetings, and proofreading
+  - prepare for meetings by listening to documents
+  - listen to client materials before meetings
+  - listen to briefing documents before meetings
+  - take notes while listening to reports
+  - best playback speed for work documents
+  - proofread documents by listening
+  - edit reports by listening
+  - review writing with text to speech
+  - hear a contract read aloud
+  - review proposals by listening
+  - listen to a draft before sending it
+  - catch writing errors by listening
+  - audio first research workflow
+  - voice first knowledge work
+  - document listening workflow for busy managers
+
+  # Professional roles
+  - text to speech for consultants
+  - text to speech for lawyers
+  - text to speech for researchers
+  - text to speech for executives
+  - text to speech for entrepreneurs
+  - text to speech for writers
+  - text to speech for editors
+  - text to speech for sales professionals
+  - text to speech for remote workers
+  - text to speech for solopreneurs
+  - text to speech for business analysts
+  - text to speech for project managers
+  - text to speech for professors
+  - text to speech for content marketers
+  - text to speech for knowledge workers
+  - text to speech for frequent travelers
+  - listen to legal documents while commuting
+  - listen to product information while traveling
+  - listen to research papers between meetings
 - name: competitor_alternatives
   seeds:
   - Speechify alternatives
@@ -86,17 +239,79 @@ pillars:
   - affordable text to speech apps for students
 - name: case_studies
   seeds:
-  - how students listen to textbooks
-  - student listening workflow for lecture notes
-  - dyslexia student audio study workflow
-  - ADHD student listening workflow
-  - how university students review long PDFs
-  - how professionals listen to work documents
-  - how busy professionals manage long reading lists
-  - how commuters listen to work documents
-  - how researchers review long papers
-  - how consultants consume client reports
-  - real document listening workflows
+  # Student persona workflows
+  - how student athletes listen to textbooks
+  - student athlete audio study routine
+  - how online students listen to course readings
+  - online student course reading workflow
+  - working student commute study workflow
+  - how working students study during commutes
+  - law student case reading workflow
+  - how law students listen to case briefs
+  - medical student lecture note listening workflow
+  - how medical students review long readings
+  - nursing student clinical reading workflow
+  - how nursing students listen to study notes
+  - graduate student weekly reading workflow
+  - how graduate students manage assigned reading
+  - PhD student research paper listening workflow
+  - how PhD students keep up with research papers
+  - international student academic reading workflow
+  - how international students listen to academic texts
+  - dyslexic college student assigned reading workflow
+  - ADHD student long PDF listening workflow
+  - commuter student exam review workflow
+  - student exam week audio revision workflow
+  - student textbook chapter to MP3 workflow
+  - how students create an audio study queue
+
+  # Research and academic professional workflows
+  - professor journal article listening workflow
+  - how professors keep up with journal articles
+  - researcher literature review audio workflow
+  - how researchers turn papers into commute audio
+  - academic reading backlog audio workflow
+  - how academics listen to papers while traveling
+  - postgraduate literature review listening routine
+  - research assistant document listening workflow
+
+  # Business persona workflows
+  - consultant client report listening workflow
+  - how consultants prepare for meetings with audio
+  - consultant morning briefing audio routine
+  - lawyer contract review by listening
+  - how lawyers listen to case files
+  - analyst market report listening workflow
+  - how analysts process long industry reports
+  - executive briefing document audio workflow
+  - how executives listen to briefing materials
+  - sales representative product information audio workflow
+  - how sales professionals study product documents
+  - pharma sales representative research update workflow
+  - project manager status report listening workflow
+  - manager onboarding document listening workflow
+  - remote worker screen free document workflow
+  - solopreneur audio reading backlog workflow
+  - commuting professional document listening setup
+  - frequent traveler offline document listening workflow
+  - knowledge worker weekly audio reading queue
+
+  # Writing and review workflows
+  - marketer proofreading content by listening
+  - how content marketers review drafts with audio
+  - writer edits drafts with text to speech
+  - editor reviews long reports by listening
+  - how editors catch mistakes by listening
+  - consultant proofreads proposals with text to speech
+  - researcher reviews a paper draft by listening
+  - professional listens to reports while exercising
+
+  # Accessibility-oriented real-world workflows
+  - dyslexic professional report review workflow
+  - low vision professional document listening workflow
+  - ADHD professional reading backlog workflow
+  - multilingual professional document listening workflow
+  - adult learner audio reading workflow
 internal_pages:
 - url: https://invocly.com/
   topic: homepage / product overview
@@ -204,3 +419,7 @@ internal_pages:
   topic: 'Best Read Aloud Apps for iPhone: iOS Features vs Apps'
 - url: https://invocly.com/blog/how-to-listen-to-research-papers
   topic: How to Listen to Research Papers Efficiently
+- url: https://invocly.com/blog/google-doc-text-to-speech
+  topic: 'Google Doc Text to Speech: 3 Ways to Listen Out Loud'
+- url: https://invocly.com/blog/how-to-proofread-a-document
+  topic: 'How to Proofread a Document: A Step-by-Step Guide'
