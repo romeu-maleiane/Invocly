@@ -1,4 +1,61 @@
 topics:
+- id: how-to-read-scholarly-articles
+  keyword: how to read scholarly articles
+  intent: how-to
+  search_volume: 210
+  difficulty: 0
+  bullets:
+  - Help students identify the purpose of each article section before close reading
+  - Cover a question-led route through abstract, introduction, evidence, discussion,
+    and references
+  - Explain how to assess an author's claim, evidence, limitations, and relevance
+    to an assignment
+  - Position audio only as an optional pass for readable narrative sections, with
+    figures, tables, and citations reviewed visually
+  - Distinguish this article-anatomy workflow from a literature-review process across
+    many papers
+  internal_links:
+  - url: https://invocly.com/blog/how-to-master-academic-reading-in-college
+    anchor_hint: academic reading in college
+  - url: https://invocly.com/blog/how-to-listen-to-research-papers
+    anchor_hint: listen to research papers
+  - url: https://invocly.com/
+    anchor_hint: make a readable article available as audio
+  external_links:
+  - url: https://libguides.brown.edu/evaluate/Read
+    note: Brown University guide to reading scholarly articles
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3687192/
+    note: NIH article on reading journal articles methodically
+  status: drafted
+- id: how-to-read-research-papers
+  keyword: how to read research papers
+  intent: how-to
+  search_volume: 480
+  difficulty: 9
+  bullets:
+  - Focus on selecting and synthesizing multiple papers for a literature review or
+    research project
+  - Give a triage sequence for research question, abstract, methods, results, and
+    reference trail
+  - Show a comparison-note template that records relevance, evidence, limitations,
+    and follow-up questions
+  - Keep visual review for methods, figures, tables, equations, and cited evidence;
+    audio can support readable narrative context only
+  - Distinguish multi-paper synthesis from the separate task of reviewing one long
+    manuscript
+  internal_links:
+  - url: https://invocly.com/blog/how-researchers-review-long-papers
+    anchor_hint: review one long research paper
+  - url: https://invocly.com/blog/how-to-listen-to-research-papers
+    anchor_hint: listen to research papers
+  - url: https://invocly.com/
+    anchor_hint: make a readable paper available as audio
+  external_links:
+  - url: https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf
+    note: Stanford guide to reading research papers
+  - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7392212/
+    note: PLOS guide to reading scientific papers
+  status: drafted
 - id: how-to-take-notes-from-a-textbook
   keyword: how to take notes from a textbook
   intent: how-to
