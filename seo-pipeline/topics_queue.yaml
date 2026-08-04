@@ -1,4 +1,87 @@
 topics:
+- id: how-to-take-notes-from-a-textbook
+  keyword: how to take notes from a textbook
+  intent: how-to
+  search_volume: 720
+  difficulty: 0
+  bullets:
+  - Build notes around questions, headings, key ideas, and short retrieval prompts
+    instead of transcription
+  - Show a practical read-pause-note-review routine for chapters and assigned sections
+  - Explain when diagrams, formulas, and tables need visual notes alongside written
+    notes
+  - Position document audio as an optional way to revisit readable narrative passages
+    while pausing to make notes
+  - Avoid memory, comprehension, or grade guarantees
+  internal_links:
+  - url: https://invocly.com/blog/how-to-study-textbooks
+    anchor_hint: study textbooks actively
+  - url: https://invocly.com/blog/how-to-listen-to-textbooks
+    anchor_hint: listen to textbooks
+  - url: https://invocly.com/
+    anchor_hint: make readable textbook passages available as audio
+  external_links:
+  - url: https://learningcenter.unc.edu/tips-and-tools/taking-notes-while-reading/
+    note: UNC Learning Center guidance on taking notes while reading
+  - url: https://ctl.stanford.edu/students/note-taking-guide
+    note: Stanford Center for Teaching and Learning note-taking guide
+  status: drafted
+- id: how-to-revise-an-essay
+  keyword: how to revise an essay
+  intent: how-to
+  search_volume: 210
+  difficulty: 11
+  bullets:
+  - Separate revision of argument, structure, and evidence from final proofreading
+  - Give a repeatable pass sequence using the assignment, reader expectations, and
+    paragraph purpose
+  - Include a checklist for introductions, transitions, evidence, conclusions, citations,
+    and version control
+  - Position listening to a readable draft as an optional later pass for noticing
+    flow, without accuracy guarantees
+  - Avoid writing-quality guarantees and unsupported product claims
+  internal_links:
+  - url: https://invocly.com/blog/how-to-proofread-a-document
+    anchor_hint: proofread a document after revision
+  - url: https://invocly.com/blog/how-to-have-documents-read-to-you
+    anchor_hint: have a document read aloud
+  - url: https://invocly.com/
+    anchor_hint: make a readable draft available as audio
+  external_links:
+  - url: https://writingcenter.unc.edu/tips-and-tools/revising-drafts/
+    note: UNC Writing Center revision guidance
+  - url: https://owl.purdue.edu/owl/general_writing/the_writing_process/proofreading/steps_for_revising.html
+    note: Purdue OWL revision process
+  status: drafted
+- id: how-to-study-powerpoint-slides
+  keyword: how to study powerpoint slides
+  intent: how-to
+  search_volume: 50
+  difficulty: 0
+  bullets:
+  - Turn each slide or learning objective into a small set of questions and retrieval
+    prompts
+  - Show how to connect sparse slides with lecture context, speaker notes, and assigned
+    reading
+  - Explain why diagrams, tables, and visual labels need a visual review instead of
+    audio alone
+  - Position document audio as an optional review format for readable speaker notes
+    and text-heavy slides
+  - Avoid claims that a tool can replace lecture attendance, visual review, or active
+    recall
+  internal_links:
+  - url: https://invocly.com/blog/how-to-study-textbooks
+    anchor_hint: active study method for textbooks
+  - url: https://invocly.com/blog/listen-to-lecture-notes-while-studying
+    anchor_hint: listen to lecture notes while studying
+  - url: https://invocly.com/
+    anchor_hint: make readable study notes available as audio
+  external_links:
+  - url: https://www.sdstate.edu/sites/default/files/file-archive/2023-04/A%20Guide%20for%20Studying%20from%20PowerPoint%20Presentations.pdf
+    note: South Dakota State University guide to studying PowerPoint presentations
+  - url: https://sheridancollege.libguides.com/fast-taking-notes-module/taking-notes-in-class/powerpoint-slides
+    note: Sheridan College guidance on taking notes from PowerPoint slides
+  status: drafted
 - id: google-doc-text-to-speech
   keyword: google doc text to speech
   intent: how-to

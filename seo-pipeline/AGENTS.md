@@ -18,52 +18,107 @@ before starting either job. If it's not connected, stop and ask the human to con
 
 ## Job 1 — Research & Publish (run 1–2x/week)
 
-1. **Research keywords with OpenSEO MCP**, not from memory. For the chosen pillar in
-   `seo-pipeline/topics_seed.yaml`, call `research_keywords` on the seed terms, then
-   use `get_serp_results` on the 3–5 most promising candidates to understand search
-   intent, the pages currently ranking, and the content gaps.
+1. **Research keywords with OpenSEO MCP**, not from memory.
+
+   For the chosen pillar in `seo-pipeline/topics_seed.yaml`, start by calling
+   `research_keywords` on the seed terms.
+
+   Seeds are discovery starting points, not exact keyword requirements. They may be
+   broad enough to explore a search neighborhood. Final selected topics must be
+   specific enough to support a focused and useful article.
+
+   If the initial seed research does not produce enough relevant, unused keyword
+   opportunities, do not stop immediately. Expand the research through up to 3
+   meaningfully different research passes.
+
+   Expansion may use:
+
+   - Related keywords returned by OpenSEO
+   - Recurring terminology and questions found in SERPs
+   - Audience and persona variations
+   - Document types
+   - Tasks and workflows
+   - Situations and contexts
+   - Platforms and devices
+   - Professional roles
+   - Academic disciplines or student types
+
+   Do not repeatedly submit minor wording variations of the same seed. Each
+   expansion pass must explore a meaningfully different search neighborhood.
+
+   When expanding a topic, consider combinations across dimensions such as:
+
+   - Audience/persona:
+     students, graduate students, researchers, consultants, lawyers, writers,
+     editors, managers, remote workers, etc.
+
+   - Document type:
+     textbooks, lecture notes, academic papers, reports, briefs, policies,
+     contracts, articles, study guides, DOCX files, PDFs, etc.
+
+   - Task/workflow:
+     studying, reviewing, proofreading, preparing for meetings, catching up on
+     reading, researching, revising, commuting, etc.
+
+   - Situation:
+     while commuting, while traveling, before an exam, before a meeting,
+     while exercising, away from a screen, etc.
+
+   - Platform/device:
+     iPhone, Android, Windows, Mac, mobile, desktop, etc.
+
+   These variations are research inputs. Do not assume that every combination
+   deserves its own article.
+
+   ### Competitor discovery
+
+   Competitor content may also be used as an additional source for discovering
+   keyword opportunities, not only for validating keywords already found.
+
+   Inspect relevant content from competitors such as Speechify, NaturalReader,
+   ElevenReader, Voice Dream Reader, and similar products.
+
+   Look for:
+
+   - Audience problems they repeatedly cover
+   - Student or professional personas they target
+   - Document types they discuss
+   - Study and work workflows
+   - Situations in which users consume written content
+   - Professional roles and academic disciplines
+   - Recurring topic categories not substantially covered by Invocly
+
+   Use these competitor findings to create new research inputs for OpenSEO.
+
+   Do not select a topic simply because a competitor published about it.
+   Competitor content is a discovery source; the resulting keyword must still be
+   validated with OpenSEO.
+
+   After keyword discovery and expansion, use `get_serp_results` on the 3–5 most
+   promising candidates to understand search intent, the pages currently ranking,
+   and the content gaps.
 
    Select up to 3 strong topics for bullet-point briefs. One strong topic is enough;
    do not reject the entire pillar simply because fewer than 3 valid opportunities
    were found.
 
-   When a relevant measured keyword is available, include at least one measured topic
-   in a batch of up to 3. Do not force this requirement when the available measured
-   options are generic, duplicate existing coverage, or poorly matched to Invocly.
-   Include no more than one topic with `search_volume: unknown` in a batch of up to 3.
+   Only select keywords with available measured search volume from OpenSEO.
+
+   Do not select keywords whose search volume is unavailable or unknown.
+   Never invent search volume or keyword difficulty.
 
    Prioritize topics that are:
 
    - Relevant to a real Invocly audience problem, workflow, or use case
-   - Specific enough to support a focused and useful article
+   - Specific enough at the final topic-selection stage to support a focused and
+     useful article
    - Low-to-medium difficulty when reliable difficulty data is available
-   - Supported by clear search intent, even when exact search volume is unavailable
+   - Supported by clear search intent
    - Not substantially covered by an existing post in `blog/`
 
    Prefer long-tail keywords, but do not require every selected topic to be an exact
-   3+ word keyword returned by the research tool.
-
-   A topic may be selected with `search_volume: unknown` only when it has at least
-   one strong demand signal or at least two independent moderate demand signals.
-
-   Strong signals include:
-
-   - Multiple relevant organic results targeting substantially the same intent
-   - Existing Search Console impressions for the topic or close variations
-   - A measurable cluster of related keywords sharing the same intent
-   - Competitor pages with evidence of organic visibility for the topic
-
-   Moderate signals include:
-
-   - Google autocomplete, People Also Ask, or related searches
-   - Repeated questions in relevant communities
-   - Multiple competitors independently covering the same audience problem
-   - A clear upward trend or sustained interest in Google Trends
-
-   Product relevance alone is not evidence of search demand.
-
-   Never invent search volume or keyword difficulty. Record unavailable values as
-   `unknown`.
+   3+ word keyword returned from the initial seed research. A valid keyword may be
+   discovered during one of the expansion passes.
 
    Do not reject a topic as a duplicate only because it shares words such as PDF,
    audio, listen, reading, document, or text to speech with an existing article.
