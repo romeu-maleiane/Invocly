@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const { data } = matter(fs.readFileSync(filePath, 'utf8'))
   return {
-    title: `${data.title} | Invocly Blog`,
+    title: data.title,
     description: data.description,
   }
 }
