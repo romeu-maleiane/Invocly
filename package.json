@@ -6,6 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "start": "next start"
   },
   "dependencies": {
@@ -70,7 +71,7 @@
     "react": "^19",
     "react-day-picker": "9.8.0",
     "react-dom": "^19",
-    "react-dropzone": "latest",
+    "react-dropzone": "15.0.0",
     "react-hook-form": "^7.60.0",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.4",
@@ -83,6 +84,7 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "tesseract.js": "latest",
+    "tus-js-client": "^4.3.1",
     "vaul": "^0.9.9",
     "zod": "3.25.67"
   },
@@ -91,8 +93,8 @@
     "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^22",
     "@types/pdf-parse": "^1.1.5",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "postcss": "^8.5",
     "supabase": "^2.34.3",
     "tailwindcss": "^4.1.9",

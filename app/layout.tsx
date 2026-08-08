@@ -4,6 +4,10 @@ import { GeistMono } from 'geist/font/mono'
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+
+// Clerk's server entry is async at runtime, which Next.js supports, but this
+// project's JSX checker still expects a synchronous component signature.
+const RootClerkProvider = ClerkProvider as unknown as React.ComponentType<{ children: React.ReactNode }>
 import { Analytics } from "@vercel/analytics/next"
 import './globals.css'
 import { Footer } from '@/components/footer'
@@ -20,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
+    <RootClerkProvider>
       <html lang="en" className="h-full">
         <head>
           <style>{`
@@ -42,6 +46,6 @@ export default function RootLayout({
           <Footer />
         </body>
       </html>
-    </ClerkProvider>
+    </RootClerkProvider>
   )
 }
