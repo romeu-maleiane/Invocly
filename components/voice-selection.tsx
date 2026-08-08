@@ -97,9 +97,13 @@ export function VoiceSelection({
             console.error("Audio play() failed:", playError)
             throw new Error('Something went wrong playing the audio')
           }
-        } 
+        } else {
+          setIsPlayingPreview(null)
+          throw new Error("Voice preview was unavailable")
+        }
       } else {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        const data = await response.json().catch(() => ({})) as { error?: string }
+        throw new Error(data.error || `HTTP ${response.status}: ${response.statusText}`)
       }
     } catch (error) {
       console.error("Preview failed:", error)

@@ -12,9 +12,8 @@ import { type VoiceOption } from "./voice-selection"
 import { processExtractedText, validateTextForTTS, type ExtractionResult } from "@/lib/text-extraction"
 import { useSubscription } from "@/hooks/use-subscription"
 import { useUser } from "@clerk/nextjs"
-import { uploadAudio } from "@/models/uploadAudio"
-import { insertAudio } from "@/models/insertAudio"
 import { type ListeningStyle } from "@/lib/speech-direction"
+import { uploadGeneratedAudio } from "@/lib/audio/direct-upload"
 
 const DynamicVoiceSelection = dynamic(() => import("./voice-selection").then((mod) => mod.VoiceSelection),{
   ssr: false
@@ -34,6 +33,8 @@ interface UploadedFile {
   showVoiceSelection?: boolean
   downloadableBlob?: Blob
   audioStream?: ReadableStream<Uint8Array>
+  isSavingAudio?: boolean
+  storageError?: string
 }
 
 interface FileUploadProps {
@@ -161,29 +162,44 @@ export function FileUpload({ voices }: FileUploadProps) {
     setGeneratingAudio(fileId)
 
     try {
-      const response = await fetch("/api/audio-stream", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          text: file.extractedText,
-          selectedVoice,
-          listeningStyle,
-        }),
-      })
+      let response: Response | undefined
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        response = await fetch("/api/audio-stream", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: file.extractedText, selectedVoice, listeningStyle }),
+        })
 
-      if (!response.ok || !response.body) {
+        if (response.ok) break
+        const error = await response.clone().json().catch(() => ({})) as { error?: string; code?: string }
+        const retryAfter = Number.parseInt(response.headers.get("retry-after") || "0", 10)
+        const retryable = ["capacity_limited", "speechify_rate_limited"].includes(error.code || "")
+        if (!retryable || attempt === 2 || retryAfter < 1 || retryAfter > 5) {
+          throw new Error(error.error || "Failed to generate audio stream")
+        }
+        await new Promise((resolve) => setTimeout(resolve, retryAfter * 1_000))
+      }
+
+      if (!response?.ok || !response.body) {
         throw new Error("Failed to generate audio stream")
       }
 
-      incrementUsage()
+      const remainingHeader = response.headers.get("x-invocly-remaining-documents")
+      const audioStream = response.body
+      const remaining = remainingHeader === null ? null : Number.parseInt(remainingHeader, 10)
+      incrementUsage(remaining !== null && Number.isFinite(remaining) ? remaining : null)
       setUploadedFiles((prev) =>
-        prev.map((f) => (f.id === fileId ? { ...f, audioStream: response.body!, showVoiceSelection: false } : f)),
+        prev.map((f) => (f.id === fileId ? { ...f, audioStream, showVoiceSelection: false } : f)),
       )
       setGeneratingAudio(null)
     } catch (error) {
       console.error("Audio generation failed:", error)
       setUploadedFiles((prev) =>
-        prev.map((f) => (f.id === fileId ? { ...f, status: "error", error: "Failed to generate audio" } : f)),
+        prev.map((f) =>
+          f.id === fileId
+            ? { ...f, status: "error", error: error instanceof Error ? error.message : "Failed to generate audio" }
+            : f,
+        ),
       )
       setGeneratingAudio(null)
     }
@@ -200,12 +216,26 @@ export function FileUpload({ voices }: FileUploadProps) {
           : f,
       ),
     )
-    if(user) {
-      const handleStoreAudio = async () => {
-        await uploadAudio(blob, fileName, user.id)
-        .then(async publicUrl => publicUrl && await insertAudio(fileName, publicUrl, user.id))
-      }
-      handleStoreAudio()
+    if (user) {
+      setUploadedFiles((prev) =>
+        prev.map((file) => (file.id === fileId ? { ...file, isSavingAudio: true, storageError: undefined } : file)),
+      )
+      void uploadGeneratedAudio(blob, fileName)
+        .then(() => {
+          setUploadedFiles((prev) =>
+            prev.map((file) => (file.id === fileId ? { ...file, isSavingAudio: false } : file)),
+          )
+        })
+        .catch((error) => {
+          console.error("Unable to save generated audio:", error)
+          setUploadedFiles((prev) =>
+            prev.map((file) =>
+              file.id === fileId
+                ? { ...file, isSavingAudio: false, storageError: "Audio generated, but it could not be saved to your library." }
+                : file,
+            ),
+          )
+        })
     }
   }
 
@@ -352,6 +382,14 @@ export function FileUpload({ voices }: FileUploadProps) {
                           onStreamEnd={(blob) => handleStreamEnd(fileData.id, blob, `${fileData.file.name.replace(/\.[^/.]+$/, "")}_audio.mp3`)}
                           onDownload={() => downloadAudio(fileData.id)}
                         />
+                        {fileData.isSavingAudio && (
+                          <p className="mt-2 type-caption text-gray-500">Saving to your audio library...</p>
+                        )}
+                        {fileData.storageError && (
+                          <Alert className="mt-2" variant="destructive">
+                            <AlertDescription>{fileData.storageError}</AlertDescription>
+                          </Alert>
+                        )}
                       </div>
                     )}
                   </div>
