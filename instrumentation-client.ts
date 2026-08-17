@@ -6,10 +6,18 @@ import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
   dsn: "https://7fdc07501489fff8eb4bab8b4348c930@o4508894158192640.ingest.de.sentry.io/4508894160027728",
-
+  
   // Add optional integrations for additional features
   integrations: [
     Sentry.replayIntegration(),
+    Sentry.feedbackIntegration({
+      // Additional SDK configuration goes in here, for example:
+      colorScheme: "system",
+      isEmailRequired: true,
+      enableScreenshot: true,
+    }),
+    // send console.log, console.warn, and console.error calls as logs to Sentry
+    Sentry.consoleLoggingIntegration({ levels: ["log", "warn", "error"] }),
   ],
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
